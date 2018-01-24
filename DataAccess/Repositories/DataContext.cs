@@ -16,5 +16,8 @@ namespace DataAccess.Models
         {
             return new DataContext();
         }
+
+        public DbSet<Post> Posts { get; set; }
+        
     }
 }
