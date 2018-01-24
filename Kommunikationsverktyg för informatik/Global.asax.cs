@@ -1,5 +1,7 @@
-﻿using System;
+﻿using DataAccess.Repositories;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -15,6 +17,8 @@ namespace Kommunikationsverktyg_för_informatik
     {
         protected void Application_Start()
         {
+            Initialization.Initialize();
+            
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

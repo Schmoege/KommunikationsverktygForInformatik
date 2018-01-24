@@ -1,5 +1,6 @@
 ﻿using Microsoft.Owin;
 using Owin;
+using System.Data.Entity;
 
 [assembly: OwinStartupAttribute(typeof(Kommunikationsverktyg_för_informatik.Startup))]
 namespace Kommunikationsverktyg_för_informatik
