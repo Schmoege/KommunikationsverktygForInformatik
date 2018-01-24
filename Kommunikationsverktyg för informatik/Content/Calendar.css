@@ -25,6 +25,16 @@
   /*background-color: red;*/
 }
 
+.grey
+{
+    background-color: grey;
+}
+
+.regular
+{
+    background-color: red;
+}
+
 .vecka
 {
 	margin-right: 5px;

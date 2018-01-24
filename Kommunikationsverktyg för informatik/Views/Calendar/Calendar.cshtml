@@ -1,9 +1,14 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    Queue<int> greyDays = new Queue<int>();
+    Queue<int> regularDays = new Queue<int>();
+    Queue<int> futureGreyDays = new Queue<int>();
+    int count = 42;
 }
+@model Kommunikationsverktyg_för_informatik.ViewModels.MonthViewModels
 
 <div id="M">
-    <span id="monthTitle">Januari</span>
+    <span id="monthTitle">@Model.CurrentDay @Model.Name</span>
     <div class="elements">
         <div class="element__day">M</div>
         <div class="element__day">T</div>
@@ -13,151 +18,44 @@
         <div class="element__day">L</div>
         <div class="element__day">S</div>
     </div>
-    <div id="v1" class="elements">
-        <div class="d1 element__item">
-            <div class="date">1</div>
+    @for(int i = Model.NumberOfDays - (Model.FirstDayOfMonth - 1); i < Model.NumberOfDays; i++ )
+    {
+        greyDays.Enqueue(i);
+    }
+    @for(int i = 1; i <= Model.NumberOfDays; i++)
+    {
+        regularDays.Enqueue(i);
+    }
+    @for(int i = 1; i < Model.NumberOfDays + Model.FirstDayOfMonth; i++)
+    {
+        futureGreyDays.Enqueue(i);
+    }
+    @for (int i = 0; i < 6; i++)
+    {
+        <div class="elements">
+            @do
+            {
+                if (greyDays.Count != 0)
+                {
+                    <div class="element__item grey">
+                        <div class="date">@greyDays.Dequeue()</div>
+                    </div>
+                }
+                else if (regularDays.Count != 0)
+                {
+                    <div class="element__item regular">
+                        <div class="date">@regularDays.Dequeue()</div>
+                    </div>
+                }
+                else
+                {
+                    <div class="element__item grey">
+                        <div class="date">@futureGreyDays.Dequeue()</div>
+                    </div>
+                }
+                count--;
+            } while (count % 7 != 0);
         </div>
-        <div class="d2 element__item">
-            <div class="date">2</div>
-        </div>
-        <div class="d3 element__item">
-            <div class="date">3</div>
-        </div>
-        <div class="d4 element__item">
-            <div class="date">4</div>
-            <div class="meeting">Andersson. A, 10 am - 12 pm</div>
-            <div class="meeting">Andersson. A, 1 pm - 2 pm</div>
-            <div class="meeting">Andersson. A, 3 pm - 5 pm</div>
-        </div>
-        <div class="d5 element__item">
-            <div class="date">5</div>
-        </div>
-        <div class="d6 element__item">
-            <div class="date">6</div>
-        </div>
-        <div class="d7 element__item">
-            <div class="date">7</div>
-        </div>
-    </div>
-    <div id="v2" class="elements">
-        <div class="d1 element__item">
-            <div class="date">8</div>
-        </div>
-        <div class="d2 element__item">
-            <div class="date">9</div>
-        </div>
-        <div class="d3 element__item">
-            <div class="date">10</div>
-        </div>
-        <div class="d4 element__item">
-            <div class="date">11</div>
-        </div>
-        <div class="d5 element__item">
-            <div class="date">12</div>
-        </div>
-        <div class="d6 element__item">
-            <div class="date">13</div>
-        </div>
-        <div class="d7 element__item">
-            <div class="date">14</div>
-        </div>
-    </div>
-    <div id="v3" class="elements">
-        <div class="d1 element__item">
-            <div class="date">15</div>
-        </div>
-        <div class="d2 element__item">
-            <div class="date">16</div>
-        </div>
-        <div class="d3 element__item">
-            <div class="date">17</div>
-        </div>
-        <div class="d4 element__item">
-            <div class="date">18</div>
-        </div>
-        <div class="d5 element__item">
-            <div class="date">19</div>
-        </div>
-        <div class="d6 element__item">
-            <div class="date">20</div>
-            <div class="meeting">Andersson. A, 10 am - 12 pm</div>
-            <div class="meeting">Andersson. A, 1 pm - 2 pm</div>
-            <div class="meeting">Andersson. A, 3 pm - 5 pm</div>
-            <div class="meeting">...</div>
-        </div>
-        <div class="d7 element__item">
-            <div class="date">21</div>
-        </div>
-    </div>
-    <div id="v4" class="elements">
-        <div class="d1 element__item">
-            <div class="date">22</div>
-        </div>
-        <div class="d2 element__item">
-            <div class="date">23</div>
-        </div>
-        <div class="d3 element__item">
-            <div class="date">24</div>
-        </div>
-        <div class="d4 element__item">
-            <div class="date">25</div>
-        </div>
-        <div class="d5 element__item">
-            <div class="date">26</div>
-        </div>
-        <div class="d6 element__item">
-            <div class="date">27</div>
-        </div>
-        <div class="d7 element__item">
-            <div class="date">28</div>
-        </div>
-    </div>
-    <div id="v5" class="elements">
-        <div class="d1 element__item">
-            <div class="date">29</div>
-        </div>
-        <div class="d2 element__item">
-            <div class="date">30</div>
-        </div>
-        <div class="d3 element__item">
-            <div class="date">31</div>
-        </div>
-        <div class="d4 element__item">
-            <div class="date">32</div>
-        </div>
-        <div class="d5 element__item">
-            <div class="date">33</div>
-        </div>
-        <div class="d6 element__item">
-            <div class="date">34</div>
-        </div>
-        <div class="d7 element__item">
-            <div class="date">35</div>
-        </div>
-    </div>
-    <div id="v6" class="elements">
-        <div class="d1 element__item">
-            <div class="date">36</div>
-        </div>
-        <div class="d2 element__item">
-            <div class="date">37</div>
-        </div>
-        <div class="d3 element__item">
-            <div class="date">38</div>
-        </div>
-        <div class="d4 element__item">
-            <div class="date">39</div>
-        </div>
-        <div class="d5 element__item">
-            <div class="date">40</div>
-        </div>
-        <div class="d6 element__item">
-            <div class="date">41</div>
-        </div>
-        <div class="d7 element__item">
-            <div class="date">42</div>
-        </div>
-    </div>
-</div>
+    }
 
 <link href="~/Content/Calendar.css" rel="stylesheet" />
