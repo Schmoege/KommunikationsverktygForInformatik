@@ -28,11 +28,21 @@
 .grey
 {
     background-color: grey;
+    opacity: 0.4;
+}
+
+.grey:hover
+{
+    opacity: 1;
 }
 
 .regular
 {
-    background-color: red;
+}
+
+.regular:hover
+{
+    box-shadow: 0px 0px 2px 2px lightblue;
 }
 
 .vecka

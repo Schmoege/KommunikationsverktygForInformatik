@@ -1,61 +1,11 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    Queue<int> greyDays = new Queue<int>();
-    Queue<int> regularDays = new Queue<int>();
-    Queue<int> futureGreyDays = new Queue<int>();
-    int count = 42;
 }
 @model Kommunikationsverktyg_för_informatik.ViewModels.MonthViewModels
 
 <div id="M">
-    <span id="monthTitle">@Model.CurrentDay @Model.Name</span>
-    <div class="elements">
-        <div class="element__day">M</div>
-        <div class="element__day">T</div>
-        <div class="element__day">O</div>
-        <div class="element__day">T</div>
-        <div class="element__day">F</div>
-        <div class="element__day">L</div>
-        <div class="element__day">S</div>
-    </div>
-    @for(int i = Model.NumberOfDays - (Model.FirstDayOfMonth - 1); i < Model.NumberOfDays; i++ )
-    {
-        greyDays.Enqueue(i);
-    }
-    @for(int i = 1; i <= Model.NumberOfDays; i++)
-    {
-        regularDays.Enqueue(i);
-    }
-    @for(int i = 1; i < Model.NumberOfDays + Model.FirstDayOfMonth; i++)
-    {
-        futureGreyDays.Enqueue(i);
-    }
-    @for (int i = 0; i < 6; i++)
-    {
-        <div class="elements">
-            @do
-            {
-                if (greyDays.Count != 0)
-                {
-                    <div class="element__item grey">
-                        <div class="date">@greyDays.Dequeue()</div>
-                    </div>
-                }
-                else if (regularDays.Count != 0)
-                {
-                    <div class="element__item regular">
-                        <div class="date">@regularDays.Dequeue()</div>
-                    </div>
-                }
-                else
-                {
-                    <div class="element__item grey">
-                        <div class="date">@futureGreyDays.Dequeue()</div>
-                    </div>
-                }
-                count--;
-            } while (count % 7 != 0);
-        </div>
-    }
+    @{Html.RenderPartial("_CalendarPartial", Model);}
+</div>
+
 
 <link href="~/Content/Calendar.css" rel="stylesheet" />
