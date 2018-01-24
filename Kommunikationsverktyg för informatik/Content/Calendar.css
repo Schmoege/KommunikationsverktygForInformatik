@@ -1,0 +1,49 @@
+﻿.elements 
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+}
+
+.element__item 
+{
+  border: 1px solid black;
+  border-radius: 5px;
+  margin: 1px;
+  padding-left: 2px;
+  padding-right: 2px;
+  height: 80px;
+  width: 140px;
+  /*background-color: red;*/
+}
+
+.element__day 
+{
+  width: 140px;
+  text-align: center;
+  /*background-color: red;*/
+}
+
+.vecka
+{
+	margin-right: 5px;
+}
+
+.meeting
+{
+	font-size: 10px;
+	font-family: "Times New Roman";
+}
+
+#monthTitle
+{
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#M 
+{
+	margin: auto;
+	width: 80%;
+}
