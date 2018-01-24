@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.16
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kommunikationsverktyg för informatik", "Kommunikationsverktyg för informatik\Kommunikationsverktyg för informatik.csproj", "{2B2DDA8C-67E6-4804-8D7B-0AAEF47AC852}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kommunikationsverktyg för informatik.Tests", "Kommunikationsverktyg för informatik.Tests\Kommunikationsverktyg för informatik.Tests.csproj", "{DD2D3A15-330E-4567-A0CC-CC026E077B45}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2B2DDA8C-67E6-4804-8D7B-0AAEF47AC852}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B2DDA8C-67E6-4804-8D7B-0AAEF47AC852}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B2DDA8C-67E6-4804-8D7B-0AAEF47AC852}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B2DDA8C-67E6-4804-8D7B-0AAEF47AC852}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD2D3A15-330E-4567-A0CC-CC026E077B45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD2D3A15-330E-4567-A0CC-CC026E077B45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD2D3A15-330E-4567-A0CC-CC026E077B45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD2D3A15-330E-4567-A0CC-CC026E077B45}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0F002D49-23CB-4B9D-83A6-60EB3C9E11A4}
+	EndGlobalSection
+EndGlobal
