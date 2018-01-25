@@ -14,11 +14,14 @@ namespace DataAccess.Repositories
         {
 
             var passwordHash = new PasswordHasher();
-            string password = passwordHash.HashPassword("Hej123!");
-            var admin = new ApplicationUser()   
+            string password = passwordHash.HashPassword("Abc123");
+            var admin = new ApplicationUser()
             {
-                UserName = "Admin@admin.se",
-                Email = "Admin@admin.se",
+                UserName = "admin@admin.se",
+                Email = "admin@admin.se",
+                FirstName = "Admin",
+                LastName = "Adminsson",
+                Admin = true,
                 PasswordHash = password,
                 SecurityStamp = Guid.NewGuid().ToString()
             };
