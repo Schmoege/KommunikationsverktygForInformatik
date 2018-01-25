@@ -1,0 +1,24 @@
+﻿@Model List<UserFile>
+@{
+    ViewBag.Title = "FileUpload";
+}
+
+<h2>FileUpload</h2>
+@using(Html.BeginForm("UploadFile", "FileUpload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="col-md-10">
+        <p>Upload one or more files using this form:</p>
+        <input type="file" name="fileToUpload" multiple accept=".png,.jpg,.jpeg,.doc,.docx,.pdf,.ppt,.pptx,.xlsx,.xls,.xlt" />
+        <input type="submit" value="Ladda upp" />
+    </div>
+}
+
+<ul clear="both">
+    @foreach (var file in Model)
+    {
+        <li>@Html.ActionLink(file.FileName as string, "DownloadFile", "FileUpload", new { id = file.FileID }, null);</li>
+
+    }
+</ul>
