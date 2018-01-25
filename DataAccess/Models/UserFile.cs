@@ -11,7 +11,7 @@ namespace DataAccess.Models
     {
         [Key]
         public Guid FileID { get; set; }
-        public byte[] Path { get; set; }
+        public byte[] FileBytes { get; set; }
         public String FileType { get; set; }
         public String FileName { get; set; }
         public Post BlogPost { get; set; }
