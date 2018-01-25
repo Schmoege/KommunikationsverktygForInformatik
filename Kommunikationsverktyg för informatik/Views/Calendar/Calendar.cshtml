@@ -1,0 +1,11 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Kommunikationsverktyg_för_informatik.ViewModels.MonthViewModels
+
+<div id="M">
+    @{Html.RenderPartial("_CalendarPartial", Model);}
+</div>
+
+
+<link href="~/Content/Calendar.css" rel="stylesheet" />
