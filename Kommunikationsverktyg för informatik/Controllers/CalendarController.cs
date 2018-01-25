@@ -12,6 +12,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
     {
         private MonthViewModels model;
         private int month = DateTime.Today.Month;
+        private int year = DateTime.Today.Year;
 
         // GET: Calendar
         public ActionResult Calendar()
@@ -44,13 +45,23 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         {
             model = new MonthViewModels
             {
-                Name = new DateTime(DateTime.Today.Year, month, DateTime.Today.Day).ToString("MMMM").ToUpper(),
-                NumberOfDays = DateTime.DaysInMonth(DateTime.Now.Year, month),
-                PreviousMonthsNumberOfDays = DateTime.DaysInMonth(DateTime.Now.Year, oldMonth),
-                FirstDayOfMonth = new DateTime(DateTime.Today.Year, month, 1).Day,
+                Name = new DateTime(year, month, DateTime.Today.Day).ToString("MMMM").ToUpper(),
+                NumberOfDays = DateTime.DaysInMonth(year, month),
+                PreviousMonthsNumberOfDays = DateTime.DaysInMonth(year, oldMonth),
+                FirstDayOfMonth = getFirstDayOfMonth(),
                 CurrentDay = DateTime.Today.Day,
                 CurrentMonth = month
             };
+        }
+
+        private int getFirstDayOfMonth()
+        {
+            int day = Convert.ToInt32(new DateTime(DateTime.Today.Year, month, 1).DayOfWeek);
+            if(day == 0)
+            {
+                day = 7;
+            }
+            return day;
         }
 
         //private int nextMonth(int currentMonth)
