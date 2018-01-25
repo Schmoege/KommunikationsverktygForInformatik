@@ -18,7 +18,7 @@
 <ul clear="both">
     @foreach (var file in Model)
     {
-        <li>@Html.ActionLink(file.FileName as string, "DownloadFile", "FileUpload", new { downloadFileId = file.FileID }, null);</li>
+        <li>@Html.ActionLink(file.FileName as string, "DownloadFile", "FileUpload", new { downloadFileId = file.FileID }, null)</li>
 
     }
 </ul>

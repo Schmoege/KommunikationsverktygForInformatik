@@ -54,10 +54,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.Write("Hello via Debug!");
-                System.Diagnostics.Debug.Write(e.Message);
-                System.Diagnostics.Debug.Write( "Hello via Debug!" );
-                throw;
+                System.Diagnostics.Debug.Write(e.Message);                throw;
             }
             return RedirectToAction("Index", "Home");
         }
@@ -68,36 +65,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             {
                 fileToDownload = db.UserFiles.Single(x => x.FileID.Equals(new Guid(downloadFileId)));
             }
-            byte[] fileBytes = GetFile(fileToDownload);
-            var fileName = fileToDownload.FileName.Split(Char.Parse("."))[0];
-            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+            return File(fileToDownload.Path, System.Net.Mime.MediaTypeNames.Application.Octet, fileToDownload.FileName);
         }
-        private byte[] GetFile(UserFile userFile)
-        {
-            var fullName = userFile.FileName;
-            System.IO.FileStream fileRead = System.IO.File.OpenRead(fullName);
-
-            byte[] data = new byte[fileRead.Length];
-            //int returnData = fileRead.Read(data, 0, data.Length);
-            return data;
-        }
-        //public ActionResult Download(string filePath, string fileName)
-        //{
-        //    string fullName = Path.Combine(GetBaseDir(), filePath, fileName);
-
-        //    byte[] fileBytes = GetFile(fullName);
-        //    return File(
-        //        fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
-        //}
-
-        //byte[] GetFile(string s)
-        //{
-        //    System.IO.FileStream fs = System.IO.File.OpenRead(s);
-        //    byte[] data = new byte[fs.Length];
-        //    int br = fs.Read(data, 0, data.Length);
-        //    if (br != fs.Length)
-        //        throw new System.IO.IOException(s);
-        //    return data;
-        //}
     }
 }
