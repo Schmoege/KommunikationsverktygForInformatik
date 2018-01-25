@@ -12,5 +12,6 @@ namespace Kommunikationsverktyg_för_informatik.ViewModels
         public int PreviousMonthsNumberOfDays { get; set; }
         public int FirstDayOfMonth { get; set; }
         public int CurrentDay { get; set; }
+        public int CurrentMonth { get; set; }
     }
 }
