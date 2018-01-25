@@ -7,6 +7,7 @@ using Microsoft.Owin.Security.Google;
 using Owin;
 using Kommunikationsverktyg_för_informatik.Models;
 using DataAccess.Models;
+using DataAccess.Repositories;
 
 namespace Kommunikationsverktyg_för_informatik
 {

@@ -12,6 +12,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Kommunikationsverktyg_för_informatik.Models;
 using DataAccess.Models;
+using DataAccess.Repositories;
 
 namespace Kommunikationsverktyg_för_informatik
 {
@@ -55,7 +56,7 @@ namespace Kommunikationsverktyg_för_informatik
             manager.PasswordValidator = new PasswordValidator
             {
                 RequiredLength = 6,
-                RequireNonLetterOrDigit = true,
+                RequireNonLetterOrDigit = false,
                 RequireDigit = true,
                 RequireLowercase = true,
                 RequireUppercase = true,

@@ -1,6 +1,8 @@
 ﻿using Kommunikationsverktyg_för_informatik.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +11,8 @@ namespace DataAccess.Models
 {
     public class Post
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         public string Title { get; set; }
@@ -18,8 +22,11 @@ namespace DataAccess.Models
         public DateTime Date { get; set; }
 
         public string UserName { get; set; }
-        public ApplicationUser ApplicationUser { get; set; }
+        public ApplicationUser ApplicationUser;
 
-        //category
+        public int KategoriId { get; set; }
+        public Kategori Kategori;
+
+        
     }
 }
