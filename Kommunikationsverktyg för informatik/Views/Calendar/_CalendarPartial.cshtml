@@ -6,6 +6,8 @@
 }
 @model Kommunikationsverktyg_för_informatik.ViewModels.MonthViewModels
 
+@Html.HiddenFor(model => model.CurrentMonth, new { id = "currentMonth" })
+
 <span id="monthTitle">@Model.Name</span>
 <div class="elements">
     <div class="element__day">M</div>

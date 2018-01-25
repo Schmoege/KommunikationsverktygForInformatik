@@ -3,9 +3,13 @@
 }
 @model Kommunikationsverktyg_för_informatik.ViewModels.MonthViewModels
 
-<div id="M">
+<div id="Month" class="">
     @{Html.RenderPartial("_CalendarPartial", Model);}
 </div>
+<button id="nextMonth" data-request-url="@Url.Action("_CalendarPartial", "Calendar")">Nästa månad</button>
 
-
+@section Scripts
+{
+    @Scripts.Render("~/Scripts/Calendar.js")
+}
 <link href="~/Content/Calendar.css" rel="stylesheet" />
