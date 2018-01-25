@@ -1,4 +1,5 @@
-﻿using Kommunikationsverktyg_för_informatik.Models;
+﻿using DataAccess.Repositories;
+using Kommunikationsverktyg_för_informatik.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity;
 
@@ -8,6 +9,7 @@ namespace DataAccess.Models
     {
         public DataContext() : base("DefaultConnection", throwIfV1Schema: false)
         {
+            Database.SetInitializer(new DataInitializer());
         }
 
         public static DataContext Create()
@@ -15,9 +17,7 @@ namespace DataAccess.Models
             return new DataContext();
         }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-        }
+        public DbSet<Post> Posts { get; set; }
+        
     }
 }

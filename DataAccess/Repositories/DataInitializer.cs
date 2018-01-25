@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Kommunikationsverktyg_för_informatik.Models;
 using Microsoft.AspNet.Identity;
 using Kommunikationsverktyg_för_informatik;
+using System;
 
 namespace DataAccess.Repositories
 {
@@ -11,17 +12,21 @@ namespace DataAccess.Repositories
     {
         protected override void Seed(DataContext context)
         {
-            //Hämta exempeldata
 
-            context.SaveChanges();
+            var passwordHash = new PasswordHasher();
+            string password = passwordHash.HashPassword("Hej123!");
+            var admin = new ApplicationUser()   
+            {
+                UserName = "Admin@admin.se",
+                Email = "Admin@admin.se",
+                PasswordHash = password,
+                SecurityStamp = Guid.NewGuid().ToString()
+            };
+
+            context.Users.Add(admin);
 
             base.Seed(context);
-        }
-
-        private static void SeedUsers(DataContext context)
-        {
-            ApplicationUserManager manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context));
-
+          
         }
     }
 }
