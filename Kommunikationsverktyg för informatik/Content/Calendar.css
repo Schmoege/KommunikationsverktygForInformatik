@@ -1,4 +1,9 @@
-﻿.elements 
+﻿img
+{
+    max-width: 100%;
+}
+
+.elements 
 {
   display: flex;
   justify-content: center;
@@ -64,6 +69,19 @@
 
 #Month
 {
+    display:inline-block;
 	margin: auto;
 	width: 80%;
+}
+
+#Left
+{
+    display:inline-block;
+    width: 5%;
+}
+
+#Right
+{
+    display:inline-block;
+    width: 5%;
 }
