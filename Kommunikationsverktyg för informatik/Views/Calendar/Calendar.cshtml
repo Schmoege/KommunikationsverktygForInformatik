@@ -3,10 +3,15 @@
 }
 @model Kommunikationsverktyg_för_informatik.ViewModels.MonthViewModels
 
+<div id="Pre">
+    <img id="previousMonth" src="~/Icons/Calendar/Left.png" alt="Föregående" width="96" height="128" />
+</div>
 <div id="Month" class="">
     @{Html.RenderPartial("_CalendarPartial", Model);}
 </div>
-<button id="nextMonth" data-request-url="@Url.Action("_CalendarPartial", "Calendar")">Nästa månad</button>
+<div id="Nex">
+    <img id="nextMonth" src="~/Icons/Calendar/Right.png" alt="Nästa" width="96" height="128" />
+</div>
 
 @section Scripts
 {

@@ -231,6 +231,8 @@
     <Content Include="Icons\Calendar\if_6_1250325.png" />
     <Content Include="Icons\Calendar\if_Calendar_2125602.png" />
     <Content Include="Icons\Calendar\if_evolution-calendar_7103.png" />
+    <Content Include="Icons\Calendar\Left.png" />
+    <Content Include="Icons\Calendar\Right.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
