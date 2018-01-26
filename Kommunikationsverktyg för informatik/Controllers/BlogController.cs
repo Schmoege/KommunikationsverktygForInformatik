@@ -109,11 +109,8 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                 {
                     newFile.FileBytes = reader.ReadBytes(fileToUpload.ContentLength);
                 }
-                using (var dbContext = new DataContext())
-                {
-                    dbContext.UserFiles.Add(newFile);
-                    dbContext.SaveChanges();
-                }
+                context.UserFiles.Add(newFile);
+                context.SaveChanges();
 
             }
             catch (Exception e)

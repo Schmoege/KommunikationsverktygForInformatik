@@ -17,7 +17,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         // GET: Calendar
         public ActionResult Calendar()
         {
-            createModel(PreviousMonth(month));
+            createModel(previousMonth(month));
             return View(model);
         }
 
@@ -26,7 +26,16 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         {
             setMonth(newMonth);
             setYear(newYear);
-            createModel(PreviousMonth(month));
+            createModel(previousMonth(month));
+            return PartialView("_CalendarPartial", model);
+        }
+
+        [HttpGet]
+        public PartialViewResult previousMonth(int newMonth, int newYear)
+        {
+            setMonth(newMonth);
+            setYear(newYear);
+            createModel(previousMonth(month));
             return PartialView("_CalendarPartial", model);
         }
 
@@ -35,6 +44,10 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             if(newMonth > 12)
             {
                 month = 1;
+            }
+            else if(newMonth <= 0)
+            {
+                month = 12;
             }
             else
             {
@@ -85,7 +98,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         //    return month;
         //}
 
-        private int PreviousMonth(int currentMonth)
+        private int previousMonth(int currentMonth)
         {
             int month = currentMonth;
             if (currentMonth == 1)

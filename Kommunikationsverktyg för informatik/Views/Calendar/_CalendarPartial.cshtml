@@ -9,7 +9,7 @@
 @Html.HiddenFor(model => model.CurrentMonth, new { id = "currentMonth" })
 @Html.HiddenFor(model => model.CurrentYear, new { id = "currentYear" })
 
-<span id="monthTitle">@Model.Name</span>
+<span id="monthTitle">@Model.Name @Model.CurrentYear</span>
 <div class="elements">
     <div class="element__day">M</div>
     <div class="element__day">T</div>

@@ -1,0 +1,33 @@
+﻿@model Kommunikationsverktyg_för_informatik.Models.RegisterViewModel
+@using DataAccess.Models
+@using Kommunikationsverktyg_för_informatik.Models
+@using System.Linq
+<div class="titlediv">
+    @{
+        ViewBag.Title = "Adminpanel";
+    }
+
+    <h2>@ViewBag.Title.</h2>
+</div>
+<div class="adminpaneldiv">
+    <div class="registerdiv">
+        @Html.Partial("_Register")
+    </div>
+    @{
+        using (var db = new DataContext())
+        {
+            {
+                List<ApplicationUser> users = new List<ApplicationUser>();
+                users.AddRange(db.Users);
+                <div class="userlistdiv">
+                    @Html.Partial("_UserList", users)
+                </div>
+            }
+        }
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<link href="~/Content/Adminpanel.css" rel="stylesheet" />
