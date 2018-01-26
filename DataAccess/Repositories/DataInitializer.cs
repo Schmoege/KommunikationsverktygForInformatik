@@ -25,11 +25,40 @@ namespace DataAccess.Repositories
                 PasswordHash = password,
                 SecurityStamp = Guid.NewGuid().ToString()
             };
+            var adminrole = new IdentityRole()
+            {
+                Name = "administrator"
+            };
+            var userrole = new IdentityRole()
+            {
+                Name = "user"
+            };
 
             context.Users.Add(admin);
+            context.Roles.Add(adminrole);
+            context.Roles.Add(userrole);
 
+            context.SaveChanges();
             base.Seed(context);
-          
+
+            
+
+
+            UserRepository ur = new UserRepository();
+            ur.AddUserToRole("admin@admin.se", "administrator");
+            //try
+            //{
+            //    var user = UserManager.FindByName("admin@admin.se");
+            //    UserManager.AddToRole(user.Id, "administrator");
+            //    context.SaveChanges();
+            //}
+            //catch
+            //{
+            //    throw;
+            //}
+
+            
+
         }
     }
 }

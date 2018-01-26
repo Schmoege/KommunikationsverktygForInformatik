@@ -10,10 +10,9 @@ namespace Kommunikationsverktyg_för_informatik.Models
     public class ApplicationUser : IdentityUser
     {
         public bool Admin { get; set; }
-        
         public string FirstName { get; set; }
-        
         public string LastName { get; set; }
+        public bool Active { get; set; } = true;
 
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)

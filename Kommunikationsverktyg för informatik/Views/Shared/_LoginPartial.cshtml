@@ -16,12 +16,12 @@
             }
             @if (currentUser.Admin)
             {
-                <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                <li>@Html.ActionLink("Admin", "Adminpanel", "Admin", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
             }
 
             <li>
                 <a href='@Url.Action("Calendar", "Calendar")'>
-                    <img src="~/Icons/Calendar/if_6_1250325.png" alt="Kalender" width="32" height="32" />
+                    <img src="~/Icons/Calendar/if_Calendar_2125602.png" alt="Kalender" width="32" height="32" />
                 </a>
             </li>
             <li>
