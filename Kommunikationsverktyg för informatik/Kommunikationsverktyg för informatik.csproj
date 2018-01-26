@@ -221,6 +221,7 @@
     <Compile Include="ViewModels\ManageViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Adminpanel.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
