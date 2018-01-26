@@ -2,17 +2,17 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @model Kommunikationsverktyg_för_informatik.ViewModels.MonthViewModels
-
-<div id="Pre">
-    <img id="previousMonth" src="~/Icons/Calendar/Left.png" alt="Föregående" width="96" height="128" />
+<div class="elements">
+    <div id="Pre">
+        <img id="previousMonth" src="~/Icons/Calendar/Left.png" alt="Föregående" width="96" height="128" />
+    </div>
+    <div id="Month" class="">
+        @{Html.RenderPartial("_CalendarPartial", Model);}
+    </div>
+    <div id="Nex">
+        <img id="nextMonth" src="~/Icons/Calendar/Right.png" alt="Nästa" width="96" height="128" />
+    </div>
 </div>
-<div id="Month" class="">
-    @{Html.RenderPartial("_CalendarPartial", Model);}
-</div>
-<div id="Nex">
-    <img id="nextMonth" src="~/Icons/Calendar/Right.png" alt="Nästa" width="96" height="128" />
-</div>
-
 @section Scripts
 {
     @Scripts.Render("~/Scripts/Calendar.js")
