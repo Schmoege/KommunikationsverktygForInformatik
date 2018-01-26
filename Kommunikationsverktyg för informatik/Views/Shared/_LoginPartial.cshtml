@@ -19,7 +19,11 @@
                 <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
             }
 
-
+            <li>
+                <a href='@Url.Action("Calendar", "Calendar")'>
+                    <img src="~/Icons/Calendar/if_6_1250325.png" alt="Kalender" width="32" height="32" />
+                </a>
+            </li>
             <li>
                 @Html.ActionLink("Blogg", "Index", "Blog")
             </li>

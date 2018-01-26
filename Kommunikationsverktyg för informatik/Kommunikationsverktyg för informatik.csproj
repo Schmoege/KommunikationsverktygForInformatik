@@ -227,6 +227,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Icons\Calendar\if_01_halloween-calendar_2660282.png" />
+    <Content Include="Icons\Calendar\if_6_1250325.png" />
+    <Content Include="Icons\Calendar\if_Calendar_2125602.png" />
+    <Content Include="Icons\Calendar\if_evolution-calendar_7103.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
