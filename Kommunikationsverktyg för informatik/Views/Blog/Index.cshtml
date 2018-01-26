@@ -44,21 +44,24 @@
         <th></th>
     </tr>
 
-    @foreach (var item in Model.Posts)
+    @foreach (var item in Model.PostFileCombinations)
     {
 
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Title)
+                @Html.DisplayFor(modelItem => item.AttatchedPost.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                @Html.DisplayFor(modelItem => item.AttatchedPost.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Date)
+                @Html.DisplayFor(modelItem => item.AttatchedPost.Date)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UserName)
+                @Html.DisplayFor(modelItem => item.AttatchedPost.UserName)
+            </td>
+            <td>
+                @Html.ActionLink(item.AttatchedFile.FileName as string, "DownloadFile", "Blog", new { downloadFileId = item.AttatchedFile.FileID }, null)
             </td>
             @*<td>
                     @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
