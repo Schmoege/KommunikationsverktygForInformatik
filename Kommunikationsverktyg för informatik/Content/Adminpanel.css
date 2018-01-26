@@ -1,22 +1,29 @@
 ﻿body {
-    display:flex;
+    display: flex;
 }
-.adminpaneldiv
-{
-    display:flex;
-    flex:1;
+
+.adminpaneldiv {
+    display: flex;
+    flex: 1;
 }
-.registerdiv
-{
-    flex:1;
-    margin-right:10%;
-    width:660px;
+
+.registerdiv {
+    flex: 1;
+    margin-right: 10%;
+    width: 660px;
 }
-.userlistdiv
-{
-    flex:1.5;
+
+.userlistdiv {
+    flex: 1.5;
 }
-.titlediv
+
+.titlediv {
+    flex: 1;
+}
+.redRow {
+    background-color: #f95454;
+}
+.InactiveUserLink
 {
-    flex:1;
+    color:black;
 }

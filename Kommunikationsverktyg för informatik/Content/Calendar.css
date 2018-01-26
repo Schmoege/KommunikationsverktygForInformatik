@@ -1,4 +1,9 @@
-﻿img
+﻿.date
+{
+    font-weight: bold;
+}
+
+img
 {
     max-width: 100%;
 }
@@ -69,16 +74,21 @@
 	width: 80%;
 }
 
-#Left
+.pointer
 {
-    display:inline-block;
-    width: 5%;
+    opacity: 0.6;
 }
 
-#Right
+.pointer:hover
 {
-    display:inline-block;
-    width: 5%;
+    cursor: pointer;
+    opacity: 1;
+}
+
+.day
+{
+    font-weight: bold;
+    font-size: 16px;
 }
 
 #cal

@@ -3,6 +3,7 @@
     <h4>List of users:</h4>
 </div>
 <table class="table">
+
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.UserName)
@@ -18,30 +19,62 @@
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @if (item.Active)
-                {
-                    @Html.ActionLink("Deactivate", "Deactivate", new { id = item.Id })
-                }
-                else
-                {
-                    @Html.ActionLink("Activate", "Activate", new { id = item.Id })
-                }
+        if (item.Active)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) | 
+                    @if (!item.Admin)
+                    {
+          
+                        @Html.ActionLink("Deactivate User", "SetInactive", new { email = item.Email })
+                    }
 
-            </td>
-        </tr>
+
+                </td>
+            </tr>
+        }
     }
+    @foreach (var item in Model)
+    {
+        if (!item.Active)
+        {
+            <tr class="redRow">
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "InactiveUserLink" }) | 
+
+
+                    @Html.ActionLink("Activate User", "SetActive", new { email = item.Email }, new { @class = "InactiveUserLink" })
+
+
+
+
+
+                </td>
+            </tr>
+        }
+    }
+
+
+
 
 </table>
 <link href="~/Content/Adminpanel.css" rel="stylesheet" />

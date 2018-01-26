@@ -11,6 +11,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
     public class CalendarController : Controller
     {
         private MonthViewModels model;
+        private DayViewModels dayModel;
         private int month = DateTime.Today.Month;
         private int year = DateTime.Today.Year;
 
@@ -37,6 +38,17 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             setYear(newYear);
             createModel(previousMonth(month));
             return PartialView("_CalendarPartial", model);
+        }
+
+        public ActionResult day()
+        {
+            dayModel = new DayViewModels
+            {
+                Date = "2018-03-04",
+                Meetings = null,
+                Notes = null
+            };
+            return View("CalendarDay", dayModel);
         }
 
         private void setMonth(int newMonth)

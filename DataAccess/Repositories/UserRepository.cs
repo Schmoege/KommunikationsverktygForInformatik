@@ -12,21 +12,64 @@ namespace DataAccess.Repositories
 {
     public class UserRepository
     {
+        
+
+
         public void AddUserToRole(string userName, string roleName)
         {
-            DataContext context = new DataContext();
-            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            using (var db = new DataContext())
+            {
+                var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
 
-            try
+
+                try
+                {
+                    var user = UserManager.FindByName(userName);
+                    UserManager.AddToRole(user.Id, roleName);
+                    db.SaveChanges();
+                }
+                catch
+                {
+                    throw;
+                }
+            };
+        }
+
+        public ApplicationUser getUser(string email)
+        {
+            using (var db = new DataContext())
             {
-                var user = UserManager.FindByName(userName);
-                UserManager.AddToRole(user.Id, roleName);
-                context.SaveChanges();
-            }
-            catch
+                var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+                try
+                {
+                    var user = UserManager.FindByName(email);
+                    return user;
+                }
+                catch
+                {
+                    return null;
+                }
+            };
+        }
+
+        public void SetActive(string email)
+        {
+            using (var db = new DataContext())
             {
-                throw;
-            }
+                var user = db.Users.FirstOrDefault(m => m.Email.Equals(email));
+                user.Active = true;
+                db.SaveChanges();
+            };
+        }
+        public void SetInactive(string email)
+        {
+            using (var db = new DataContext())
+            {
+                var user = db.Users.FirstOrDefault(m => m.Email.Equals(email));
+                user.Active = false;
+                db.SaveChanges();
+            };
         }
     }
+
 }

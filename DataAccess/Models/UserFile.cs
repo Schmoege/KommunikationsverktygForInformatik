@@ -14,6 +14,7 @@ namespace DataAccess.Models
         public byte[] FileBytes { get; set; }
         public String FileName { get; set; }
         public Post BlogPost { get; set; }
+        public int BlogPostId { get; set; }
     }
 }
 

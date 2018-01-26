@@ -13,7 +13,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
 {
     public class AdminController : Controller
     {
-        private ApplicationSignInManager _signInManager;
+      
         private ApplicationUserManager _userManager;
         //
         public ApplicationUserManager UserManager
@@ -58,25 +58,24 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                 }
                 
                 return RedirectToAction("Adminpanel", "Admin");
-
-
-                //if (result.Succeeded)
-                //{
-                //    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-
-                //    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                //    // Send an email with this link
-                //    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                //    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                //    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-
-                //}
-                //AddErrors(result);
             }
 
-            // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        public ActionResult SetActive(ApplicationUser model)
+        {
+            UserRepository ur = new UserRepository();
+            ur.SetActive(model.Email);
+
+            return RedirectToAction("Adminpanel", "Admin");
+        }
+        public ActionResult SetInactive(ApplicationUser model)
+        {
+            UserRepository ur = new UserRepository();
+            ur.SetInactive(model.Email);
+
+            return RedirectToAction("Adminpanel", "Admin");
         }
     }
 }
