@@ -22,9 +22,10 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         }
 
         [HttpGet]
-        public PartialViewResult nextMonth(int newMonth)
+        public PartialViewResult nextMonth(int newMonth, int newYear)
         {
             setMonth(newMonth);
+            setYear(newYear);
             createModel(PreviousMonth(month));
             return PartialView("_CalendarPartial", model);
         }
@@ -41,6 +42,11 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             }
         }
 
+        private void setYear(int newYear)
+        {
+            year = newYear;
+        }
+
         private void createModel(int oldMonth)
         {
             model = new MonthViewModels
@@ -50,13 +56,14 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                 PreviousMonthsNumberOfDays = DateTime.DaysInMonth(year, oldMonth),
                 FirstDayOfMonth = getFirstDayOfMonth(),
                 CurrentDay = DateTime.Today.Day,
-                CurrentMonth = month
+                CurrentMonth = month,
+                CurrentYear = year
             };
         }
 
         private int getFirstDayOfMonth()
         {
-            int day = Convert.ToInt32(new DateTime(DateTime.Today.Year, month, 1).DayOfWeek);
+            int day = Convert.ToInt32(new DateTime(year, month, 1).DayOfWeek);
             if(day == 0)
             {
                 day = 7;
@@ -87,7 +94,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             }
             else
             {
-                month--;
+                month = month - 1;
             }
             return month;
         }

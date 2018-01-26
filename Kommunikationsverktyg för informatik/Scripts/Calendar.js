@@ -3,9 +3,21 @@
     $("#nextMonth").on("click", function ()
     {
         var month = parseInt($("#currentMonth").val()) + 1;
+        if(month > 12)
+        {
+            var year = parseInt($("#currentYear").val()) + 1;
+        }
+        else
+        {
+            var year = parseInt($("#currentYear").val());
+        }
         $.ajax({
             url: '/Calendar/nextMonth',
-            data: {newMonth: month},
+            data:
+            {
+                newMonth: month,
+                newYear: year
+            },
             type: "GET",
             success: function (data) {
                 $('#Month').html(data);
@@ -20,16 +32,5 @@
                 alert(doneMsg);
             }
         });
-        //var url = $(this).data('request-url');
-        //alert(url);
-        //$("#Month").load(url);
-        //$("#Month").load('@Html.Raw(Url.Action(" nextMonth", "CalendarController")) ');
-        //var url = $(this).data('request-url');
-        //$("#Month").load('<%= Url.Action("_CalendarPartial", "Calendar")%>', function (responseTxt, statusTxt, xhr) {
-        //    if (statusTxt == "success")
-        //        alert("External content loaded successfully!");
-        //    if (statusTxt == "error")
-        //        alert("Error: " + xhr.status + ": " + xhr.statusText);
-        //});
     });
 });
