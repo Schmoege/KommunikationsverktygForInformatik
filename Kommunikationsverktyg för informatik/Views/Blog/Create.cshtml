@@ -41,9 +41,10 @@
         </div>
         <div class="form-group">
             <div class="col-md-10">
-                @*<input type="file" name="uploadedFile" accept=".png,.jpg,.jpeg,.doc,.docx,.pdf,.ppt,.pptx,.xlsx,.xls,.xlt" />*@
+                
                 @Html.AntiForgeryToken()
-                @Html.TextBoxFor(m => m.uploadFile, new { type = "file" })
+                <input type="file" name="uploadFile" accept=".png,.jpg,.jpeg,.doc,.docx,.pdf,.ppt,.pptx,.xlsx,.xls,.xlt" />
+                @*@Html.TextBoxFor(m => m.uploadFile, new { type = "file" })*@
             </div>
         </div>
         
