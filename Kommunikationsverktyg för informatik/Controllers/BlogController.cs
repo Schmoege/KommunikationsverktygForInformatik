@@ -38,6 +38,16 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                 model.Posts = blogRepository.GetAll().ToList();
             }
             model.Kategorier = context.Categories.ToList();
+            var postCategoriesId = model.Posts.Select(x => x.Id);
+            var allTheFiles = context.UserFiles.Where(x => postCategoriesId.Contains(x.BlogPostId));
+            foreach (var post in model.Posts)
+            {
+                var newPostFileCombo = new PostFileCombo();
+                newPostFileCombo.AttatchedPost = post;
+                newPostFileCombo.AttatchedFile = allTheFiles.SingleOrDefault(x => x.BlogPostId == post.Id);
+                model.PostFileCombinations.Add(newPostFileCombo);
+            }
+
             return View(model);
 
         }
@@ -102,7 +112,8 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             {
                 
                 var newFile = new UserFile();
-                newFile.BlogPost = ownerPost; //Ändra till postobjekt senare
+                newFile.BlogPost = ownerPost;
+                newFile.BlogPostId = ownerPost.Id;
                 newFile.FileID = Guid.NewGuid();
                 newFile.FileName = fileToUpload.FileName;
                 using (var reader = new System.IO.BinaryReader(fileToUpload.InputStream))
