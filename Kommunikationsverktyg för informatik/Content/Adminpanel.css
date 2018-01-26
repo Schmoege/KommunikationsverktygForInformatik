@@ -1,0 +1,22 @@
+﻿body {
+    display:flex;
+}
+.adminpaneldiv
+{
+    display:flex;
+    flex:1;
+}
+.registerdiv
+{
+    flex:1;
+    margin-right:10%;
+    width:660px;
+}
+.userlistdiv
+{
+    flex:1.5;
+}
+.titlediv
+{
+    flex:1;
+}
