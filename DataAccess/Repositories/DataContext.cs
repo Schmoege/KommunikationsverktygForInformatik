@@ -18,6 +18,7 @@ namespace DataAccess.Models
         }
 
         public DbSet<Post> Posts { get; set; }
-        
+        public DbSet<Kategori> Categories { get; set; }
+        public DbSet<UserFile> UserFiles { get; set; }
     }
 }

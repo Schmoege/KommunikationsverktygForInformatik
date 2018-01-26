@@ -7,8 +7,9 @@
 @model Kommunikationsverktyg_för_informatik.ViewModels.MonthViewModels
 
 @Html.HiddenFor(model => model.CurrentMonth, new { id = "currentMonth" })
+@Html.HiddenFor(model => model.CurrentYear, new { id = "currentYear" })
 
-<span id="monthTitle">@Model.Name</span>
+<span id="monthTitle">@Model.Name @Model.CurrentYear</span>
 <div class="elements">
     <div class="element__day">M</div>
     <div class="element__day">T</div>
@@ -18,9 +19,10 @@
     <div class="element__day">L</div>
     <div class="element__day">S</div>
 </div>
-@for(int i = Model.NumberOfDays - (Model.FirstDayOfMonth - 1); i < Model.NumberOfDays; i++ )
+@for(int i = Model.PreviousMonthsNumberOfDays - (Model.FirstDayOfMonth - 1); i < Model.PreviousMonthsNumberOfDays; i++ )
 {
-    greyDays.Enqueue(i);
+    int j = i + 1;
+    greyDays.Enqueue(j);
 }
 @for(int i = 1; i <= Model.NumberOfDays; i++)
 {

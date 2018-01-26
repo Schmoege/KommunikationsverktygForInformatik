@@ -12,19 +12,30 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
     {
         private MonthViewModels model;
         private int month = DateTime.Today.Month;
+        private int year = DateTime.Today.Year;
 
         // GET: Calendar
         public ActionResult Calendar()
         {
-            createModel(PreviousMonth(month));
+            createModel(previousMonth(month));
             return View(model);
         }
 
         [HttpGet]
-        public PartialViewResult nextMonth(int newMonth)
+        public PartialViewResult nextMonth(int newMonth, int newYear)
         {
             setMonth(newMonth);
-            createModel(PreviousMonth(month));
+            setYear(newYear);
+            createModel(previousMonth(month));
+            return PartialView("_CalendarPartial", model);
+        }
+
+        [HttpGet]
+        public PartialViewResult previousMonth(int newMonth, int newYear)
+        {
+            setMonth(newMonth);
+            setYear(newYear);
+            createModel(previousMonth(month));
             return PartialView("_CalendarPartial", model);
         }
 
@@ -34,23 +45,43 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             {
                 month = 1;
             }
+            else if(newMonth <= 0)
+            {
+                month = 12;
+            }
             else
             {
                 month = newMonth;
             }
         }
 
+        private void setYear(int newYear)
+        {
+            year = newYear;
+        }
+
         private void createModel(int oldMonth)
         {
             model = new MonthViewModels
             {
-                Name = new DateTime(DateTime.Today.Year, month, DateTime.Today.Day).ToString("MMMM").ToUpper(),
-                NumberOfDays = DateTime.DaysInMonth(DateTime.Now.Year, month),
-                PreviousMonthsNumberOfDays = DateTime.DaysInMonth(DateTime.Now.Year, oldMonth),
-                FirstDayOfMonth = new DateTime(DateTime.Today.Year, month, 1).Day,
+                Name = new DateTime(year, month, DateTime.Today.Day).ToString("MMMM").ToUpper(),
+                NumberOfDays = DateTime.DaysInMonth(year, month),
+                PreviousMonthsNumberOfDays = DateTime.DaysInMonth(year, oldMonth),
+                FirstDayOfMonth = getFirstDayOfMonth(),
                 CurrentDay = DateTime.Today.Day,
-                CurrentMonth = month
+                CurrentMonth = month,
+                CurrentYear = year
             };
+        }
+
+        private int getFirstDayOfMonth()
+        {
+            int day = Convert.ToInt32(new DateTime(year, month, 1).DayOfWeek);
+            if(day == 0)
+            {
+                day = 7;
+            }
+            return day;
         }
 
         //private int nextMonth(int currentMonth)
@@ -67,7 +98,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         //    return month;
         //}
 
-        private int PreviousMonth(int currentMonth)
+        private int previousMonth(int currentMonth)
         {
             int month = currentMonth;
             if (currentMonth == 1)
@@ -76,7 +107,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             }
             else
             {
-                month--;
+                month = month - 1;
             }
             return month;
         }
