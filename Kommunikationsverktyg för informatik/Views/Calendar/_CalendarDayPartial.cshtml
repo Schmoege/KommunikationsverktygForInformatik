@@ -1,9 +1,31 @@
-﻿@model Kommunikationsverktyg_för_informatik.ViewModels.DayViewModels
+﻿@{ 
+    string month = "";
+    string day = "";
+}
+@model Kommunikationsverktyg_för_informatik.ViewModels.DayViewModels
 
 @Html.HiddenFor(model => model.Month, new { id = "month" })
 @Html.HiddenFor(model => model.Year, new { id = "year" })
 
-<h1 id="dayDate">@Model.Year-@Model.Month-@Model.Day</h1>
+
+
+@if(Model.Month < 10)
+{
+    month = month + "0" + Model.Month;
+}
+else
+{
+    month = month + Model.Month;
+}
+@if(Model.Day < 10)
+{
+    day = day + "0" + Model.Day;
+}
+else
+{
+    day = day + Model.Day;
+}
+<h1 id="dayDate">@Model.Year-@month-@day</h1>
 
 <div class="elements events">
     <fieldset class="element">
