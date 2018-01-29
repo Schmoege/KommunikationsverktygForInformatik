@@ -28,23 +28,24 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
 
         public ActionResult Index(BlogPostViewModel model)
         {
+            List<Post> filteredPosts = new List<Post>();
             if (model.SelectCategories != null)
             {
                 var id = context.Categories.Where(x => x.Namn == model.SelectCategories).Select(x => x.Id).First();
-                model.Posts = context.Posts.Where(x => x.KategoriId == id).ToList();
+                filteredPosts = context.Posts.Where(x => x.KategoriId == id).ToList();
             }
             else
             {
-                model.Posts = blogRepository.GetAll().ToList();
+                filteredPosts = blogRepository.GetAll().ToList();
             }
             model.Kategorier = context.Categories.ToList();
-            var postCategoriesId = model.Posts.Select(x => x.Id);
-            var allTheFiles = context.UserFiles.Where(x => postCategoriesId.Contains(x.BlogPostId));
-            foreach (var post in model.Posts)
+            var postCategoriesId = filteredPosts.Select(x => x.Id);
+            var categoryFiles = context.UserFiles.Where(x => postCategoriesId.Contains(x.BlogPostId));
+            foreach (var post in filteredPosts)
             {
                 var newPostFileCombo = new PostFileCombo();
                 newPostFileCombo.AttatchedPost = post;
-                newPostFileCombo.AttatchedFile = allTheFiles.SingleOrDefault(x => x.BlogPostId == post.Id);
+                newPostFileCombo.AttatchedFile = categoryFiles.SingleOrDefault(x => x.BlogPostId == post.Id);
                 model.PostFileCombinations.Add(newPostFileCombo);
             }
 
