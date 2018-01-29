@@ -63,7 +63,15 @@
                 @Html.DisplayFor(modelItem => item.AttatchedPost.UserName)
             </td>
             <td>
-                @Html.ActionLink(item.AttatchedFile.FileName as string, "DownloadFile", "Blog", new { downloadFileId = item.AttatchedFile.FileID }, null)
+                @if (item.AttatchedFile != null)
+                {
+                    @Html.ActionLink(item.AttatchedFile.FileName as string, "DownloadFile", "Blog", new { downloadFileId = item.AttatchedFile.FileID }, null)
+                }
+                else
+                {
+                    <p>Ingen bilaga!</p>
+                }
+
             </td>
             @*<td>
                     @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
