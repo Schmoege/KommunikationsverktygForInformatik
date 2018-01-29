@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using Kommunikationsverktyg_för_informatik.Models;
 
 namespace Kommunikationsverktyg_för_informatik.ViewModels
 {
@@ -21,8 +22,8 @@ namespace Kommunikationsverktyg_för_informatik.ViewModels
         
         public HttpPostedFileBase uploadFile { get; set; }
         public List<PostFileCombo> PostFileCombinations { get; set; }
+        public ApplicationUser currentUser { get; set; }
 
-        
     }
     public class PostFileCombo
     {
