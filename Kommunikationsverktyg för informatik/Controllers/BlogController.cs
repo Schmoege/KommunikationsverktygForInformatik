@@ -67,23 +67,31 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         [HttpPost]
         public ActionResult Create(BlogPostViewModel model)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return View();
+                if (!ModelState.IsValid)
+                {
+                    return View();
+                }
+                model.Post.Date = DateTime.Now;
+                model.Post.UserName = User.Identity.GetUserName();
+                model.Post.KategoriId = context.Categories
+                    .Where(x => x.Namn == model.SelectCategories)
+                    .Select(x => x.Id).First();
+                context.Posts.Add(model.Post);
+
+                if (model.uploadFile != null)
+                {
+                    UploadFile(model.uploadFile, model.Post);
+                }
+                context.SaveChanges();
+                return RedirectToAction("Index");
             }
-            model.Post.Date = DateTime.Now;
-            model.Post.UserName = User.Identity.GetUserName();
-            model.Post.KategoriId = context.Categories
-                .Where(x => x.Namn == model.SelectCategories)
-                .Select(x => x.Id).First();
-            context.Posts.Add(model.Post);
-            context.SaveChanges();
-            if (model.uploadFile != null)
+            catch (Exception e)
             {
-                UploadFile(model.uploadFile, model.Post);
+                System.Diagnostics.Debug.Write(e.Message);
+                throw;
             }
-            
-            return RedirectToAction("Index");
         }
 
         [Authorize]
@@ -105,13 +113,9 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult UploadFile(HttpPostedFileBase fileToUpload, Post ownerPost)
         {
-            try
-            {
-                
                 var newFile = new UserFile();
                 newFile.BlogPost = ownerPost;
                 newFile.BlogPostId = ownerPost.Id;
@@ -121,15 +125,16 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                 {
                     newFile.FileBytes = reader.ReadBytes(fileToUpload.ContentLength);
                 }
+                int size = newFile.FileBytes.Length;
+                if (size > 15728640)
+                {
+                    throw new Exception("Den valda filen är för stor. Max storlek är: 15MB. Din storlek: " + size.ToString());
+                }
                 context.UserFiles.Add(newFile);
                 context.SaveChanges();
 
-            }
-            catch (Exception e)
-            {
-                System.Diagnostics.Debug.Write(e.Message);
-                throw;
-            }
+            
+
             return RedirectToAction("Index", "Home");
         }
         public ActionResult DownloadFile(string downloadFileId)
