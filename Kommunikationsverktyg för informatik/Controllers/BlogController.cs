@@ -82,6 +82,12 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
 
                 if (model.uploadFile != null)
                 {
+                    if(model.uploadFile.ContentLength > 1)
+                    {
+                        model.Kategorier = context.Categories.ToList();
+                        ViewBag.Error = "Den filen du valt är för stor. Din storlek: " + (model.uploadFile.ContentLength / 1024).ToString() + "KB"; ;
+                        return View(model);
+                    }
                     UploadFile(model.uploadFile, model.Post);
                 }
                 context.SaveChanges();
@@ -90,8 +96,8 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             catch (Exception e)
             {
                 System.Diagnostics.Debug.Write(e.Message);
-                throw;
             }
+           return RedirectToAction("Index");
         }
 
         [Authorize]
@@ -116,7 +122,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult UploadFile(HttpPostedFileBase fileToUpload, Post ownerPost)
         {
-                var newFile = new UserFile();
+            var newFile = new UserFile();
                 newFile.BlogPost = ownerPost;
                 newFile.BlogPostId = ownerPost.Id;
                 newFile.FileID = Guid.NewGuid();
@@ -124,11 +130,6 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                 using (var reader = new System.IO.BinaryReader(fileToUpload.InputStream))
                 {
                     newFile.FileBytes = reader.ReadBytes(fileToUpload.ContentLength);
-                }
-                int size = newFile.FileBytes.Length;
-                if (size > 15728640)
-                {
-                    throw new Exception("Den valda filen är för stor. Max storlek är: 15MB. Din storlek: " + size.ToString());
                 }
                 context.UserFiles.Add(newFile);
                 context.SaveChanges();
