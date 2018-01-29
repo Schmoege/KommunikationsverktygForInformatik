@@ -1,5 +1,6 @@
 ﻿@model Kommunikationsverktyg_för_informatik.ViewModels.BlogPostViewModel
 
+
 @{
     /**/
 
@@ -71,6 +72,16 @@
                 {
                     <p>Ingen bilaga!</p>
                 }
+
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "BlogEdit", new { Id = item.AttatchedPost.Id}, null) |
+                @if()
+                {
+
+                    @Html.ActionLink("Tar bort", "BlogCancel", new { Id = item.AttatchedPost.Id }, null)
+                }
+
 
             </td>
             @*<td>
