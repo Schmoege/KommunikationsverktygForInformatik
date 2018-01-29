@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Kommunikationsverktyg_för_informatik.Controllers
 {
+    [Authorize]
     public class CalendarController : Controller
     {
         private MonthViewModels model;
