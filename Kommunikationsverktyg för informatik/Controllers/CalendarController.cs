@@ -40,11 +40,11 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             return PartialView("_CalendarPartial", model);
         }
 
-        public ActionResult day()
+        public ActionResult day(string year, string month, string day)
         {
             dayModel = new DayViewModels
             {
-                Date = "2018-03-04",
+                Date = year + "-" + month + "-" + day,
                 Meetings = null,
                 Notes = null
             };
@@ -76,7 +76,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         {
             model = new MonthViewModels
             {
-                Name = new DateTime(year, month, DateTime.Today.Day).ToString("MMMM").ToUpper(),
+                Name = new DateTime(year, month, 1).ToString("MMMM").ToUpper(),
                 NumberOfDays = DateTime.DaysInMonth(year, month),
                 PreviousMonthsNumberOfDays = DateTime.DaysInMonth(year, oldMonth),
                 FirstDayOfMonth = getFirstDayOfMonth(),

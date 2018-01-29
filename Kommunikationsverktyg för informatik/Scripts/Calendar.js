@@ -1,5 +1,8 @@
 ﻿$(document).ready(function ()
 {
+    /*==============================================================================================
+        Shows next month
+    ==============================================================================================*/
     $("#nextMonth").on("click", function ()
     {
         var month = parseInt($("#currentMonth").val()) + 1;
@@ -30,6 +33,9 @@
         });
     });
 
+    /*==============================================================================================
+        Shows previous month
+    ==============================================================================================*/
     $("#previousMonth").on("click", function ()
     {
         var month = parseInt($("#currentMonth").val() - 1);
@@ -56,6 +62,33 @@
                 var msg = "Response failed with status: " + status + "</br>"
                 + " Error: " + error;
                 $('#Month').html(msg);
+            }
+        });
+    });
+
+    /*==============================================================================================
+        Shows the selected day
+    ==============================================================================================*/
+    $(".date").on("click", function () {
+        var year = $(this).data("year");
+        var month = $(this).data("month");
+        var day = $(this).data("day");
+        $.ajax({
+            url: '/Calendar/...',
+            data:
+            {
+                year: year,
+                month: month,
+                day: day
+            },
+            type: "GET",
+            success: function (data) {
+                $.post('Calendar');
+            },
+            error: function (xhr, status, error) {
+                var msg = "Response failed with status: " + status + "</br>"
+                + " Error: " + error;
+                alert(msg);
             }
         });
     });

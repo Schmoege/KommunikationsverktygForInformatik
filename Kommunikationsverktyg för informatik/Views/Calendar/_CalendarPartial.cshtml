@@ -39,19 +39,50 @@
         {
             if (greyDays.Count != 0)
             {
-                <div class="element__item grey">
+                string year = "";
+                string month = "";
+                string day = "";
+                if(Model.CurrentMonth == 1)
+                {
+                    year = year + (Model.CurrentYear - 1);
+                    month = month + "12";
+                }
+                else
+                {
+                    year = year + Model.CurrentYear;
+                    month = month + (Model.CurrentMonth - 1);
+                }
+                day = day + greyDays.Peek();
+                <div class="element__item grey" data-year="@year" data-month="@month" data-day="@day">
                     <div class="date">@greyDays.Dequeue()</div>
                 </div>
             }
             else if (regularDays.Count != 0)
             {
-                <div class="element__item regular">
+                string year ="" + Model.CurrentYear;
+                string month = "" + Model.CurrentMonth;
+                string day = "" + regularDays.Peek();
+                <div class="element__item regular" data-year="@year" data-month="@month" data-day="@day">
                     <div class="date">@regularDays.Dequeue()</div>
                 </div>
             }
             else
             {
-                <div class="element__item grey">
+                string year = "";
+                string month = "";
+                string day = "";
+                if(Model.CurrentMonth == 12)
+                {
+                    year = year + 1;
+                    month = month + 1;
+                }
+                else
+                {
+                    year = year + Model.CurrentYear;
+                    month = month + (Model.CurrentMonth + 1);
+                }
+                day = day + futureGreyDays.Peek();
+                <div class="element__item grey" data-year="@year" data-month="@month" data-day="@day">
                     <div class="date">@futureGreyDays.Dequeue()</div>
                 </div>
             }
