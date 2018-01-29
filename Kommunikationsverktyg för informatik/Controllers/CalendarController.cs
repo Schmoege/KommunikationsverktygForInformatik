@@ -40,15 +40,27 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             return PartialView("_CalendarPartial", model);
         }
 
-        public ActionResult day(string year, string month, string day)
+        [HttpGet]
+        public PartialViewResult Month(int month, int year)
+        {
+            setMonth(month);
+            setYear(year);
+            createModel(previousMonth(month));
+            return PartialView("_CalendarPartial", model);
+        }
+
+        [HttpGet]
+        public PartialViewResult day(string year, string month, string day)
         {
             dayModel = new DayViewModels
             {
-                Date = year + "-" + month + "-" + day,
+                Year = Convert.ToInt32(year),
+                Month = Convert.ToInt32(month),
+                Day = Convert.ToInt32(day),
                 Meetings = null,
                 Notes = null
             };
-            return View("CalendarDay", dayModel);
+            return PartialView("_CalendarDayPartial", dayModel);
         }
 
         private void setMonth(int newMonth)
