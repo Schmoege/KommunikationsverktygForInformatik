@@ -1,5 +1,6 @@
 ﻿using DataAccess.Models;
 using DataAccess.Repositories;
+using Kommunikationsverktyg_för_informatik.Models;
 using Kommunikationsverktyg_för_informatik.ViewModels;
 using Microsoft.AspNet.Identity;
 using System;
@@ -48,7 +49,8 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                 newPostFileCombo.AttatchedFile = categoryFiles.SingleOrDefault(x => x.BlogPostId == post.Id);
                 model.PostFileCombinations.Add(newPostFileCombo);
             }
-
+            var currentUserId = User.Identity.GetUserId();
+            model.currentUser = context.Users.SingleOrDefault(x => x.Id == currentUserId);
             return View(model);
 
         }
@@ -147,5 +149,24 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             }
             return File(fileToDownload.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileToDownload.FileName);
         }
+
+        public ActionResult Edit(int Id)
+        {
+            Post post = context.Posts.SingleOrDefault(x => x.Id == Id);
+
+            return View(post);
+        }
+        [HttpPost]
+        public ActionResult Edit(Post postInfo)
+        {
+            Post postToEdit = context.Posts.SingleOrDefault(x => x.Id == postInfo.Id);
+            postToEdit.Title = postInfo.Title;
+            postToEdit.Description = postInfo.Description;
+            context.Entry(postToEdit).State = System.Data.Entity.EntityState.Modified;
+            context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
     }
 }
