@@ -16,6 +16,28 @@ img
   min-height: 100%;
 }
 
+.events
+{
+    align-items: baseline;
+}
+
+.element
+{
+    margin: 0px 10px 0px 10px;
+    padding: 5px;
+    width: 50%;
+}
+
+legend
+{
+    border-bottom: 1px solid grey;
+}
+
+#dayDate
+{
+    text-align: center;
+}
+
 .element__item 
 {
   border: 1px solid black;
@@ -52,7 +74,7 @@ img
 
 .regular:hover
 {
-    box-shadow: 0px 0px 2px 2px lightblue;
+    box-shadow: 0px 0px 2px 2px #4C82FF;
 }
 
 .vecka
@@ -94,6 +116,27 @@ img
 {
     font-weight: bold;
     font-size: 16px;
+}
+
+#backToCal
+{
+    color: black;
+    background-color: lightgrey;
+    border: 5px solid lightgrey;
+    border-radius: 15px;
+    max-width: 150px;
+    padding-left: 5px;
+    box-shadow: 2px 2px 2px #888888;
+    opacity: 0.8;
+    width: 50%;
+    margin: auto;
+    margin-top: 15px;
+}
+
+#backToCal:hover
+{
+    opacity: 1;
+    cursor: pointer;
 }
 
 #cal

@@ -82,7 +82,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
 
                 if (model.uploadFile != null)
                 {
-                    if(model.uploadFile.ContentLength > 1)
+                    if(model.uploadFile.ContentLength > 15728640) //15MB i Bytes
                     {
                         model.Kategorier = context.Categories.ToList();
                         ViewBag.Error = "Den filen du valt är för stor. Din storlek: " + (model.uploadFile.ContentLength / 1024).ToString() + "KB"; ;
