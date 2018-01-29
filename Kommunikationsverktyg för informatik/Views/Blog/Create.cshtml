@@ -46,8 +46,9 @@
             <div class="col-md-10">
                 
                 @Html.AntiForgeryToken()
+                <p>Högsta tillåtna filstorlek: 15MB</p>
                 <input type="file" name="uploadFile" accept=".png,.jpg,.jpeg,.doc,.docx,.pdf,.ppt,.pptx,.xlsx,.xls,.xlt" />
-                @*@Html.TextBoxFor(m => m.uploadFile, new { type = "file" })*@
+                <p class = "text-danger">@ViewBag.Error</p>
             </div>
         </div>
         

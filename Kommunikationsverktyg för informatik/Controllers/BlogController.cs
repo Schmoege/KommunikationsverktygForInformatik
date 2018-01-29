@@ -28,23 +28,24 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
 
         public ActionResult Index(BlogPostViewModel model)
         {
+            List<Post> filteredPosts = new List<Post>();
             if (model.SelectCategories != null)
             {
                 var id = context.Categories.Where(x => x.Namn == model.SelectCategories).Select(x => x.Id).First();
-                model.Posts = context.Posts.Where(x => x.KategoriId == id).ToList();
+                filteredPosts = context.Posts.Where(x => x.KategoriId == id).ToList();
             }
             else
             {
-                model.Posts = blogRepository.GetAll().ToList();
+                filteredPosts = blogRepository.GetAll().ToList();
             }
             model.Kategorier = context.Categories.ToList();
-            var postCategoriesId = model.Posts.Select(x => x.Id);
-            var allTheFiles = context.UserFiles.Where(x => postCategoriesId.Contains(x.BlogPostId));
-            foreach (var post in model.Posts)
+            var postCategoriesId = filteredPosts.Select(x => x.Id);
+            var categoryFiles = context.UserFiles.Where(x => postCategoriesId.Contains(x.BlogPostId));
+            foreach (var post in filteredPosts)
             {
                 var newPostFileCombo = new PostFileCombo();
                 newPostFileCombo.AttatchedPost = post;
-                newPostFileCombo.AttatchedFile = allTheFiles.SingleOrDefault(x => x.BlogPostId == post.Id);
+                newPostFileCombo.AttatchedFile = categoryFiles.SingleOrDefault(x => x.BlogPostId == post.Id);
                 model.PostFileCombinations.Add(newPostFileCombo);
             }
 
@@ -66,23 +67,37 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         [HttpPost]
         public ActionResult Create(BlogPostViewModel model)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return View();
+                if (!ModelState.IsValid)
+                {
+                    return View();
+                }
+                model.Post.Date = DateTime.Now;
+                model.Post.UserName = User.Identity.GetUserName();
+                model.Post.KategoriId = context.Categories
+                    .Where(x => x.Namn == model.SelectCategories)
+                    .Select(x => x.Id).First();
+                context.Posts.Add(model.Post);
+
+                if (model.uploadFile != null)
+                {
+                    if(model.uploadFile.ContentLength > 15728640) //15MB i Bytes
+                    {
+                        model.Kategorier = context.Categories.ToList();
+                        ViewBag.Error = "Den filen du valt är för stor. Din storlek: " + (model.uploadFile.ContentLength / 1024).ToString() + "KB"; ;
+                        return View(model);
+                    }
+                    UploadFile(model.uploadFile, model.Post);
+                }
+                context.SaveChanges();
+                return RedirectToAction("Index");
             }
-            model.Post.Date = DateTime.Now;
-            model.Post.UserName = User.Identity.GetUserName();
-            model.Post.KategoriId = context.Categories
-                .Where(x => x.Namn == model.SelectCategories)
-                .Select(x => x.Id).First();
-            context.Posts.Add(model.Post);
-            context.SaveChanges();
-            if (model.uploadFile != null)
+            catch (Exception e)
             {
-                UploadFile(model.uploadFile, model.Post);
+                System.Diagnostics.Debug.Write(e.Message);
             }
-            
-            return RedirectToAction("Index");
+           return RedirectToAction("Index");
         }
 
         [Authorize]
@@ -104,14 +119,10 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult UploadFile(HttpPostedFileBase fileToUpload, Post ownerPost)
         {
-            try
-            {
-                
-                var newFile = new UserFile();
+            var newFile = new UserFile();
                 newFile.BlogPost = ownerPost;
                 newFile.BlogPostId = ownerPost.Id;
                 newFile.FileID = Guid.NewGuid();
@@ -123,12 +134,8 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                 context.UserFiles.Add(newFile);
                 context.SaveChanges();
 
-            }
-            catch (Exception e)
-            {
-                System.Diagnostics.Debug.Write(e.Message);
-                throw;
-            }
+            
+
             return RedirectToAction("Index", "Home");
         }
         public ActionResult DownloadFile(string downloadFileId)

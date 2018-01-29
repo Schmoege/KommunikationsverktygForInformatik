@@ -1,5 +1,6 @@
 ﻿@model Kommunikationsverktyg_för_informatik.ViewModels.BlogPostViewModel
 
+
 @{
     /**/
 
@@ -41,7 +42,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Post.UserName)
         </th>
-        <th></th>
+        <th>
+            Bilaga
+        </th>
     </tr>
 
     @foreach (var item in Model.PostFileCombinations)
@@ -61,7 +64,25 @@
                 @Html.DisplayFor(modelItem => item.AttatchedPost.UserName)
             </td>
             <td>
-                @Html.ActionLink(item.AttatchedFile.FileName as string, "DownloadFile", "Blog", new { downloadFileId = item.AttatchedFile.FileID }, null)
+                @if (item.AttatchedFile != null)
+                {
+                    @Html.ActionLink(item.AttatchedFile.FileName as string, "DownloadFile", "Blog", new { downloadFileId = item.AttatchedFile.FileID }, null)
+                }
+                else
+                {
+                    <p>Ingen bilaga!</p>
+                }
+
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "BlogEdit", new { Id = item.AttatchedPost.Id}, null) |
+                @if()
+                {
+
+                    @Html.ActionLink("Tar bort", "BlogCancel", new { Id = item.AttatchedPost.Id }, null)
+                }
+
+
             </td>
             @*<td>
                     @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
