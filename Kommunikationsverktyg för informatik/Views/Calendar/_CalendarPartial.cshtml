@@ -42,7 +42,7 @@
                 string year = "";
                 string month = "";
                 string day = "";
-                if(Model.CurrentMonth == 1)
+                if (Model.CurrentMonth == 1)
                 {
                     year = year + (Model.CurrentYear - 1);
                     month = month + "12";
@@ -53,25 +53,43 @@
                     month = month + (Model.CurrentMonth - 1);
                 }
                 day = day + greyDays.Peek();
-                <div class="element__item grey" data-year="@year" data-month="@month" data-day="@day">
-                    <div class="date">@greyDays.Dequeue()</div>
-                </div>
+                if ((count - 1) % 7 == 0)
+                {
+                    <div class="element__item grey" data-year="@year" data-month="@month" data-day="@day">
+                        <div class="date sunday">@greyDays.Dequeue()</div>
+                    </div>
+                }
+                else
+                {
+                    <div class="element__item grey" data-year="@year" data-month="@month" data-day="@day">
+                        <div class="date">@greyDays.Dequeue()</div>
+                    </div>
+                }
             }
             else if (regularDays.Count != 0)
             {
-                string year ="" + Model.CurrentYear;
+                string year = "" + Model.CurrentYear;
                 string month = "" + Model.CurrentMonth;
                 string day = "" + regularDays.Peek();
-                <div class="element__item regular" data-year="@year" data-month="@month" data-day="@day">
-                    <div class="date">@regularDays.Dequeue()</div>
-                </div>
+                if ((count - 1) % 7 == 0)
+                {
+                    <div class="element__item regular" data-year="@year" data-month="@month" data-day="@day">
+                        <div class="date sunday">@regularDays.Dequeue()</div>
+                    </div>
+                }
+                else
+                {
+                    <div class="element__item regular" data-year="@year" data-month="@month" data-day="@day">
+                        <div class="date">@regularDays.Dequeue()</div>
+                    </div>
+                }
             }
             else
             {
                 string year = "";
                 string month = "";
                 string day = "";
-                if(Model.CurrentMonth == 12)
+                if (Model.CurrentMonth == 12)
                 {
                     year = year + 1;
                     month = month + 1;
@@ -82,9 +100,18 @@
                     month = month + (Model.CurrentMonth + 1);
                 }
                 day = day + futureGreyDays.Peek();
-                <div class="element__item grey" data-year="@year" data-month="@month" data-day="@day">
-                    <div class="date">@futureGreyDays.Dequeue()</div>
-                </div>
+                if ((count - 1) % 7 == 0)
+                {
+                    <div class="element__item grey" data-year="@year" data-month="@month" data-day="@day">
+                        <div class="date sunday">@futureGreyDays.Dequeue()</div>
+                    </div>
+                }
+                else
+                {
+                    <div class="element__item grey" data-year="@year" data-month="@month" data-day="@day">
+                        <div class="date">@futureGreyDays.Dequeue()</div>
+                    </div>
+                }
             }
             count--;
         } while (count % 7 != 0);
