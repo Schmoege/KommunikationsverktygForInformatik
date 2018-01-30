@@ -32,7 +32,7 @@
                     @Html.DisplayFor(modelItem => item.LastName)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { email = item.Email }) |
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                     @if (!item.Admin)
                     {
 

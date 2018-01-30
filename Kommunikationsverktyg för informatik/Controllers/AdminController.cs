@@ -83,16 +83,16 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             return RedirectToAction("Adminpanel", "Admin");
         }
 
-        public ActionResult Edit(string email)
+        public ActionResult Edit(string id)
         {
 
             var ur = new UserRepository();
-            var user = ur.getUser(email);
-            var editViewModel = new EditViewModels()
+            using (var db = new DataContext())
             {
-                applicationUser = user
-            };
-            return View(editViewModel);
+                var user = db.Users.FirstOrDefault(u => u.Id.Equals(id));
+                var editViewModel = new EditViewModels(user);
+                return View(editViewModel);
+            }
         }
 
         [HttpPost]
@@ -104,15 +104,21 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             {
                 using (DataContext db = new DataContext())
                 {
-                    var user = db.Users.FirstOrDefault(u => u.Email.Equals(model.applicationUser.Email));
+                    var id = Url.RequestContext.RouteData.Values["id"].ToString();
+                    var user = db.Users.FirstOrDefault(u => u.Id.Equals(id));
                     UserRepository ur = new UserRepository();
 
-                    if (user.Admin && !model.applicationUser.Admin)
+                    if (!user.Id.Equals(User.Identity.GetUserId()))
+                    {
+                        user.Admin = model.applicationUser.Admin;
+                    }
+
+                    if (!user.Admin)
                     {
                         ur.RemoveUserFromRole(user.Email, "administrator");
                         ur.AddUserToRole(user.Email, "user");
                     }
-                    else if (!user.Admin && model.applicationUser.Admin)
+                    else if (user.Admin)
                     {
                         ur.RemoveUserFromRole(user.Email, "user");
                         ur.AddUserToRole(user.Email, "administrator");
@@ -120,10 +126,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
 
                     user.FirstName = model.applicationUser.FirstName;
                     user.LastName = model.applicationUser.LastName;
-                    if (!user.Id.Equals(User.Identity.GetUserId()))
-                    {
-                        user.Admin = model.applicationUser.Admin;
-                    }
+                    
                     user.Email = model.applicationUser.Email;
                     user.UserName = model.applicationUser.Email;
 
