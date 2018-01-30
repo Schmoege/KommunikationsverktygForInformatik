@@ -1,5 +1,6 @@
 ﻿@model Kommunikationsverktyg_för_informatik.ViewModels.BlogPostViewModel
 
+
 @{
     /**/
 
@@ -63,13 +64,29 @@
                 @Html.DisplayFor(modelItem => item.AttatchedPost.UserName)
             </td>
             <td>
-                @Html.ActionLink(item.AttatchedFile.FileName as string, "DownloadFile", "Blog", new { downloadFileId = item.AttatchedFile.FileID }, null)
+                @if (item.AttatchedFile != null)
+                {
+                    @Html.ActionLink(item.AttatchedFile.FileName as string, "DownloadFile", "Blog", new { downloadFileId = item.AttatchedFile.FileID }, null)
+                }
+                else
+                {
+                    <p>Ingen bilaga!</p>
+                }
+
             </td>
-            @*<td>
-                    @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-                </td>*@
+            <td>
+                @if (item.AttatchedPost.UserName == Model.currentUser.UserName)
+                {
+                    @Html.ActionLink("Edit", "Edit", "Blog", new { Id = item.AttatchedPost.Id }, null)
+                }
+                <br />
+                @if (Model.currentUser.Admin)
+                {
+                    @Html.ActionLink("Tar bort", "BlogCancel", new { Id = item.AttatchedPost.Id }, null)
+                }
+
+
+            </td>
         </tr>
     }
 

@@ -1,5 +1,6 @@
 ﻿using DataAccess.Models;
 using DataAccess.Repositories;
+using Kommunikationsverktyg_för_informatik.Models;
 using Kommunikationsverktyg_för_informatik.ViewModels;
 using Microsoft.AspNet.Identity;
 using System;
@@ -48,7 +49,8 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                 newPostFileCombo.AttatchedFile = categoryFiles.SingleOrDefault(x => x.BlogPostId == post.Id);
                 model.PostFileCombinations.Add(newPostFileCombo);
             }
-
+            var currentUserId = User.Identity.GetUserId();
+            model.currentUser = context.Users.SingleOrDefault(x => x.Id == currentUserId);
             return View(model);
 
         }
@@ -67,23 +69,37 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         [HttpPost]
         public ActionResult Create(BlogPostViewModel model)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return View();
+                if (!ModelState.IsValid)
+                {
+                    return View();
+                }
+                model.Post.Date = DateTime.Now;
+                model.Post.UserName = User.Identity.GetUserName();
+                model.Post.KategoriId = context.Categories
+                    .Where(x => x.Namn == model.SelectCategories)
+                    .Select(x => x.Id).First();
+                context.Posts.Add(model.Post);
+
+                if (model.uploadFile != null)
+                {
+                    if(model.uploadFile.ContentLength > 15728640) //15MB i Bytes
+                    {
+                        model.Kategorier = context.Categories.ToList();
+                        ViewBag.Error = "Den filen du valt är för stor. Din storlek: " + (model.uploadFile.ContentLength / 1024).ToString() + "KB"; ;
+                        return View(model);
+                    }
+                    UploadFile(model.uploadFile, model.Post);
+                }
+                context.SaveChanges();
+                return RedirectToAction("Index");
             }
-            model.Post.Date = DateTime.Now;
-            model.Post.UserName = User.Identity.GetUserName();
-            model.Post.KategoriId = context.Categories
-                .Where(x => x.Namn == model.SelectCategories)
-                .Select(x => x.Id).First();
-            context.Posts.Add(model.Post);
-            context.SaveChanges();
-            if (model.uploadFile != null)
+            catch (Exception e)
             {
-                UploadFile(model.uploadFile, model.Post);
+                System.Diagnostics.Debug.Write(e.Message);
             }
-            
-            return RedirectToAction("Index");
+           return RedirectToAction("Index");
         }
 
         [Authorize]
@@ -105,14 +121,10 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult UploadFile(HttpPostedFileBase fileToUpload, Post ownerPost)
         {
-            try
-            {
-                
-                var newFile = new UserFile();
+            var newFile = new UserFile();
                 newFile.BlogPost = ownerPost;
                 newFile.BlogPostId = ownerPost.Id;
                 newFile.FileID = Guid.NewGuid();
@@ -124,12 +136,8 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                 context.UserFiles.Add(newFile);
                 context.SaveChanges();
 
-            }
-            catch (Exception e)
-            {
-                System.Diagnostics.Debug.Write(e.Message);
-                throw;
-            }
+            
+
             return RedirectToAction("Index", "Home");
         }
         public ActionResult DownloadFile(string downloadFileId)
@@ -141,5 +149,24 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             }
             return File(fileToDownload.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileToDownload.FileName);
         }
+
+        public ActionResult Edit(int Id)
+        {
+            Post post = context.Posts.SingleOrDefault(x => x.Id == Id);
+
+            return View(post);
+        }
+        [HttpPost]
+        public ActionResult Edit(Post postInfo)
+        {
+            Post postToEdit = context.Posts.SingleOrDefault(x => x.Id == postInfo.Id);
+            postToEdit.Title = postInfo.Title;
+            postToEdit.Description = postInfo.Description;
+            context.Entry(postToEdit).State = System.Data.Entity.EntityState.Modified;
+            context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
     }
 }

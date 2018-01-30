@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Kommunikationsverktyg_för_informatik.Controllers
 {
+    [Authorize]
     public class CalendarController : Controller
     {
         private MonthViewModels model;
@@ -40,15 +41,27 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             return PartialView("_CalendarPartial", model);
         }
 
-        public ActionResult day()
+        [HttpGet]
+        public PartialViewResult Month(int month, int year)
+        {
+            setMonth(month);
+            setYear(year);
+            createModel(previousMonth(month));
+            return PartialView("_CalendarPartial", model);
+        }
+
+        [HttpGet]
+        public PartialViewResult day(string year, string month, string day)
         {
             dayModel = new DayViewModels
             {
-                Date = "2018-03-04",
+                Year = Convert.ToInt32(year),
+                Month = Convert.ToInt32(month),
+                Day = Convert.ToInt32(day),
                 Meetings = null,
                 Notes = null
             };
-            return View("CalendarDay", dayModel);
+            return PartialView("_CalendarDayPartial", dayModel);
         }
 
         private void setMonth(int newMonth)
@@ -76,7 +89,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         {
             model = new MonthViewModels
             {
-                Name = new DateTime(year, month, DateTime.Today.Day).ToString("MMMM").ToUpper(),
+                Name = new DateTime(year, month, 1).ToString("MMMM").ToUpper(),
                 NumberOfDays = DateTime.DaysInMonth(year, month),
                 PreviousMonthsNumberOfDays = DateTime.DaysInMonth(year, oldMonth),
                 FirstDayOfMonth = getFirstDayOfMonth(),
