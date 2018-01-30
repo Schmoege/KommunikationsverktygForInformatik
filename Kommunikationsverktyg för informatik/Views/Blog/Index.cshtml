@@ -82,7 +82,7 @@
                     @Html.ActionLink("Edit", "Edit", "Blog", new { Id = item.AttatchedPost.Id }, null)
                 }
                 <br />
-                @if (Model.currentUser.Admin)
+                @if (Model.currentUser.Admin || item.AttatchedPost.UserName == Model.currentUser.UserName)
                 {
                     @Html.ActionLink("Tar bort", "BlogCancel", "Blog", new { Id = item.AttatchedPost.Id }, null)
                 }
