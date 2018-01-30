@@ -10,5 +10,16 @@ namespace Kommunikationsverktyg_för_informatik.ViewModels
     {
         public ApplicationUser applicationUser { get; set; }
         public SetPasswordViewModel setPassword { get; set; }
+        public string Id;
+
+        public EditViewModels(ApplicationUser user)
+        {
+            this.applicationUser = user;
+        }
+        public EditViewModels()
+        {
+
+        }
     }
+    
 }
