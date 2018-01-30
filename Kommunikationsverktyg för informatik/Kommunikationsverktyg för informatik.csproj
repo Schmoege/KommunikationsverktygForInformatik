@@ -218,6 +218,7 @@
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="ViewModels\BlogPostViewModels.cs" />
     <Compile Include="ViewModels\DayViewModels.cs" />
+    <Compile Include="ViewModels\EditViewModels.cs" />
     <Compile Include="ViewModels\MonthViewModels.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
   </ItemGroup>
@@ -303,6 +304,8 @@
     <Content Include="Views\Blog\Create.cshtml" />
     <Content Include="Views\Admin\_Register.cshtml" />
     <Content Include="Views\Admin\_UserList.cshtml" />
+    <Content Include="Views\Admin\Adminpanel.cshtml" />
+    <Content Include="Views\Admin\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
