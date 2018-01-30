@@ -108,12 +108,17 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                     var user = db.Users.FirstOrDefault(u => u.Id.Equals(id));
                     UserRepository ur = new UserRepository();
 
-                    if (user.Admin && !model.applicationUser.Admin)
+                    if (!user.Id.Equals(User.Identity.GetUserId()))
+                    {
+                        user.Admin = model.applicationUser.Admin;
+                    }
+
+                    if (!user.Admin)
                     {
                         ur.RemoveUserFromRole(user.Email, "administrator");
                         ur.AddUserToRole(user.Email, "user");
                     }
-                    else if (!user.Admin && model.applicationUser.Admin)
+                    else if (user.Admin)
                     {
                         ur.RemoveUserFromRole(user.Email, "user");
                         ur.AddUserToRole(user.Email, "administrator");
@@ -121,10 +126,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
 
                     user.FirstName = model.applicationUser.FirstName;
                     user.LastName = model.applicationUser.LastName;
-                    if (!user.Id.Equals(User.Identity.GetUserId()))
-                    {
-                        user.Admin = model.applicationUser.Admin;
-                    }
+                    
                     user.Email = model.applicationUser.Email;
                     user.UserName = model.applicationUser.Email;
 
