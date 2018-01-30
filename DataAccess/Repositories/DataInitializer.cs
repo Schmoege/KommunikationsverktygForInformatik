@@ -46,16 +46,7 @@ namespace DataAccess.Repositories
 
             UserRepository ur = new UserRepository();
             ur.AddUserToRole("admin@admin.se", "administrator");
-            //try
-            //{
-            //    var user = UserManager.FindByName("admin@admin.se");
-            //    UserManager.AddToRole(user.Id, "administrator");
-            //    context.SaveChanges();
-            //}
-            //catch
-            //{
-            //    throw;
-            //}
+
 
             
 

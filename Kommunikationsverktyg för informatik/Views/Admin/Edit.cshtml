@@ -1,0 +1,90 @@
+﻿@model Kommunikationsverktyg_för_informatik.ViewModels.EditViewModels
+@using Microsoft.AspNet.Identity
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+</head>
+<body>
+
+
+
+    @using (Html.BeginForm("Edit", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <br />
+
+            <h4>Användare: @Model.applicationUser.FirstName.ToString() @Model.applicationUser.LastName.ToString()</h4>
+            <hr />
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.applicationUser.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.applicationUser.Email, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.applicationUser.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.setPassword.NewPassword, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(m => m.setPassword.NewPassword, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.setPassword.ConfirmPassword, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(m => m.setPassword.ConfirmPassword, new { @class = "form-control" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.applicationUser.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.applicationUser.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.applicationUser.FirstName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.applicationUser.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.applicationUser.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.applicationUser.LastName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @if (!Model.applicationUser.Id.Equals(User.Identity.GetUserId()))
+            {
+                <div class="form-group">
+                    @Html.LabelFor(model => model.applicationUser.Admin, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.applicationUser.Admin)
+                            @Html.ValidationMessageFor(model => model.applicationUser.Admin, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to adminpanel", "Adminpanel")
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+</body>
+</html>
