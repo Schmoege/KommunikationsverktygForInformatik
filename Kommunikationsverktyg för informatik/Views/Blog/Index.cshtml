@@ -52,10 +52,12 @@
 
         <tr>
             <td>
+                
                 @Html.DisplayFor(modelItem => item.AttatchedPost.Title)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AttatchedPost.Description)
+            <td class="blogTable">
+                <span id="blogText" class="comment more">@Html.DisplayFor(modelItem => item.AttatchedPost.Description)</span>
+
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.AttatchedPost.Date)
@@ -82,7 +84,7 @@
                 <br />
                 @if (Model.currentUser.Admin)
                 {
-                    @Html.ActionLink("Tar bort", "BlogCancel", new { Id = item.AttatchedPost.Id }, null)
+                    @Html.ActionLink("Tar bort", "BlogCancel", "Blog", new { Id = item.AttatchedPost.Id }, null)
                 }
 
 

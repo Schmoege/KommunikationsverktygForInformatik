@@ -168,5 +168,16 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult BlogCancel (int id)
+        {
+            Post postDelete = context.Posts.Find(id);
+            context.Posts.Remove(postDelete);
+            context.SaveChanges();
+            return RedirectToAction("Index");
+
+
+           
+        }
+
     }
 }
