@@ -1,0 +1,31 @@
+﻿
+a {
+    color: #0254EB
+}
+
+    a:visited {
+        color: #0254EB
+    }
+
+.morelink {
+    text-decoration: none;
+    outline: none;
+}
+
+.morecontent span {
+    display: none;
+}
+
+.comment {
+    width: 400px;
+    background-color: #f0f0f0;
+    margin: 10px;
+}
+
+#blogText {
+    word-break: break-all;
+}
+
+.blogTable {
+    width: 400px;
+}
