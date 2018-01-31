@@ -41,12 +41,21 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             }
             model.Kategorier = context.Categories.ToList();
             var postCategoriesId = filteredPosts.Select(x => x.Id);
-            var categoryFiles = context.UserFiles.Where(x => postCategoriesId.Contains(x.BlogPostId));
+            var categoryFiles = context.UserFiles.Where(x => postCategoriesId.Contains(x.BlogPostId)).ToList();
+            var picExtensionList = new List<string>() {".png", ".jpg", ".jpeg" };
+            
             foreach (var post in filteredPosts)
             {
                 var newPostFileCombo = new PostFileCombo();
                 newPostFileCombo.AttatchedPost = post;
-                newPostFileCombo.AttatchedFile = categoryFiles.SingleOrDefault(x => x.BlogPostId == post.Id);
+                
+                var picList = categoryFiles.Where(x => picExtensionList.Contains(x.FileExtension));
+                if (picList.ToList().Count > 2)
+                {
+                    newPostFileCombo.ManyPics = true;
+                    newPostFileCombo.AttatchedPics = picList.ToList();
+                }
+                newPostFileCombo.AttatchedDocs = categoryFiles.Where(x => x.BlogPostId == post.Id).Where(x => !picExtensionList.Contains(x.FileExtension)).ToList();
                 model.PostFileCombinations.Add(newPostFileCombo);
             }
             var currentUserId = User.Identity.GetUserId();
@@ -82,16 +91,27 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                     .Select(x => x.Id).First();
                 context.Posts.Add(model.Post);
 
-                if (model.uploadFile != null)
+                if (model.uploadFiles != null)
                 {
-                    if(model.uploadFile.ContentLength > 15728640) //15MB i Bytes
+
+                    //var fileExt = System.IO.Path.GetExtension(model.uploadFile.FileName).Substring(1);
+                    //if (fileExt == ".jpg" || fileExt == ".png" || fileExt == ".jpeg")
+                    //{
+
+                    foreach (var file in model.uploadFiles)
                     {
-                        model.Kategorier = context.Categories.ToList();
-                        ViewBag.Error = "Den filen du valt är för stor. Din storlek: " + (model.uploadFile.ContentLength / 1024).ToString() + "KB"; ;
-                        return View(model);
+                        if (file.ContentLength > 15728640) //15MB i Bytes
+                        {
+
+
+                            model.Kategorier = context.Categories.ToList();
+                            ViewBag.Error = file.FileName + " är för stor. Storlek: " + (file.ContentLength / 1024).ToString() + "KB"; ;
+                            return View(model);
+                        }
                     }
-                    UploadFile(model.uploadFile, model.Post);
+                    UploadFile(model.uploadFiles, model.Post);
                 }
+
                 context.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -122,21 +142,23 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult UploadFile(HttpPostedFileBase fileToUpload, Post ownerPost)
+        public ActionResult UploadFile(HttpPostedFileBase[] filesToUpload, Post ownerPost)
         {
-            var newFile = new UserFile();
+            foreach (var fileToUpload in filesToUpload)
+            {
+                var newFile = new UserFile();
                 newFile.BlogPost = ownerPost;
                 newFile.BlogPostId = ownerPost.Id;
                 newFile.FileID = Guid.NewGuid();
                 newFile.FileName = fileToUpload.FileName;
+                newFile.FileExtension = System.IO.Path.GetExtension(fileToUpload.FileName).ToString();
                 using (var reader = new System.IO.BinaryReader(fileToUpload.InputStream))
                 {
                     newFile.FileBytes = reader.ReadBytes(fileToUpload.ContentLength);
                 }
                 context.UserFiles.Add(newFile);
-                context.SaveChanges();
-
-            
+            }
+            context.SaveChanges();
 
             return RedirectToAction("Index", "Home");
         }
