@@ -22,3 +22,56 @@ select,
 textarea {
     max-width: 280px;
 }
+
+/*Custom styles*/
+#div-blogEntryMain {
+    width: 80%;
+    padding: 1% 5% 1% 5%;
+    height: 100%;
+    background-color: lightblue;
+    margin: 0 0 5% 0;
+    overflow: hidden;
+    border: 1px solid cornflowerblue;
+}
+#div-blogEntryEditDelete {
+    float:right;
+}
+#div-blogCategory {
+    overflow: hidden;
+    width: 80%;
+    padding-bottom: 2%;
+}
+#div-blogCategoryFilter {
+    width: 70%;
+    float: right;
+}
+#div-blogCategoryButtons {
+    float: right;
+    width: 60%;
+}
+
+#blogText {
+    background-color: inherit;
+}
+#btn-filter {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    float: left;
+    width: 30%;
+}
+#dropdown-Filter {
+    float: left;
+    width: 70%;
+}
+
+#h4-category {
+    width: 30%;
+    margin: 0 !important;
+    float: left;
+}
+#txtarea-createpost {
+    resize: none;
+    width: 80%;
+    max-width: 80%;
+    height: 200px;
+}

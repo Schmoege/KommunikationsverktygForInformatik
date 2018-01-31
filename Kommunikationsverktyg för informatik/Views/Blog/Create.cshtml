@@ -1,10 +1,10 @@
 ﻿@model Kommunikationsverktyg_för_informatik.ViewModels.BlogPostViewModel
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Skapa";
 }
 
-<h2>Create</h2>
+<h2>Skapa inlägg</h2>
 
 
 @using (Html.BeginForm("Create", "Blog", FormMethod.Post, new { enctype="multipart/form-data" }))
@@ -12,7 +12,6 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Post</h4>
         <hr />
        
             <h5>Välj kategori eller @Html.ActionLink("Skapa", "CreateKategori")</h5>
@@ -34,10 +33,10 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="">
             @Html.LabelFor(model => model.Post.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Post.Description, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="">
+                @Html.TextAreaFor(model => model.Post.Description, new { htmlAttributes = new { @class = "form-control" }, id = "txtarea-createpost"  })
                 @Html.ValidationMessageFor(model => model.Post.Description, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -47,7 +46,7 @@
                 
                 @Html.AntiForgeryToken()
                 <p>Högsta tillåtna filstorlek: 15MB</p>
-                <input type="file" name="uploadFile" accept=".png,.jpg,.jpeg,.doc,.docx,.pdf,.ppt,.pptx,.xlsx,.xls,.xlt" />
+                <input type="file" name="uploadFiles" multiple="multiple" accept=".png,.jpg,.jpeg,.doc,.docx,.pdf,.ppt,.pptx,.xlsx,.xls,.xlt" />
                 <p class = "text-danger">@ViewBag.Error</p>
             </div>
         </div>
@@ -58,14 +57,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Skapa" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Tillbaka", "Index")
 </div>
 
 @section Scripts {

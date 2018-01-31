@@ -78,6 +78,7 @@
     <Compile Include="IdentityConfig.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\Invitation.cs" />
+    <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Kategori.cs" />
     <Compile Include="Models\Meeting.cs" />
     <Compile Include="Models\Post.cs" />
