@@ -310,6 +310,7 @@
     <Content Include="Views\Blog\Edit.cshtml" />
     <Content Include="Views\Admin\Adminpanel.cshtml" />
     <Content Include="Views\Admin\Edit.cshtml" />
+    <Content Include="Views\Blog\CreateKategori.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
