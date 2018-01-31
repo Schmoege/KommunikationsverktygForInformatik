@@ -42,7 +42,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             model.Kategorier = context.Categories.ToList();
             var postCategoriesId = filteredPosts.Select(x => x.Id);
             var categoryFiles = context.UserFiles.Where(x => postCategoriesId.Contains(x.BlogPostId)).ToList();
-            var picExtensionList = new List<string>() {".png", ".jpg", ".jpeg" };
+            var picExtensionList = new List<string>() {".png",".PNG", ".jpg",".JPG",".jpeg",".JPEG" };
             
             foreach (var post in filteredPosts)
             {
@@ -91,7 +91,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                     .Select(x => x.Id).First();
                 context.Posts.Add(model.Post);
 
-                if (model.uploadFiles != null)
+                if (model.uploadFiles[0] != null) //Den skickar alltid med någon jävel
                 {
 
                     //var fileExt = System.IO.Path.GetExtension(model.uploadFile.FileName).Substring(1);
@@ -108,8 +108,9 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                             ViewBag.Error = file.FileName + " är för stor. Storlek: " + (file.ContentLength / 1024).ToString() + "KB"; ;
                             return View(model);
                         }
+                        UploadFile(model.uploadFiles, model.Post);
                     }
-                    UploadFile(model.uploadFiles, model.Post);
+                    
                 }
 
                 context.SaveChanges();
