@@ -58,9 +58,12 @@
         </div>
         <div id="div-blogEntryAttachedFile">
 
-            @if (item.AttatchedFile != null)
+            @if (item.AttatchedDocs != null)
+            {
+                foreach (var file in item.AttatchedDocs)
                 {
-                @Html.ActionLink(item.AttatchedFile.FileName as string, "DownloadFile", "Blog", new { downloadFileId = item.AttatchedFile.FileID }, null)
+                    @Html.ActionLink(file.FileName as string, "DownloadFile", "Blog", new { downloadFileId = file.FileID }, null)
+                }
             }
 
         </div>
