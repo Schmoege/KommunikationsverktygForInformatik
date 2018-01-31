@@ -15,6 +15,7 @@ namespace DataAccess.Models
         public String FileName { get; set; }
         public Post BlogPost { get; set; }
         public int BlogPostId { get; set; }
+        public string FileExtension { get; set; }
     }
 }
 
