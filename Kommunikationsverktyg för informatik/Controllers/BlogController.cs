@@ -43,18 +43,18 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             var postCategoriesId = filteredPosts.Select(x => x.Id);
             var categoryFiles = context.UserFiles.Where(x => postCategoriesId.Contains(x.BlogPostId)).ToList();
             var picExtensionList = new List<string>() {".png",".PNG", ".jpg",".JPG",".jpeg",".JPEG" };
-            
+            var picList = categoryFiles.Where(x => picExtensionList.Contains(x.FileExtension));
             foreach (var post in filteredPosts)
             {
                 var newPostFileCombo = new PostFileCombo();
                 newPostFileCombo.AttatchedPost = post;
-                
-                var picList = categoryFiles.Where(x => picExtensionList.Contains(x.FileExtension));
-                if (picList.ToList().Count > 2)
+
+                var postPics = picList.Where(x => x.BlogPostId.Equals(post.Id));
+                if (postPics.ToList().Count >= 3)
                 {
                     newPostFileCombo.ManyPics = true;
-                    newPostFileCombo.AttatchedPics = picList.ToList();
                 }
+                newPostFileCombo.AttatchedPics = postPics.ToList();
                 newPostFileCombo.AttatchedDocs = categoryFiles.Where(x => x.BlogPostId == post.Id).Where(x => !picExtensionList.Contains(x.FileExtension)).ToList();
                 model.PostFileCombinations.Add(newPostFileCombo);
             }
@@ -93,24 +93,18 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
 
                 if (model.uploadFiles[0] != null) //Den skickar alltid med någon jävel
                 {
-
-                    //var fileExt = System.IO.Path.GetExtension(model.uploadFile.FileName).Substring(1);
-                    //if (fileExt == ".jpg" || fileExt == ".png" || fileExt == ".jpeg")
-                    //{
-
-                    foreach (var file in model.uploadFiles)
+                    foreach (var file in model.uploadFiles) //Kontrollera så att alla filer är under 15MB
                     {
                         if (file.ContentLength > 15728640) //15MB i Bytes
                         {
-
-
                             model.Kategorier = context.Categories.ToList();
                             ViewBag.Error = file.FileName + " är för stor. Storlek: " + (file.ContentLength / 1024).ToString() + "KB"; ;
                             return View(model);
                         }
-                        UploadFile(model.uploadFiles, model.Post);
+                        
                     }
-                    
+                    UploadFile(model.uploadFiles, model.Post);
+
                 }
 
                 context.SaveChanges();

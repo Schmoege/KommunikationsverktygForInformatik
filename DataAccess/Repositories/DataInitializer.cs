@@ -21,7 +21,6 @@ namespace DataAccess.Repositories
                 Email = "admin@admin.se",
                 FirstName = "Admin",
                 LastName = "Adminsson",
-                Admin = true,
                 PasswordHash = password,
                 SecurityStamp = Guid.NewGuid().ToString()
             };
@@ -31,7 +30,6 @@ namespace DataAccess.Repositories
                 Email = "Johan@user.se",
                 FirstName = "Johan",
                 LastName = "Johansson",
-                Admin = false,
                 PasswordHash = passwordHash.HashPassword("Abc123"),
                 SecurityStamp = Guid.NewGuid().ToString()
             };
@@ -41,7 +39,6 @@ namespace DataAccess.Repositories
                 Email = "Lisa@user.se",
                 FirstName = "Lisa",
                 LastName = "Einarsdottír",
-                Admin = false,
                 PasswordHash = passwordHash.HashPassword("Abc123"),
                 SecurityStamp = Guid.NewGuid().ToString()
             };
@@ -53,10 +50,19 @@ namespace DataAccess.Repositories
             {
                 Name = "user"
             };
-
+            var educationrole = new IdentityRole()
+            {
+                Name = "educationAdministrator"
+            };
+            var researchrole = new IdentityRole()
+            {
+                Name = "researchAdministrator"
+            };
             context.Users.Add(admin);
             context.Roles.Add(adminrole);
             context.Roles.Add(userrole);
+            context.Roles.Add(educationrole);
+            context.Roles.Add(researchrole);
             context.Users.Add(user1);
             context.Users.Add(user2);
 
