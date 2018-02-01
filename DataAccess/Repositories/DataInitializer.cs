@@ -30,7 +30,6 @@ namespace DataAccess.Repositories
                 Email = "Johan@user.se",
                 FirstName = "Johan",
                 LastName = "Johansson",
-                Admin = false,
                 PasswordHash = passwordHash.HashPassword("Abc123"),
                 SecurityStamp = Guid.NewGuid().ToString()
             };
@@ -40,7 +39,6 @@ namespace DataAccess.Repositories
                 Email = "Lisa@user.se",
                 FirstName = "Lisa",
                 LastName = "Einarsdottír",
-                Admin = false,
                 PasswordHash = passwordHash.HashPassword("Abc123"),
                 SecurityStamp = Guid.NewGuid().ToString()
             };
