@@ -20,15 +20,18 @@ namespace Kommunikationsverktyg_för_informatik.ViewModels
         public List<Post> Posts { get; set; }
         public string SelectCategories { set; get; }
         
-        public HttpPostedFileBase uploadFile { get; set; }
+        public HttpPostedFileBase[] uploadFiles { get; set; }
         public List<PostFileCombo> PostFileCombinations { get; set; }
         public ApplicationUser currentUser { get; set; }
+        
 
     }
     public class PostFileCombo
     {
         public Post AttatchedPost { get; set; }
-        public UserFile AttatchedFile { get; set; }
-        
+        public List<UserFile> AttatchedDocs { get; set; }
+        public List<UserFile> AttatchedPics { get; set; }
+        public bool ManyPics { get; set; }
+
     }
 }

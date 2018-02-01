@@ -10,27 +10,19 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Models
 {
-    public class Post
+    public class Comment
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [MaxLength (30)]
-        [DisplayName("Titel")]
-        public string Title { get; set; }
+        public string Content { get; set; }
 
-        [DisplayName("Innehåll")]
-        public string Description { get; set; }
+        public int PostID { get; set; }
+        public Post Post;
 
-        public DateTime Date { get; set; }
-
-        public string UserName { get; set; }
+        public string Author { get; set; }
         public ApplicationUser ApplicationUser;
 
-        public int KategoriId { get; set; }
-        public Kategori Kategori;
-
-        
     }
 }

@@ -24,6 +24,8 @@ namespace Kommunikationsverktyg_för_informatik.Models
 
         public bool Active { get; set; } = true;
 
+        public string BlogDisplayName { get { return string.Format("{0} {1}({2})", FirstName, LastName, Email);  } } 
+
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

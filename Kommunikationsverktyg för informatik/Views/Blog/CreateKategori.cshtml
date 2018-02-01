@@ -1,10 +1,10 @@
 ﻿@model DataAccess.Models.Kategori
 
 @{
-    ViewBag.Title = "CreateKategori";
+    ViewBag.Title = "Kategori";
 }
 
-<h2>CreateKategori</h2>
+<h2>Skapa kategori</h2>
 
 
 @using (Html.BeginForm())
@@ -35,14 +35,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Skapa" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Create")
+    @Html.ActionLink("Tillbaka", "Create")
 </div>
 
 @section Scripts {
