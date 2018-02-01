@@ -51,7 +51,7 @@ namespace DataAccess.Repositories
             };
         }
 
-        public ApplicationUser getUser(string email)
+        public ApplicationUser GetUser(string email)
         {
             using (var db = new DataContext())
             {
@@ -119,22 +119,47 @@ namespace DataAccess.Repositories
             using (var db = new DataContext())
             {
                 var user = db.Users.FirstOrDefault(m => m.Email.Equals(email));
-                if (user.Admin && !admin)
+                if (!admin)
                 {
                     RemoveUserFromRole(user.Email, "administrator");
                     AddUserToRole(user.Email, "user");
                 }
-                else if (!user.Admin && admin)
+                else if (admin)
                 {
                     RemoveUserFromRole(user.Email, "user");
                     AddUserToRole(user.Email, "administrator");
                 }
-                user.Admin = admin;
+               
                 db.SaveChanges();
             };
         }
 
+        public int GetRolesAssignedByRoleName(string roleName)
+        {
 
+            using (var db = new DataContext())
+            {
+                
+                var role = db.Set<IdentityRole>().FirstOrDefault(r => r.Name.Equals(roleName));
+
+                int number = db.Set<IdentityUserRole>().Count(r => r.RoleId == role.Id);
+                return number;
+            }
+        }
+
+        public bool IsUserInRole(string id, string roleName)
+        {
+            using (var db = new DataContext())
+            {
+
+                var role = db.Set<IdentityRole>().FirstOrDefault(r => r.Name.Equals(roleName)).Id;
+                
+
+                var exists = db.Set<IdentityUserRole>().FirstOrDefault(r => r.UserId.Equals(id) && r.RoleId.Equals(role));
+                if (exists != null) return true;
+                else return false;
+            }
+        }
     }
 
 }

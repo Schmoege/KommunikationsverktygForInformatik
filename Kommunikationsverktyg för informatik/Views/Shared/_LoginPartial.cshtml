@@ -2,6 +2,8 @@
 @using DataAccess.Models
 @using Microsoft.AspNet.Identity
 @using Microsoft.AspNet.Identity.EntityFramework
+@using DataAccess.Repositories
+
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
@@ -16,8 +18,9 @@
             }
            @if (currentUser != null)
            {
-            if (currentUser.Admin)
-            {
+               UserRepository ur = new UserRepository();
+               if (ur.IsUserInRole(currentUser.Id, "administrator"))
+               {
                 <li>@Html.ActionLink("Admin", "Adminpanel", "Admin", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
             }
            }

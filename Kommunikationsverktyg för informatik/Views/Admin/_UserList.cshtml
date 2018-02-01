@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<Kommunikationsverktyg_för_informatik.Models.ApplicationUser>
+@using DataAccess.Repositories
 <div class="titlediv">
     <h4>List of users:</h4>
 </div>
@@ -33,20 +34,30 @@
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @if (!item.Admin)
-                    {
+                    @{UserRepository ur = new UserRepository();
+                        if (ur.IsUserInRole(item.Id, "administrator"))
+                        {
+                            @:| Adm
+                        }
+                        if (ur.IsUserInRole(item.Id, "researchAdministrator"))
+                        {
+                            @:| ResAdm
+                        }
+                        if (ur.IsUserInRole(item.Id, "educationAdministrator"))
+                        {
+                            @:| EduAdm
+                        }
+    if (ur.IsUserInRole(item.Id, "user"))
+    {
+                           @Html.ActionLink("Deactivate User", "SetInactive", new { email = item.Email })
+                        }
 
-                        @Html.ActionLink("Deactivate User", "SetInactive", new { email = item.Email })
+
                     }
-                    @*else
-                    {
-                        | ADMIN
-                    }*@
-
-                    </td>
-                </tr>
-        }
-    }
+                </td>
+            </tr>
+                            }
+                        }
     @foreach (var item in Model)
     {
         if (!item.Active)

@@ -49,18 +49,31 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Admin = model.Admin };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName};
                 var result = await UserManager.CreateAsync(user, model.Password);
 
                 UserRepository ur = new UserRepository();
+                bool sometypeOfAdmin = false;
                 if (model.Admin)
                 {
                     ur.AddUserToRole(model.Email, "administrator");
+                    sometypeOfAdmin = true;
                 }
-                else
+                if (model.ResarchAdmin)
+                {
+                    ur.AddUserToRole(model.Email, "researchAdministrator");
+                    sometypeOfAdmin = true;
+                }
+                if (model.EducationAdmin)
+                {
+                    ur.AddUserToRole(model.Email, "educationAdministrator");
+                    sometypeOfAdmin = true;
+                }
+                if (!sometypeOfAdmin)
                 {
                     ur.AddUserToRole(model.Email, "user");
                 }
+
 
                 return RedirectToAction("Adminpanel", "Admin");
             }
@@ -108,32 +121,70 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                     var user = db.Users.FirstOrDefault(u => u.Id.Equals(id));
                     UserRepository ur = new UserRepository();
 
-                    if (!user.Id.Equals(User.Identity.GetUserId()))
+                    //if (!user.Id.Equals(User.Identity.GetUserId()))
+                    //{
+                    //    user.Admin = model.applicationUser.Admin;
+                    //}
+                    bool someTypeOfAdmin = false;
+                    if (model.Admin)
                     {
-                        user.Admin = model.applicationUser.Admin;
+                        ur.AddUserToRole(user.Email, "administrator");
+                        someTypeOfAdmin = true;
                     }
-
-                    if (!user.Admin)
+                    else
                     {
-                        ur.RemoveUserFromRole(user.Email, "administrator");
+                        if (user.Id.Equals(System.Web.HttpContext.Current.User.Identity.GetUserId()))
+                        {
+                            ur.AddUserToRole(user.Email, "administrator");
+                            someTypeOfAdmin = true;
+                        }
+                        else
+                        {
+                            ur.RemoveUserFromRole(user.Email, "administrator");
+                        }
+                    }
+                    
+                    if (model.EducationAdmin)
+                    {
+                        ur.AddUserToRole(user.Email, "educationAdministrator");
+                        someTypeOfAdmin = true;
+                    }
+                    else
+                    {
+                        ur.RemoveUserFromRole(user.Email, "educationAdministrator");
+                    }
+                    if (model.ResarchAdmin)
+                    {
+                        ur.AddUserToRole(user.Email, "researchAdministrator");
+                        someTypeOfAdmin = true;
+                    }
+                    else
+                    {
+                        ur.RemoveUserFromRole(user.Email, "researchAdministrator");
+                    }
+                    if (!someTypeOfAdmin)
+                    {
                         ur.AddUserToRole(user.Email, "user");
                     }
-                    else if (user.Admin)
+                    else
                     {
                         ur.RemoveUserFromRole(user.Email, "user");
-                        ur.AddUserToRole(user.Email, "administrator");
                     }
 
-                    user.FirstName = model.applicationUser.FirstName;
-                    user.LastName = model.applicationUser.LastName;
-                    
-                    user.Email = model.applicationUser.Email;
-                    user.UserName = model.applicationUser.Email;
+                    if (model.FirstName != null)
+                    {
+                        user.FirstName = model.FirstName;
+                    }
+                    if (model.LastName != null)
+                    {
+                        user.LastName = model.LastName;
+                    }
+                    if (model.Email != null)
+                    {
+                        user.Email = model.Email;
+                        user.UserName = model.Email;
+                    }
 
-                    
-
-
-                    
                     if (model.setPassword.NewPassword != null)
                     {
                     String userId = user.Id;
