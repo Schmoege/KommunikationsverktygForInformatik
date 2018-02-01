@@ -13,5 +13,11 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public PartialViewResult CreateMeeting()
+        {
+            return PartialView("_CreateMeetingPartial");
+        }
     }
 }

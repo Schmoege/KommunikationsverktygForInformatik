@@ -16,18 +16,15 @@ namespace DataAccess.Models
         public int MID { get; set; }
 
         [MaxLength(50)]
-        [RegularExpression(@"[A-Öa-ö0-9@#.,!?_-]+")]
         [Required]
         public string Subject { get; set; }
 
         [MaxLength(150)]
-        [RegularExpression(@"[A-Öa-ö0-9@#.,!?_-]+")]
         [DataType(DataType.MultilineText)]
         [Required]
         public string Description { get; set; }
 
         [MaxLength(20)]
-        [RegularExpression(@"[A-Öa-ö0-9@#.,!?_-]+")]
         [Required]
         public string Place { get; set; }
 
