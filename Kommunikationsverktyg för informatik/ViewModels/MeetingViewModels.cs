@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.WebPages.Html;
 
 namespace Kommunikationsverktyg_för_informatik.ViewModels
 {
@@ -22,5 +23,6 @@ namespace Kommunikationsverktyg_för_informatik.ViewModels
         [RegularExpression(@"[0-9]{2}[:][0-9]{2}", ErrorMessage = "FEL!")]
         [Required, Display(Name = "Tid")]
         public string Time { get; set; }
+        public List<string> Times { get; set; }
     }
 }
