@@ -31,19 +31,19 @@
 
 
                 <li>
-                        <a href='@Url.Action("EducationBlog", "Education")'>
-                            <img src="~/Icons/Admin/274892-24.png" alt="eduAdmin" width="32" height="32" />
-                        </a>
-                    </li>
-
-
-
-
-                <li>
-                    <a href='@Url.Action("Index", "Research")'>
-                        <img src="~/Icons/Admin/728987-32.png" alt="resAdmin" width="32" height="32" />
+                    <a href='@Url.Action("EducationBlog", "Education")'>
+                        <img src="~/Icons/Admin/274892-24.png" alt="eduAdmin" width="32" height="32" />
                     </a>
                 </li>
+
+
+
+
+                    <li>
+                        <a href='@Url.Action("Index", "Research")'>
+                            <img src="~/Icons/Admin/728987-32.png" alt="resAdmin" width="32" height="32" />
+                        </a>
+                    </li>
 
 
             }
@@ -58,7 +58,9 @@
                 </a>
             </li>
             <li>
-                @Html.ActionLink("Blogg", "Index", "Blog")
+                <a href='@Html.ActionLink("Blogg", "Index", "Blog")'>
+                    <img src="~/Icons/Blogg/Blogg.png" alt="Blogg" width="32" height="32" />
+                </a>
             </li>
             <li>
                 <text class="login">@User.Identity.GetUserName().ToString()</text>
