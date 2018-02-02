@@ -221,6 +221,7 @@
     <Compile Include="ViewModels\BlogPostViewModels.cs" />
     <Compile Include="ViewModels\DayViewModels.cs" />
     <Compile Include="ViewModels\EditViewModels.cs" />
+    <Compile Include="ViewModels\MeetingViewModels.cs" />
     <Compile Include="ViewModels\MonthViewModels.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
     <Compile Include="ViewModels\ResearchBlogViewModel.cs" />
@@ -271,6 +272,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\Meeting.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -323,6 +325,7 @@
     <Content Include="Views\Blog\CreateKategori.cshtml" />
     <Content Include="Views\Research\Index.cshtml" />
     <Content Include="Views\Research\Create.cshtml" />
+    <Content Include="Views\Meeting\_CreateMeetingPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

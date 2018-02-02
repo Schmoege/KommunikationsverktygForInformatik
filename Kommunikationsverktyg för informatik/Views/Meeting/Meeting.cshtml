@@ -1,4 +1,8 @@
 ﻿<div id="Meeting">
     @{ Html.RenderPartial("_MeetingPartial");}
 </div>
+@section Scripts
+{
+    @Scripts.Render("~/Scripts/Meeting.js")
+}
 <link href="~/Content/Meeting.css" rel="stylesheet" />
