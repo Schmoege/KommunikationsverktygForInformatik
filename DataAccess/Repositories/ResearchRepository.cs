@@ -15,7 +15,13 @@ namespace DataAccess.Repositories
         {
             using (DataContext db = new DataContext())
             {
-                return db.ResearchPosts.ToList().OrderByDescending(x => x.Date).Take(10);
+                List <ResearchPost> listOfPosts = new List<ResearchPost>();
+                listOfPosts.AddRange(db.ResearchPosts.ToList().OrderByDescending(x => x.Date).Take(10));
+                foreach (var post in listOfPosts)
+                {
+                    post.ApplicationUser = db.Users.SingleOrDefault(x => x.Id.Equals(post.UserId));
+                }
+                return listOfPosts;
             }
 
         }
@@ -24,6 +30,7 @@ namespace DataAccess.Repositories
         {
             using (DataContext db = new DataContext())
             {
+
                 db.ResearchPosts.Add(post);
                 db.SaveChanges();
             }
@@ -45,6 +52,8 @@ namespace DataAccess.Repositories
             using (DataContext db = new DataContext())
             {
                 ResearchPost post = db.ResearchPosts.SingleOrDefault(p => p.Id.Equals(id));
+                var user = db.Users.SingleOrDefault(x => x.Id.Equals(post.UserId));
+                post.ApplicationUser = user;
                 return post;
             }
         }

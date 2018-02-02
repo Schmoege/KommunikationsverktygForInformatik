@@ -25,7 +25,8 @@ namespace DataAccess.Models
 
         public DateTime Date { get; set; }
 
-        public string UserName { get; set; }
+        //[ForeignKey("Id")]
+        public string UserId { get; set; }
         public ApplicationUser ApplicationUser;
 
         public ResearchPost()

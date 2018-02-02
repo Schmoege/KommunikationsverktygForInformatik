@@ -79,7 +79,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             UserRepository ur = new UserRepository();
             try
             {
-                var User = ur.GetUser(model.Email);
+                var User = ur.GetUserByEmail(model.Email);
                 if (User.Active)
                 {
                     var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
@@ -105,7 +105,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             }
             catch
             {
-                ModelState.AddModelError("", "User doesn't user");
+                ModelState.AddModelError("", "User doesn't exist");
                 return View(model);
             }
             

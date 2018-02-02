@@ -49,7 +49,7 @@
 
             <div id="div-blogEntryUser">
 
-                <h4>@Html.DisplayFor(m => item.AttatchedPost.UserName)</h4>
+                <h4>@Html.DisplayFor(m => item.AttatchedPost.ApplicationUser.BlogDisplayName)</h4>
 
             </div>
             <div id="div-blogEntryDate">
@@ -97,7 +97,7 @@
             <div id="div-blogEntryEditDelete">
 
                 <p>
-                    @if (item.AttatchedPost.UserName == User.Identity.GetUserName() && ur.IsUserInRole(User.Identity.GetUserId(), "researchAdministrator"))
+                    @if (item.AttatchedPost.ApplicationUser.Id.Equals(User.Identity.GetUserId()) && ur.IsUserInRole(User.Identity.GetUserId(), "researchAdministrator"))
                     {
                     @Html.ActionLink("Edit", "Edit", "Research", new { Id = item.AttatchedPost.Id }, null)
                     }
