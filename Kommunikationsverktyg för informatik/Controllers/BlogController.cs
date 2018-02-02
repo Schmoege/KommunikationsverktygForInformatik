@@ -142,7 +142,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             foreach (var fileToUpload in filesToUpload)
             {
                 var newFile = new UserFile();
-                newFile.BlogPost = ownerPost;
+                //newFile.BlogPost = ownerPost;
                 newFile.BlogPostId = ownerPost.Id;
                 newFile.FileID = Guid.NewGuid();
                 newFile.FileName = fileToUpload.FileName;

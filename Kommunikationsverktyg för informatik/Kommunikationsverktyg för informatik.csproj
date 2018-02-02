@@ -211,6 +211,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MeetingController.cs" />
+    <Compile Include="Controllers\ResearchController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -222,6 +223,7 @@
     <Compile Include="ViewModels\EditViewModels.cs" />
     <Compile Include="ViewModels\MonthViewModels.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
+    <Compile Include="ViewModels\ResearchBlogViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Adminpanel.css" />
@@ -236,6 +238,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Icons\Admin\1041638-24.png" />
+    <Content Include="Icons\Admin\274892-24.png" />
+    <Content Include="Icons\Admin\728987-32.png" />
     <Content Include="Icons\Calendar\if_01_halloween-calendar_2660282.png" />
     <Content Include="Icons\Calendar\if_6_1250325.png" />
     <Content Include="Icons\Calendar\if_Calendar_2125602.png" />
@@ -316,6 +321,8 @@
     <Content Include="Views\Meeting\Meeting.cshtml" />
     <Content Include="Views\Meeting\_MeetingPartial.cshtml" />
     <Content Include="Views\Blog\CreateKategori.cshtml" />
+    <Content Include="Views\Research\Index.cshtml" />
+    <Content Include="Views\Research\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

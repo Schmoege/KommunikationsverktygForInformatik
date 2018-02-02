@@ -82,6 +82,7 @@
     <Compile Include="Models\Kategori.cs" />
     <Compile Include="Models\Meeting.cs" />
     <Compile Include="Models\Post.cs" />
+    <Compile Include="Models\ResearchPost.cs" />
     <Compile Include="Models\UserFile.cs" />
     <Compile Include="Repositories\BlogRepository.cs" />
     <Compile Include="Repositories\DataContext.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Repositories\DataInitializer.cs" />
     <Compile Include="Repositories\Initialization.cs" />
     <Compile Include="Repositories\MeetingRepository.cs" />
+    <Compile Include="Repositories\ResearchRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>

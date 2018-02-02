@@ -1,12 +1,12 @@
 ﻿@model Kommunikationsverktyg_för_informatik.ViewModels.BlogPostViewModel
-
+@using DataAccess.Repositories
 
 @{
     /**/
 
     ViewBag.Title = "Blogg";
 }
-
+@{UserRepository ur = new UserRepository();}
 <h2>Bloggflöde</h2>
 
 <p>
@@ -74,7 +74,7 @@
                 @Html.ActionLink("Edit", "Edit", "Blog", new { Id = item.AttatchedPost.Id }, null)
             }
            |
-            @if (Model.currentUser.Admin || item.AttatchedPost.UserName == Model.currentUser.UserName)
+            @if (ur.IsUserInRole(Model.currentUser.Id, "administrator") || item.AttatchedPost.UserName == Model.currentUser.UserName)
                 {
                 @Html.ActionLink("Ta bort", "BlogCancel", "Blog", new { Id = item.AttatchedPost.Id }, null)
             }
