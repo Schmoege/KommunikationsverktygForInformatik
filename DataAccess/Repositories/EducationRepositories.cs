@@ -40,5 +40,24 @@ namespace DataAccess.Repositories
             }
 
         }
+        public EducationPost GetPost(Guid id)
+        {
+            using (DataContext db = new DataContext())
+            {
+                EducationPost post = db.EducationPosts.SingleOrDefault(p => p.Id.Equals(id));
+                return post;
+            }
+        }
+        public void EditPost(EducationPost post)
+        {
+            using (DataContext db = new DataContext())
+            {
+                EducationPost postToEdit = GetPost(post.Id);
+                postToEdit.Title = post.Title;
+                postToEdit.Content = post.Content;
+                db.Entry(postToEdit).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
+        }
     }
 }

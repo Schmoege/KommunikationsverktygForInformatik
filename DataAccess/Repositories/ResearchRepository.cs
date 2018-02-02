@@ -50,12 +50,12 @@ namespace DataAccess.Repositories
         }
         public void EditPost(ResearchPost post)
         {
-            
-            ResearchPost postToEdit = GetPost(post.Id);
-            postToEdit.Title = post.Title;
-            postToEdit.Content = post.Content;
             using (DataContext db = new DataContext())
             {
+                ResearchPost postToEdit = GetPost(post.Id);
+                postToEdit.Title = post.Title;
+                postToEdit.Content = post.Content;
+                db.Entry(postToEdit).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
             }
         }

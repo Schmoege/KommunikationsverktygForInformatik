@@ -12,7 +12,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
 {
     public class EducationController : Controller
     {
-        EducationRepository rr = new EducationRepository();
+        EducationRepository er = new EducationRepository();
         // GET: Education
         [Authorize]
         public ActionResult Index()
@@ -20,7 +20,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
 
 
             EducationBlogViewModel model = new EducationBlogViewModel();
-            model.Posts = rr.GetAll().ToList();
+            model.Posts = er.GetAll().ToList();
 
 
             foreach (var post in model.Posts)
@@ -47,7 +47,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = "EducationAdministrator")]
+        [Authorize(Roles = "educationAdministrator")]
         public ActionResult Create()
         {
             return View();
@@ -55,20 +55,20 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
 
 
         [HttpPost]
-        [Authorize(Roles = "EducationAdministrator")]
+        [Authorize(Roles = "educationAdministrator")]
         public ActionResult Create(EducationBlogViewModel model)
         {
             model.Post.Date = DateTime.Now;
             model.Post.UserName = User.Identity.GetUserName();
 
-            rr.AddPost(model.Post);
+            er.AddPost(model.Post);
             if (model.uploadFiles[0] != null) //Den skickar alltid med någon jävel
             {
                 foreach (var file in model.uploadFiles) //Kontrollera så att alla filer är under 15MB
                 {
                     if (file.ContentLength > 15728640) //15MB i Bytes
                     {
-                        ViewBag.Error = file.FileName + " är för stor. Storlek: " + (file.ContentLength / 1024).ToString() + "KB"; ;
+                        ViewBag.Eeror = file.FileName + " är för stor. Storlek: " + (file.ContentLength / 1024).ToString() + "KB"; ;
                         return View(model);
                     }
 
@@ -105,7 +105,19 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         [Authorize]
         public ActionResult Delete(Guid id)
         {
-            rr.DeletePost(id);
+            er.DeletePost(id);
+            return RedirectToAction("Index");
+        }
+        public ActionResult Edit(Guid Id)
+        {
+            EducationPost post = er.GetPost(Id);
+
+            return View(post);
+        }
+        [HttpPost]
+        public ActionResult Edit(EducationPost postInfo)
+        {
+            er.EditPost(postInfo);
             return RedirectToAction("Index");
         }
     }

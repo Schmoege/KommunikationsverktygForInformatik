@@ -117,12 +117,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         [HttpPost]
         public ActionResult Edit(ResearchPost postInfo)
         {
-            
-            ResearchPost postToEdit = rr.GetPost(postInfo.Id);
-            postToEdit.Title = postInfo.Title;
-            postToEdit.Content = postInfo.Content;
-            //context.Entry(postToEdit).State = System.Data.Entity.EntityState.Modified;
-
+            rr.EditPost(postInfo);
             return RedirectToAction("Index");
         }
     }
