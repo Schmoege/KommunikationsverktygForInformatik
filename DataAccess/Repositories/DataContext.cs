@@ -23,5 +23,6 @@ namespace DataAccess.Models
         public DbSet<Meeting> Meetings { get; set; }
         public DbSet<Invitation> Invitations { get; set; }
         public DbSet<ResearchPost> ResearchPosts { get; set; }
+        public DbSet<EducationPost> EducationPosts { get; set; }
     }
 }

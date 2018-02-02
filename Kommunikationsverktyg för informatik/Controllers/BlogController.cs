@@ -167,7 +167,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             return File(fileToDownload.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileToDownload.FileName);
         }
 
-        public ActionResult Edit(int Id)
+        public ActionResult Edit(Guid Id)
         {
             Post post = context.Posts.SingleOrDefault(x => x.Id == Id);
 
@@ -185,7 +185,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult BlogCancel (int id)
+        public ActionResult BlogCancel (Guid id)
         {
             Post postDelete = context.Posts.Find(id);
             context.Posts.Remove(postDelete);

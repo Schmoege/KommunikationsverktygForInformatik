@@ -10,30 +10,30 @@ using DataAccess.Models;
 
 namespace Kommunikationsverktyg_för_informatik.Controllers
 {
-    public class ResearchController : Controller
+    public class EducationController : Controller
     {
-        ResearchRepository rr = new ResearchRepository();
-        // GET: Research
+        EducationRepository rr = new EducationRepository();
+        // GET: Education
         [Authorize]
         public ActionResult Index()
         {
-            
 
-            ResearchBlogViewModel model = new ResearchBlogViewModel();
+
+            EducationBlogViewModel model = new EducationBlogViewModel();
             model.Posts = rr.GetAll().ToList();
-            
 
-            foreach(var post in model.Posts)
+
+            foreach (var post in model.Posts)
             {
-                ResearchPostFileCombo rpfc = new ResearchPostFileCombo()
+                EducationPostFileCombo rpfc = new EducationPostFileCombo()
                 {
                     AttatchedPost = post
                 };
                 using (DataContext context = new DataContext())
                 {
-                    ResearchPost rp = new ResearchPost();
-                    var ResearchPostId = context.ResearchPosts.Select(r => r.Id);
-                    var categoryFiles = context.UserFiles.Where(x => ResearchPostId.Contains(x.BlogPostId)).ToList();
+                    EducationPost rp = new EducationPost();
+                    var EducationPostId = context.EducationPosts.Select(r => r.Id);
+                    var categoryFiles = context.UserFiles.Where(x => EducationPostId.Contains(x.BlogPostId)).ToList();
                     var picExtensionList = new List<string>() { ".png", ".PNG", ".jpg", ".JPG", ".jpeg", ".JPEG" };
                     var picList = categoryFiles.Where(x => picExtensionList.Contains(x.FileExtension)).Where(x => x.BlogPostId == post.Id);
                     rpfc.AttatchedPics = picList.ToList();
@@ -43,20 +43,20 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                 }
                 model.PostFileCombinations.Add(rpfc);
             }
-            
-                return View(model);
+
+            return View(model);
         }
 
-        [Authorize(Roles = "researchAdministrator")]
+        [Authorize(Roles = "EducationAdministrator")]
         public ActionResult Create()
         {
             return View();
         }
-        
-        
+
+
         [HttpPost]
-        [Authorize(Roles = "researchAdministrator")]
-        public ActionResult Create(ResearchBlogViewModel model)
+        [Authorize(Roles = "EducationAdministrator")]
+        public ActionResult Create(EducationBlogViewModel model)
         {
             model.Post.Date = DateTime.Now;
             model.Post.UserName = User.Identity.GetUserName();
@@ -80,7 +80,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult UploadFile(HttpPostedFileBase[] filesToUpload, ResearchPost ownerPost)
+        public ActionResult UploadFile(HttpPostedFileBase[] filesToUpload, EducationPost ownerPost)
         {
             using (DataContext context = new DataContext())
             {
@@ -108,23 +108,6 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             rr.DeletePost(id);
             return RedirectToAction("Index");
         }
-        public ActionResult Edit(Guid Id)
-        {
-            ResearchPost post = rr.GetPost(Id);
-
-            return View(post);
-        }
-        [HttpPost]
-        public ActionResult Edit(ResearchPost postInfo)
-        {
-            
-            ResearchPost postToEdit = rr.GetPost(postInfo.Id);
-            postToEdit.Title = postInfo.Title;
-            postToEdit.Content = postInfo.Content;
-            //context.Entry(postToEdit).State = System.Data.Entity.EntityState.Modified;
-
-            return RedirectToAction("Index");
-        }
     }
-    
+
 }

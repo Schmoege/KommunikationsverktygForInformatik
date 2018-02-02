@@ -13,8 +13,7 @@ namespace DataAccess.Models
         public Guid FileID { get; set; }
         public byte[] FileBytes { get; set; }
         public String FileName { get; set; }
-        //public Post BlogPost { get; set; }
-        public int BlogPostId { get; set; }
+        public Guid BlogPostId { get; set; }
         public string FileExtension { get; set; }
     }
 }

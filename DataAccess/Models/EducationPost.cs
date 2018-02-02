@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Models
 {
-    public class ResearchPost
+    public class EducationPost
     {
         [Key]
         [Required]
@@ -28,10 +28,10 @@ namespace DataAccess.Models
         public string UserName { get; set; }
         public ApplicationUser ApplicationUser;
 
-        public ResearchPost()
+        public EducationPost()
         {
             Id = Guid.NewGuid();
-     
+
         }
     }
 }

@@ -13,8 +13,8 @@ namespace DataAccess.Models
     public class Post
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        [Required]
+        public Guid Id { get; set; }
 
         [MaxLength (30)]
         [DisplayName("Titel")]
@@ -28,9 +28,13 @@ namespace DataAccess.Models
         public string UserName { get; set; }
         public ApplicationUser ApplicationUser;
 
-        public int KategoriId { get; set; }
+        public Guid KategoriId { get; set; }
         public Kategori Kategori;
 
+        public Post()
+        {     
+                Id = Guid.NewGuid();
+        }
         
     }
 }

@@ -208,6 +208,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
+    <Compile Include="Controllers\EducationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MeetingController.cs" />
@@ -221,6 +222,7 @@
     <Compile Include="ViewModels\BlogPostViewModels.cs" />
     <Compile Include="ViewModels\DayViewModels.cs" />
     <Compile Include="ViewModels\EditViewModels.cs" />
+    <Compile Include="ViewModels\EducationBlogViewModel.cs" />
     <Compile Include="ViewModels\MeetingViewModels.cs" />
     <Compile Include="ViewModels\MonthViewModels.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
@@ -326,6 +328,9 @@
     <Content Include="Views\Research\Index.cshtml" />
     <Content Include="Views\Research\Create.cshtml" />
     <Content Include="Views\Meeting\_CreateMeetingPartial.cshtml" />
+    <Content Include="Views\Education\Index.cshtml" />
+    <Content Include="Views\Education\Create.cshtml" />
+    <Content Include="Views\Research\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

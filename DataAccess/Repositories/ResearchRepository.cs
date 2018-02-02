@@ -29,7 +29,7 @@ namespace DataAccess.Repositories
             }
         }
 
-        public void DeletePost(int id)
+        public void DeletePost(Guid id)
         {
             using (DataContext context = new DataContext())
             {
@@ -39,6 +39,25 @@ namespace DataAccess.Repositories
 
             }
 
+        }
+        public ResearchPost GetPost(Guid id)
+        {
+            using (DataContext db = new DataContext())
+            {
+                ResearchPost post = db.ResearchPosts.SingleOrDefault(p => p.Id.Equals(id));
+                return post;
+            }
+        }
+        public void EditPost(ResearchPost post)
+        {
+            
+            ResearchPost postToEdit = GetPost(post.Id);
+            postToEdit.Title = post.Title;
+            postToEdit.Content = post.Content;
+            using (DataContext db = new DataContext())
+            {
+                db.SaveChanges();
+            }
         }
     }
 }
