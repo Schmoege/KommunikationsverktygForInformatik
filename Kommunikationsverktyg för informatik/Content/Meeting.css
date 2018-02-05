@@ -23,7 +23,7 @@
     width: 220px;
 }
 
-#createMeetingButton
+#buttons
 {
     float: right;
 }
@@ -33,19 +33,25 @@
     align-items: baseline;
 }
 
-.red
-{
-    /*border: 2px solid red;*/
-}
-
 #Meeting #creatMeetingTable
 {
     width: 100%;
 }
 
-.createMeeting
+#Meeting #creatMeetingTable td
+{
+    height: 60px;
+}
+
+#Meeting #creatMeetingTable input
+{
+    float: right;
+}
+
+.createMeetingButtons
 {
     margin-left: 20px;
+    margin-bottom: 40px;
     color: black;
     background-color: lightgrey;
     height: 70px;
@@ -58,7 +64,26 @@
     text-align:center;
 }
 
-.createMeeting:hover
+.createMeetingButtons:hover
+{
+    cursor: pointer;
+}
+
+#addTime
+{
+    background-color: lightgrey;
+    text-align: center;
+    width: 100%;
+    height: 40px;
+    padding-top: 5px;
+    box-shadow: 2px 2px 2px #888888;
+    border: 5px solid lightgrey;
+    border-radius: 10px;
+    color: black;
+    font-weight: bold;
+}
+
+#addTime:hover
 {
     cursor: pointer;
 }

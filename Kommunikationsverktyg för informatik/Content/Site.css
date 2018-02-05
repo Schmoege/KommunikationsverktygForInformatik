@@ -24,14 +24,16 @@ textarea {
 }
 
 /*Custom styles*/
-#div-blogEntryMain {
+.div-blogEntryMain {
     width: 80%;
     padding: 1% 5% 1% 5%;
     height: 100%;
     background-color: lightblue;
-    margin: 0 0 5% 0;
     overflow: hidden;
     border: 1px solid cornflowerblue;
+}
+.margin5 {
+    margin: 0 0 5% 0;
 }
 #div-blogEntryEditDelete {
     float:right;
@@ -54,8 +56,8 @@ textarea {
     background-color: inherit;
 }
 #btn-filter {
-    padding-top: 0px;
-    padding-bottom: 0px;
+    padding-top: 0;
+    padding-bottom: 0;
     float: left;
     width: 30%;
 }
@@ -66,7 +68,7 @@ textarea {
 
 #h4-category {
     width: 30%;
-    margin: 0 !important;
+    margin: 0;
     float: left;
 }
 #txtarea-createpost {
@@ -75,21 +77,48 @@ textarea {
     max-width: 80%;
     height: 200px;
 }
-.login {
-    color: cornflowerblue;
-    text-align: center;
-    vertical-align: middle;
-    display: table-cell;
+.btnComment {
+    float: left;
+    margin: 10px 0 10px 0;
 }
-.loginCell {
-    display: table;
+.inputComment {
+    min-width: 40%;
+    margin: 10px 5px 10px 1%;
+    float: left;    
+    resize: none;
+    overflow: hidden;
 }
-
-/*#admPanelIcon{
-    background-image: url(~/Icons/Menu/AdmIcon.png);
-}*/
-
-/*#adminPanelIcon:hover 
-{
-    background-image: url(~/Icons/Menu/AdmIconHover.png);
-}*/
+.blogComments {
+    background-color : gainsboro;
+    width : 100%;
+    float : left;
+    height : 100%;
+    border-radius: 5px;
+}
+.commentMain {
+    width : 97%;
+    border-radius : 5px;
+    float : left;
+    background-color : antiquewhite;
+    margin: 10px;
+}
+.commentContent {
+    word-break : break-all;
+    margin: 5px 5px 5px 5px;
+}
+.commentDate {
+    font-size: small;
+    margin: 5px 5px 5px 5px;
+}
+.commentAuthor {
+    margin: 5px 5px 5px 5px;
+}
+.linkComment {
+    border: 1px solid blue;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: aliceblue;
+}
+#div-blogEntryAttachedFile {
+    margin-bottom: 10px;
+}
