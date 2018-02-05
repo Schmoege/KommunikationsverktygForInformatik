@@ -15,12 +15,16 @@ namespace DataAccess.Repositories
         {
             using (DataContext db = new DataContext())
             {
-                return db.EducationPosts.ToList().OrderByDescending(x => x.Date).Take(10);
+                List<EducationPost> listOfPosts = new List<EducationPost>();
+                listOfPosts.AddRange(db.EducationPosts.ToList().OrderByDescending(x => x.Date).Take(10));
+                foreach (var post in listOfPosts)
+                {
+                    post.ApplicationUser = db.Users.SingleOrDefault(x => x.Id.Equals(post.UserId));
+                }
+                return listOfPosts;
             }
-
         }
-
-        public void AddPost(EducationPost post)
+            public void AddPost(EducationPost post)
         {
             using (DataContext db = new DataContext())
             {

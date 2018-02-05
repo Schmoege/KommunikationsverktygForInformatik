@@ -8,7 +8,7 @@
     ViewBag.Title = "education Blog";
 }
 
-<h2>Bloggflöde</h2>
+<h2>Education Blog</h2>
 @{UserRepository ur = new UserRepository();
     if (ur.IsUserInRole(User.Identity.GetUserId(), "educationAdministrator"))
     {
@@ -42,7 +42,7 @@
 
         <div id="div-blogEntryUser">
 
-            <h4>@Html.DisplayFor(m => item.AttatchedPost.UserName)</h4>
+            <h4>@Html.DisplayFor(m => item.AttatchedPost.ApplicationUser.BlogDisplayName)</h4>
 
         </div>
         <div id="div-blogEntryDate">
@@ -75,7 +75,7 @@
         <div id="div-blogEntryEditDelete">
 
             <p>
-                @if (item.AttatchedPost.UserName == User.Identity.GetUserName() && ur.IsUserInRole(User.Identity.GetUserId(), "educationAdministrator"))
+                @if (item.AttatchedPost.ApplicationUser.Id == User.Identity.GetUserId() && ur.IsUserInRole(User.Identity.GetUserId(), "educationAdministrator"))
                 {
                     @Html.ActionLink("Edit", "Edit", "Education", new { Id = item.AttatchedPost.Id }, null)
                 }

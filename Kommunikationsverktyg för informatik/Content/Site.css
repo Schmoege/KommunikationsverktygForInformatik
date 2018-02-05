@@ -78,4 +78,18 @@ textarea {
 .login {
     color: cornflowerblue;
     text-align: center;
+    vertical-align: middle;
+    display: table-cell;
 }
+.loginCell {
+    display: table;
+}
+
+/*#admPanelIcon{
+    background-image: url(~/Icons/Menu/AdmIcon.png);
+}*/
+
+/*#adminPanelIcon:hover 
+{
+    background-image: url(~/Icons/Menu/AdmIconHover.png);
+}*/

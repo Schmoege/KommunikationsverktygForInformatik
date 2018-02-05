@@ -59,7 +59,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         public ActionResult Create(EducationBlogViewModel model)
         {
             model.Post.Date = DateTime.Now;
-            model.Post.UserName = User.Identity.GetUserName();
+            model.Post.UserId = User.Identity.GetUserId();
 
             er.AddPost(model.Post);
             if (model.uploadFiles[0] != null) //Den skickar alltid med någon jävel
