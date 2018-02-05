@@ -1,8 +1,12 @@
-﻿using System;
+﻿using Kommunikationsverktyg_för_informatik.ViewModels;
+using DataAccess.Repositories;
+using DataAccess.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Collections;
 
 namespace Kommunikationsverktyg_för_informatik.Controllers
 {
@@ -17,7 +21,27 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         [HttpGet]
         public PartialViewResult CreateMeeting()
         {
-            return PartialView("_CreateMeetingPartial");
+            UserRepository ur = new UserRepository();
+            var list = ur.GetUserList();
+            List<string> names = new List<string>();
+            List<string> IDs = new List<string>();
+            foreach(var v in list)
+            {
+                names.Add(v.LastName + ", " + v.FirstName);
+                IDs.Add(v.Id);
+            }
+            var model = new MeetingViewModels
+            {
+                Date = "",
+                Place = "",
+                Time = "",
+                Subject = "",
+                Times = names,
+                Names = names,
+                IDs = IDs
+            };
+            
+            return PartialView("_CreateMeetingPartial", Tuple.Create(model, new DateTime()));
         }
 
         [HttpGet]

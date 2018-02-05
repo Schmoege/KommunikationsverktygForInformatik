@@ -68,6 +68,23 @@ namespace DataAccess.Repositories
             };
         }
 
+        public List<ApplicationUser> GetUserList()
+        {
+            using (var db = new DataContext())
+            {
+                var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+                try
+                {
+                    List<ApplicationUser> userList = UserManager.Users.ToList<ApplicationUser>();
+                    return userList;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
+
         public void SetActive(string email)
         {
             using (var db = new DataContext())

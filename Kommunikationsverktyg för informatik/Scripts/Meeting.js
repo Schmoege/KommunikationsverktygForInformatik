@@ -4,6 +4,7 @@
     var validPlace = false;
     var validDate = false;
     var validTimes = false;
+    var validUsers = false;
 
     $(document).on('click', '#goToCreateMeeting', function ()
     {
@@ -26,17 +27,44 @@
     $(document).on('click', '#createMeeting', function ()
     {
         isFormValid();
-        if(validSubject && validPlace && validDate && validTimes)
+        if(validSubject && validPlace && validDate && validTimes && validUsers)
         {
             alert("yay");
             validSubject = false;
             validDate = false;
             validPlace = false;
             validTimes = false;
+            validUsers = false;
         }
         else
         {
             alert("Nay");
+        }
+    });
+
+    $(document).on('click', '.add', function ()
+    {
+        $("#selectedUserList ul #empty").remove();
+        $(this).toggleClass("add remove");
+        var selected = $(this);
+        $("#selectedUserList ul").append($(selected).clone());
+        $(selected).remove();
+        if($("#userList ul li").length == 0)
+        {
+            $("#userList ul").html('<li id="empty" class="scrollItem">Empty</li>');
+        }
+    });
+
+    $(document).on('click', '.remove', function ()
+    {
+        $("#userList ul #empty").remove();
+        $(this).toggleClass("add remove");
+        var selected = $(this);
+        $("#userList ul").append($(selected).clone());
+        $(selected).remove();
+        if ($("#selectedUserList ul li").length == 0)
+        {
+            $("#selectedUserList ul").html('<li id="empty" class="scrollItem">Empty</li>');
         }
     });
 
@@ -57,6 +85,10 @@
         if ($("#timeList li").length != 0)
         {
             validTimes = true;
+        }
+        if(!$("#selectedUserList ul #empty").length)
+        {
+            validUsers = true;
         }
     }
 
