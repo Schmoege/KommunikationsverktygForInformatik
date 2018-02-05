@@ -2,6 +2,8 @@
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
 <div id="createNewMeeting">
+    @using (Html.BeginForm("", "", FormMethod.Post))
+    {
     <div id="superDiv" class="elements events">
         <div id="userList" class="element">
             <ul class="scrollList">
@@ -25,11 +27,20 @@
             <table>
                 <tr>
                     <td>
+                        @Html.LabelFor(model => model.Item1.Subject)
+                        @Html.TextBoxFor(model => model.Item1.Subject)
+                    </td>
+                    <td>
+                        @Html.ValidationMessageFor(model => model.Item1.Subject, null, new { @id = "SubjectVal"})
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                         @Html.LabelFor(model => model.Item1.Place)
                         @Html.TextBoxFor(model => model.Item1.Place)
                     </td>
                     <td>
-                        @Html.ValidationMessageFor(model => model.Item1.Place)
+                        @Html.ValidationMessageFor(model => model.Item1.Place, null, new { @id = "PlaceVal" })
                     </td>
                 </tr>
                 <tr>
@@ -38,7 +49,7 @@
                         @Html.TextBoxFor(model => model.Item1.Date, new { @placeholder = "YYYY-MM-DD", @maxlength = 10})
                     </td>
                     <td>
-                        @Html.ValidationMessageFor(model => model.Item1.Date)
+                        @Html.ValidationMessageFor(model => model.Item1.Date, null, new { @id = "DateVal" })
                     </td>
                 </tr>
                 <tr>
@@ -63,8 +74,10 @@
                 </tr>
             </table>
         </div>
-        <div id="createMeetingButton" class="element">
-            <div id="createMeeting" class="createMeeting">Skapa Möte</div>
+        <div id="buttons" class="element">
+            <div id="createMeeting" class="createMeetingButtons">Skapa Möte</div>
+            <div id="cancelMeeting" class="createMeetingButtons">Avbryt</div>
         </div>
-    </div>   
+    </div>
+    }   
 </div>

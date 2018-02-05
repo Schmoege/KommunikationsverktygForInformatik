@@ -1,6 +1,11 @@
 ﻿$(document).ready(function ()
 {
-    $("#goToCreateMeeting").on('click', function ()
+    var validSubject = false;
+    var validPlace = false;
+    var validDate = false;
+    var validTimes = false;
+
+    $(document).on('click', '#goToCreateMeeting', function ()
     {
         $.ajax({
             url: '/Meeting/CreateMeeting',
@@ -18,12 +23,65 @@
         });
     });
 
+    $(document).on('click', '#createMeeting', function ()
+    {
+        isFormValid();
+        if(validSubject && validPlace && validDate && validTimes)
+        {
+            alert("yay");
+            validSubject = false;
+            validDate = false;
+            validPlace = false;
+            validTimes = false;
+        }
+        else
+        {
+            alert("Nay");
+        }
+    });
+
+    function isFormValid()
+    {
+        if(!$("#Item1_Subject").val() == "" && $("#SubjectVal").html() == "")
+        {
+            validSubject = true;
+        }
+        if (!$("#Item1_Place").val() == "" && $("#PlaceVal").html() == "")
+        {
+            validPlace = true;
+        }
+        if (!$("#Item1_Date").val() == "" && $("#DateVal").html() == "")
+        {
+            validDate = true;
+        }
+        if ($("#timeList li").length != 0)
+        {
+            validTimes = true;
+        }
+    }
+
+    $(document).on('click', '#cancelMeeting', function ()
+    {
+        $.ajax({
+            url: '/Meeting/ViewMeetings',
+            type: "GET",
+            success: function (data) {
+                $("#Meeting").html(data);
+            },
+            error: function (xhr, status, error) {
+                var msg = "Response failed with status: " + status + "</br>"
+                + " Error: " + error;
+                $("#Meeting").html(msg);
+            }
+        });
+    });
+
     $(document).on('click', '#addTime', function ()
     {
         var time = $('#Item1_Time').val();
         if (!time.match(/[0-9]{2}[:][0-9]{2}$/))
         {
-            alert("Inga bokstäver i tiden, tack.");
+            alert("Följ formatet för tid (hh:mm), tack.");
             return false;
         }
         else
@@ -48,8 +106,6 @@
 
     $(document).on('keydown keyup', '#Item1_Date' , function (event)
     {
-        $("#times").push("test");
-        alert($("#times").val());
         var inputLength = event.target.value.length;
         if (event.keyCode != 8)
         {
