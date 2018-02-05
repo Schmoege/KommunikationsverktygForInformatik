@@ -89,9 +89,15 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
+                if (!ModelState.IsValid || model.SelectedCategory == null)
                 {
-                    return View();
+                    model.Kategorier = context.Categories.ToList();
+                    ViewBag.CategoryError = "Du måste skapa en kategori för att kunna lägga upp ett inlägg";
+                    return View(model);
+                }
+                else
+                {
+                    ViewBag.CategoryError = ""; //Om du lägger till kategori men inte ngn fil så ska du inte få fel här
                 }
                 model.Post.Date = DateTime.Now;
                 model.Post.User = User.Identity.GetUserId(); 
@@ -107,7 +113,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                         if (file.ContentLength > 15728640) //15MB i Bytes
                         {
                             model.Kategorier = context.Categories.ToList();
-                            ViewBag.Error = file.FileName + " är för stor. Storlek: " + (file.ContentLength / 1024).ToString() + "KB"; ;
+                            ViewBag.FileError = file.FileName + " är för stor. Storlek: " + (file.ContentLength / 1024).ToString() + "KB"; ;
                             return View(model);
                         }
                         

@@ -20,7 +20,7 @@
                 @Html.LabelFor(model => model.Kategorier, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.DropDownListFor(model => model.SelectedCategory, new SelectList(Model.Kategorier.Select(x => x.Namn)))
-
+                    <p class="text-danger">@ViewBag.CategoryError</p>
                 </div>
             </div>
         
@@ -47,7 +47,7 @@
                 @Html.AntiForgeryToken()
                 <p>Högsta tillåtna filstorlek: 15MB</p>
                 <input type="file" name="uploadFiles" multiple="multiple" accept=".png,.jpg,.jpeg,.doc,.docx,.pdf,.ppt,.pptx,.xlsx,.xls,.xlt" />
-                <p class = "text-danger">@ViewBag.Error</p>
+                <p class = "text-danger">@ViewBag.FileError</p>
             </div>
         </div>
         

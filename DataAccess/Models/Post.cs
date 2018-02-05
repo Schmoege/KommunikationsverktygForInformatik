@@ -28,6 +28,7 @@ namespace DataAccess.Models
         public string User { get; set; }
         public ApplicationUser ApplicationUser;
 
+        [Required]
         public Guid KategoriId { get; set; }
         public Kategori Kategori;
 
