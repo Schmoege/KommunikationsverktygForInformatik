@@ -122,3 +122,12 @@ textarea {
 #div-blogEntryAttachedFile {
     margin-bottom: 10px;
 }
+.login {
+    color: azure;
+    text-align: center;
+}
+
+.smallPic {
+    height: 100px;
+    width: 100px
+}

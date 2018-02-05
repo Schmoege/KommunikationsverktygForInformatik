@@ -40,6 +40,10 @@ namespace Kommunikationsverktyg_för_informatik.Controllers.Api
         [HttpPost]
         public PostCommentViewModels PostComment(PostCommentViewModels model)
         {
+            if(model.Content.Length < 1)
+            {
+                return model;
+            }
             Comment newComment = new Comment
             {
                 Author = model.Author,
