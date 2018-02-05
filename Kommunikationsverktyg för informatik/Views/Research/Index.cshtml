@@ -8,12 +8,12 @@
     ViewBag.Title = "Research Blog";
 }
 
-@*<style>
+<style>
     .smallPic {
         height: 100px;
         width: 100px
     }
-</style>*@
+</style>
 
 <h2>Research Blog</h2>
 @{UserRepository ur = new UserRepository();
@@ -22,9 +22,9 @@
         <p>
             @Html.ActionLink("Skapa inlägg", "Create")
         </p>
-        }
     }
-    @*@using (Html.BeginForm("Index", "Blog"))
+}
+@*@using (Html.BeginForm("Index", "Blog"))
     {
         <div id="div-blogCategory">
                 <h4 id="h4-category">Sortera efter kategori</h4>
@@ -42,11 +42,11 @@
 
 
     }*@
-    @foreach (var item in Model.PostFileCombinations)
-    {
+@foreach (var item in Model.PostFileCombinations)
+{
 
-        <div id="div-blogEntryMain">
-
+    <div id="mainContainer">
+        <div id="@item.AttatchedPost.Id" class="margin5 div-blogEntryMain">
             <div id="div-blogEntryUser">
 
                 <h4>@Html.DisplayFor(m => item.AttatchedPost.ApplicationUser.BlogDisplayName)</h4>
@@ -72,12 +72,12 @@
                 @if (item.AttatchedDocs.Count > 0)
                 {
                     <p>Bifogade filer:</p>
-                    <ul>
-                        @foreach (var file in item.AttatchedDocs)
+                        <ul>
+                            @foreach (var file in item.AttatchedDocs)
                     {
-                            <li>@Html.ActionLink(file.FileName as string, "DownloadFile", "Blog", new { downloadFileId = file.FileID }, null)</li>
-                        }
-                    </ul>
+                                <li>@Html.ActionLink(file.FileName as string, "DownloadFile", "Blog", new { downloadFileId = file.FileID }, null)</li>
+                            }
+                        </ul>
                 }
             </div>
             <div id="div-blogEntryAttachedFile">
@@ -99,7 +99,7 @@
                 <p>
                     @if (item.AttatchedPost.ApplicationUser.Id.Equals(User.Identity.GetUserId()) && ur.IsUserInRole(User.Identity.GetUserId(), "researchAdministrator"))
                     {
-                    @Html.ActionLink("Edit", "Edit", "Research", new { Id = item.AttatchedPost.Id }, null)
+                        @Html.ActionLink("Edit", "Edit", "Research", new { Id = item.AttatchedPost.Id }, null)
                     }
                     |
 
@@ -107,10 +107,12 @@
                     {
                         @Html.ActionLink("Ta bort", "Delete", "Research", new { Id = item.AttatchedPost.Id }, null)
                     }
-                    
+
                 </p>
 
             </div>
         </div>
-    }
-<link href="~/Content/Site.css" rel="stylesheet" />
+
+    </div>
+}
+<link href="~/Content/blogg.css" rel="stylesheet" />
