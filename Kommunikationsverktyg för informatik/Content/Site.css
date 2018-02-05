@@ -56,8 +56,8 @@ textarea {
     background-color: inherit;
 }
 #btn-filter {
-    padding-top: 0px;
-    padding-bottom: 0px;
+    padding-top: 0;
+    padding-bottom: 0;
     float: left;
     width: 30%;
 }
@@ -68,7 +68,7 @@ textarea {
 
 #h4-category {
     width: 30%;
-    margin: 0 !important;
+    margin: 0;
     float: left;
 }
 #txtarea-createpost {
@@ -79,7 +79,7 @@ textarea {
 }
 .btnComment {
     float: left;
-    margin: 10px 0px 10px 0px;
+    margin: 10px 0 10px 0;
 }
 .inputComment {
     min-width: 40%;
