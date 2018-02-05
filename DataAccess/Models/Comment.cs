@@ -16,6 +16,8 @@ namespace DataAccess.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        public DateTime PostedAt { get; set; }
+
         public string Content { get; set; }
 
         public int PostID { get; set; }
@@ -23,6 +25,5 @@ namespace DataAccess.Models
 
         public string Author { get; set; }
         public ApplicationUser ApplicationUser;
-
     }
 }

@@ -206,6 +206,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\Api\CommentController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -219,8 +220,10 @@
     <Compile Include="ViewModels\BlogPostViewModels.cs" />
     <Compile Include="ViewModels\DayViewModels.cs" />
     <Compile Include="ViewModels\EditViewModels.cs" />
+    <Compile Include="ViewModels\GetCommentViewModels.cs" />
     <Compile Include="ViewModels\MonthViewModels.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
+    <Compile Include="ViewModels\PostCommentViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Adminpanel.css" />
@@ -249,6 +252,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Calendar.js" />
     <Content Include="Scripts\CommentMore.js" />
+    <Content Include="Scripts\GetComments.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />

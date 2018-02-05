@@ -24,14 +24,16 @@ textarea {
 }
 
 /*Custom styles*/
-#div-blogEntryMain {
+.div-blogEntryMain {
     width: 80%;
     padding: 1% 5% 1% 5%;
     height: 100%;
     background-color: lightblue;
-    margin: 0 0 5% 0;
     overflow: hidden;
     border: 1px solid cornflowerblue;
+}
+.margin5 {
+    margin: 0 0 5% 0;
 }
 #div-blogEntryEditDelete {
     float:right;
@@ -74,4 +76,40 @@ textarea {
     width: 80%;
     max-width: 80%;
     height: 200px;
+}
+.btnComment {
+    float: left;
+    margin: 10px 0px 10px 0px;
+}
+.inputComment {
+    min-width: 40%;
+    margin: 10px 5px 10px 1%;
+    float: left;    
+    resize: none;
+    overflow: hidden;
+}
+.blogComments {
+    background-color : gainsboro;
+    width : 100%;
+    float : left;
+    height : 100%;
+    border-radius: 5px;
+}
+.commentMain {
+    width : 97%;
+    border-radius : 5px;
+    float : left;
+    background-color : antiquewhite;
+    margin: 10px;
+}
+.commentContent {
+    word-break : break-all;
+    margin: 5px 5px 5px 5px;
+}
+.commentDate {
+    font-size: small;
+    margin: 5px 5px 5px 5px;
+}
+.commentAuthor {
+    margin: 5px 5px 5px 5px;
 }

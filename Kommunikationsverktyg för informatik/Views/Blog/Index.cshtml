@@ -15,7 +15,7 @@
 @using (Html.BeginForm("Index", "Blog"))
 {
     <div id="div-blogCategory">
-            <h4 id="h4-category">Sortera efter kategori</h4>
+        <h4 id="h4-category">Sortera efter kategori</h4>
         <div id="div-blogCategoryFilter">
             <div id="div-blogCategoryButtons">
                 @Html.DropDownListFor(model => model.SelectCategories, new SelectList(Model.Kategorier.Select(x => x.Namn)), new { id = "dropdown-Filter" })
@@ -27,69 +27,71 @@
 
 
 
-       
+
 
 }
 @foreach (var item in Model.PostFileCombinations)
 {
+    <div id="mainContainer">
+        <div id="@item.AttatchedPost.Id" class="margin5 div-blogEntryMain">
 
-    <div id="div-blogEntryMain">
+            <div id="div-blogEntryUser">
 
-        <div id="div-blogEntryUser">
+                <h4>@Html.DisplayFor(m => m.currentUser.BlogDisplayName)</h4>
 
-            <h4>@Html.DisplayFor(m => m.currentUser.BlogDisplayName)</h4>
+            </div>
+            <div id="div-blogEntryDate">
 
-        </div>
-        <div id="div-blogEntryDate">
+                <h5>@Html.DisplayFor(modelItem => item.AttatchedPost.Date)</h5>
 
-            <h5>@Html.DisplayFor(modelItem => item.AttatchedPost.Date)</h5>
+            </div>
+            <div id="div-blogEntryTitle">
 
-        </div>
-        <div id="div-blogEntryTitle">
+                <h4>@Html.DisplayFor(modelItem => item.AttatchedPost.Title)</h4>
 
-            <h4>@Html.DisplayFor(modelItem => item.AttatchedPost.Title)</h4>
+            </div>
+            <div id="div-blogEntryDescription">
 
-        </div>
-        <div id="div-blogEntryDescription">
 
-            
-            <h5 id="blogText" class="comment more">@Html.DisplayFor(modelItem => item.AttatchedPost.Description)</h5>
-            
-        </div>
-        <div id="div-blogEntryAttachedFile">
+                <h5 id="blogText" class="comment more">@Html.DisplayFor(modelItem => item.AttatchedPost.Description)</h5>
 
-            @if (item.AttatchedDocs != null)
-            {
-                foreach (var file in item.AttatchedDocs)
+            </div>
+            <div id="div-blogEntryAttachedFile">
+
+                @if (item.AttatchedDocs != null)
                 {
-                    @Html.ActionLink(file.FileName as string, "DownloadFile", "Blog", new { downloadFileId = file.FileID }, null)
+                    foreach (var file in item.AttatchedDocs)
+                    {
+                        @Html.ActionLink(file.FileName as string, "DownloadFile", "Blog", new { downloadFileId = file.FileID }, null)
+                    }
                 }
-            }
 
-        </div>
-        <div id="div-blogEntryEditDelete">
+            </div>
+            <div id="div-blogEntryEditDelete">
 
-           <p> @if (item.AttatchedPost.UserName == Model.currentUser.UserName)
+                <p>
+                    @if (item.AttatchedPost.UserName == Model.currentUser.UserName)
                 {
-                @Html.ActionLink("Edit", "Edit", "Blog", new { Id = item.AttatchedPost.Id }, null)
-            }
-           |
-            @if (Model.currentUser.Admin || item.AttatchedPost.UserName == Model.currentUser.UserName)
+                        @Html.ActionLink("Edit", "Edit", "Blog", new { Id = item.AttatchedPost.Id }, null)
+                    }
+                    |
+                    @if (Model.currentUser.Admin || item.AttatchedPost.UserName == Model.currentUser.UserName)
                 {
-                @Html.ActionLink("Ta bort", "BlogCancel", "Blog", new { Id = item.AttatchedPost.Id }, null)
-            }
-            </p>
+                        @Html.ActionLink("Ta bort", "BlogCancel", "Blog", new { Id = item.AttatchedPost.Id }, null)
+                    }
+                </p>
 
-        </div>
-        <div id="div-blogEntryComment">
+            </div>
+            <div class="div-blogEntryComment">
 
-            @
+                <a href="javascript:void(0)" class="linkComment" id="@item.AttatchedPost.Id">Kommentera</a>
+            </div>
+            <div id="@item.AttatchedPost.Id" class="@item.AttatchedPost.Id blogComments">
 
+            </div>
         </div>
     </div>
-
+@Html.Hidden("currentUser", Model.currentUser.Id)
+@Html.Hidden("displayName", Model.currentUser.BlogDisplayName)
 }
-
-
-
 <link href="~/Content/blogg.css" rel="stylesheet" />
