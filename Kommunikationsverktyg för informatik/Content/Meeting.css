@@ -1,0 +1,120 @@
+﻿#Meeting
+{
+    margin-top: 20px;
+}
+
+.elements 
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+}
+
+.element
+{
+    margin: 0px, 20px, 0px, 20px;
+    padding: 20px;
+    width: 350px;
+}
+
+#superDiv .element
+{
+    width: 220px;
+}
+
+#createMeetingButton
+{
+    float: right;
+}
+
+.events
+{
+    align-items: baseline;
+}
+
+.red
+{
+    /*border: 2px solid red;*/
+}
+
+#Meeting #creatMeetingTable
+{
+    width: 100%;
+}
+
+.createMeeting
+{
+    margin-left: 20px;
+    color: black;
+    background-color: lightgrey;
+    height: 70px;
+    width: 200px;
+    font-size: 2em;
+    padding-top: 10px;
+    box-shadow: 2px 2px 2px #888888;
+    border-radius: 15px;
+    border: 5px solid lightgrey;
+    text-align:center;
+}
+
+.createMeeting:hover
+{
+    cursor: pointer;
+}
+
+/*==================================================================================================
+    Scroll List
+==================================================================================================*/
+@import "compass/css3";
+
+* 
+{
+    box-sizing: border-box;
+}
+
+#Meeting td
+{
+    background-color: white;
+    padding: 10px;
+}
+
+.scrollList
+{
+    height: 400px;
+    width: 200px;
+    top: 80px;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    overflow: scroll;
+    overflow-y: auto;
+    overflow-x: auto;
+    margin: 0;
+    padding: 0;
+    border: 2px solid #ccc;
+    font-size: 16px;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+}
+
+#creatMeetingTable .scrollList
+{
+    height: 200px;
+}
+
+.scrollItem
+{
+    padding: 10px 20px;
+    border-bottom: 1px solid #ccc;
+}
+
+.scrollItem:last-child
+{
+    border-bottom: none;
+}
+
+.scrollItem:nth-child(even)
+{
+    background: #f8f8f8;
+}

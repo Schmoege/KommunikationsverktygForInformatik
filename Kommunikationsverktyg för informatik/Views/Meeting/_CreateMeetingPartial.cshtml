@@ -1,0 +1,77 @@
+﻿@model Tuple< Kommunikationsverktyg_för_informatik.ViewModels.MeetingViewModels, DateTime>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<div id="createNewMeeting">
+    @using (Html.BeginForm("", "", FormMethod.Post))
+    {
+    <div id="superDiv" class="elements events">
+        <div id="userList" class="element red">
+            <ul class="scrollList">
+                <li class="scrollItem">Användare 1</li>
+                <li class="scrollItem">Användare 2</li>
+                <li class="scrollItem">Användare 3</li>
+                <li class="scrollItem">Användare 4</li>
+                <li class="scrollItem">Användare 5</li>
+                <li class="scrollItem">Användare 6</li>
+            </ul>
+        </div>
+        <div id="selectedUserList" class="element red">
+            <ul class="scrollList">
+                <li class="scrollItem">Lorem Ipsum</li>
+                <li class="scrollItem">Lorem Ipsum</li>
+                <li class="scrollItem">Lorem Ipsum</li>
+                <li class="scrollItem">Lorem Ipsum</li>
+            </ul>
+        </div>
+        <div id="creatMeetingTable" class="element red">
+            <table>
+                <tr>
+                    <td>
+                        @Html.LabelFor(model => model.Item1.Place)
+                        @Html.TextBoxFor(model => model.Item1.Place)
+                    </td>
+                    <td>
+                        @Html.ValidationMessageFor(model => model.Item1.Place)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.LabelFor(model => model.Item1.Date)
+                        @Html.TextBoxFor(model => model.Item1.Date, new { @placeholder = "YYYY-MM-DD", @maxlength = 10})
+                    </td>
+                    <td>
+                        @Html.ValidationMessageFor(model => model.Item1.Date)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.LabelFor(model => model.Item1.Time)
+                        @Html.TextBoxFor(model => model.Item1.Time, new { @placeholder = "hh:mm", @maxlength = 5})
+                    </td>
+                    <td>
+                        @Html.ValidationMessageFor(model => model.Item1.Time)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>Button-Add</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <ul class="scrollList">
+                            <li class="scrollItem">Lorem Ipsum</li>
+                            <li class="scrollItem">Lorem Ipsum</li>
+                            <li class="scrollItem">Lorem Ipsum</li>
+                            <li class="scrollItem">Lorem Ipsum</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="createMeetingButton" class="element">
+            <div id="createMeeting" class="createMeeting">Skapa Möte</div>
+        </div>
+    </div>
+    }   
+</div>

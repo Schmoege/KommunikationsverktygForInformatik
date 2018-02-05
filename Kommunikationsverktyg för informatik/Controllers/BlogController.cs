@@ -42,19 +42,19 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             model.Kategorier = context.Categories.ToList();
             var postCategoriesId = filteredPosts.Select(x => x.Id);
             var categoryFiles = context.UserFiles.Where(x => postCategoriesId.Contains(x.BlogPostId)).ToList();
-            var picExtensionList = new List<string>() {".png", ".jpg", ".jpeg" };
-            
+            var picExtensionList = new List<string>() {".png",".PNG", ".jpg",".JPG",".jpeg",".JPEG" };
+            var picList = categoryFiles.Where(x => picExtensionList.Contains(x.FileExtension));
             foreach (var post in filteredPosts)
             {
                 var newPostFileCombo = new PostFileCombo();
                 newPostFileCombo.AttatchedPost = post;
-                
-                var picList = categoryFiles.Where(x => picExtensionList.Contains(x.FileExtension));
-                if (picList.ToList().Count > 2)
+
+                var postPics = picList.Where(x => x.BlogPostId.Equals(post.Id));
+                if (postPics.ToList().Count >= 3)
                 {
                     newPostFileCombo.ManyPics = true;
-                    newPostFileCombo.AttatchedPics = picList.ToList();
                 }
+                newPostFileCombo.AttatchedPics = postPics.ToList();
                 newPostFileCombo.AttatchedDocs = categoryFiles.Where(x => x.BlogPostId == post.Id).Where(x => !picExtensionList.Contains(x.FileExtension)).ToList();
                 model.PostFileCombinations.Add(newPostFileCombo);
             }
@@ -91,25 +91,20 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                     .Select(x => x.Id).First();
                 context.Posts.Add(model.Post);
 
-                if (model.uploadFiles != null)
+                if (model.uploadFiles[0] != null) //Den skickar alltid med någon jävel
                 {
-
-                    //var fileExt = System.IO.Path.GetExtension(model.uploadFile.FileName).Substring(1);
-                    //if (fileExt == ".jpg" || fileExt == ".png" || fileExt == ".jpeg")
-                    //{
-
-                    foreach (var file in model.uploadFiles)
+                    foreach (var file in model.uploadFiles) //Kontrollera så att alla filer är under 15MB
                     {
                         if (file.ContentLength > 15728640) //15MB i Bytes
                         {
-
-
                             model.Kategorier = context.Categories.ToList();
                             ViewBag.Error = file.FileName + " är för stor. Storlek: " + (file.ContentLength / 1024).ToString() + "KB"; ;
                             return View(model);
                         }
+                        
                     }
                     UploadFile(model.uploadFiles, model.Post);
+
                 }
 
                 context.SaveChanges();
@@ -147,7 +142,6 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             foreach (var fileToUpload in filesToUpload)
             {
                 var newFile = new UserFile();
-                newFile.BlogPost = ownerPost;
                 newFile.BlogPostId = ownerPost.Id;
                 newFile.FileID = Guid.NewGuid();
                 newFile.FileName = fileToUpload.FileName;
@@ -172,7 +166,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             return File(fileToDownload.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileToDownload.FileName);
         }
 
-        public ActionResult Edit(int Id)
+        public ActionResult Edit(Guid Id)
         {
             Post post = context.Posts.SingleOrDefault(x => x.Id == Id);
 
@@ -190,7 +184,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult BlogCancel (int id)
+        public ActionResult BlogCancel (Guid id)
         {
             Post postDelete = context.Posts.Find(id);
             context.Posts.Remove(postDelete);

@@ -10,31 +10,28 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Models
 {
-    public class Post
+    public class ResearchPost
     {
         [Key]
         [Required]
         public Guid Id { get; set; }
 
-        [MaxLength (30)]
+        [MaxLength(30)]
         [DisplayName("Titel")]
         public string Title { get; set; }
 
         [DisplayName("Innehåll")]
-        public string Description { get; set; }
+        public string Content { get; set; }
 
         public DateTime Date { get; set; }
 
         public string UserName { get; set; }
         public ApplicationUser ApplicationUser;
 
-        public Guid KategoriId { get; set; }
-        public Kategori Kategori;
-
-        public Post()
-        {     
-                Id = Guid.NewGuid();
+        public ResearchPost()
+        {
+            Id = Guid.NewGuid();
+     
         }
-        
     }
 }

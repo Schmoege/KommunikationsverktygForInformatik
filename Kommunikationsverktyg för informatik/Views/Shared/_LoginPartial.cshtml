@@ -2,6 +2,8 @@
 @using DataAccess.Models
 @using Microsoft.AspNet.Identity
 @using Microsoft.AspNet.Identity.EntityFramework
+@using DataAccess.Repositories
+
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
@@ -14,23 +16,54 @@
                 var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new DataContext()));
                 var currentUser = manager.FindById(currentUserId);
             }
-           @if (currentUser != null)
-           {
-            if (currentUser.Admin)
+            @if (currentUser != null)
             {
-                <li>@Html.ActionLink("Admin", "Adminpanel", "Admin", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                UserRepository ur = new UserRepository();
+                if (ur.IsUserInRole(currentUser.Id, "administrator"))
+                {
+                    <li>
+                        <a href='@Url.Action("Adminpanel", "Admin")'>
+                            <img src="~/Icons/Admin/1041638-24.png" alt="Admin" width="32" height="32" />
+                        </a>
+                    </li>
+                }
+
+
+
+                <li>
+                    <a href='@Url.Action("EducationBlog", "Education")'>
+                        <img src="~/Icons/Admin/274892-24.png" alt="eduAdmin" width="32" height="32" />
+                    </a>
+                </li>
+
+
+
+
+                    <li>
+                        <a href='@Url.Action("Index", "Research")'>
+                            <img src="~/Icons/Admin/728987-32.png" alt="resAdmin" width="32" height="32" />
+                        </a>
+                    </li>
+
+
             }
-           }
             <li>
                 <a href='@Url.Action("Calendar", "Calendar")'>
                     <img src="~/Icons/Calendar/if_Calendar_2125602.png" alt="Kalender" width="32" height="32" />
                 </a>
             </li>
             <li>
-                @Html.ActionLink("Blogg", "Index", "Blog")
+                <a href='@Url.Action("Meeting", "Meeting")'>
+                    <img src="~/Icons/Meeting/Meeting.png" alt="Möte" width="32" height="32" />
+                </a>
             </li>
             <li>
-                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                <a href='@Url.Action("Index","Blog")'>
+                    <img src="~/Icons/Blogg/Blogg.png" alt="Blogg" width="32" height="32" />
+                </a>
+            </li>
+            <li>
+                <text class="login">@User.Identity.GetUserName().ToString()</text>
             </li>
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
         </ul>
@@ -44,3 +77,4 @@
                         <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
                     </ul>
                 }
+<link href="~/Content/Site.css" rel="stylesheet" />

@@ -11,9 +11,14 @@ namespace DataAccess.Models
     public class Kategori
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        [Required]
+        public Guid Id { get; set; }
         public string Namn { get; set; }
         public bool Formell { get; set; }
+
+        public Kategori()
+        {
+            Id = Guid.NewGuid();
+        }
     }
 }

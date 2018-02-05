@@ -95,6 +95,14 @@ namespace Kommunikationsverktyg_för_informatik.Models
         [Required]
         [Display(Name = "Admin")]
         public bool Admin { get; set; }
+
+        [Required]
+        [Display(Name = "Education Admin")]
+        public bool EducationAdmin { get; set; }
+
+        [Required]
+        [Display(Name = "Research Admin")]
+        public bool ResarchAdmin { get; set; }
     }
 
     public class ResetPasswordViewModel

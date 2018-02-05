@@ -206,11 +206,13 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
-    <Compile Include="Controllers\Api\CommentController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
+    <Compile Include="Controllers\EducationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MeetingController.cs" />
+    <Compile Include="Controllers\ResearchController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -220,10 +222,11 @@
     <Compile Include="ViewModels\BlogPostViewModels.cs" />
     <Compile Include="ViewModels\DayViewModels.cs" />
     <Compile Include="ViewModels\EditViewModels.cs" />
-    <Compile Include="ViewModels\GetCommentViewModels.cs" />
+    <Compile Include="ViewModels\EducationBlogViewModel.cs" />
+    <Compile Include="ViewModels\MeetingViewModels.cs" />
     <Compile Include="ViewModels\MonthViewModels.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
-    <Compile Include="ViewModels\PostCommentViewModels.cs" />
+    <Compile Include="ViewModels\ResearchBlogViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Adminpanel.css" />
@@ -233,10 +236,14 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Calendar.css" />
+    <Content Include="Content\Meeting.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Icons\Admin\1041638-24.png" />
+    <Content Include="Icons\Admin\274892-24.png" />
+    <Content Include="Icons\Admin\728987-32.png" />
     <Content Include="Icons\Calendar\if_01_halloween-calendar_2660282.png" />
     <Content Include="Icons\Calendar\if_6_1250325.png" />
     <Content Include="Icons\Calendar\if_Calendar_2125602.png" />
@@ -248,11 +255,11 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Icons\Meeting\Meeting.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Calendar.js" />
     <Content Include="Scripts\CommentMore.js" />
-    <Content Include="Scripts\GetComments.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
@@ -267,6 +274,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\Meeting.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -314,7 +322,15 @@
     <Content Include="Views\Blog\Edit.cshtml" />
     <Content Include="Views\Admin\Adminpanel.cshtml" />
     <Content Include="Views\Admin\Edit.cshtml" />
+    <Content Include="Views\Meeting\Meeting.cshtml" />
+    <Content Include="Views\Meeting\_MeetingPartial.cshtml" />
     <Content Include="Views\Blog\CreateKategori.cshtml" />
+    <Content Include="Views\Research\Index.cshtml" />
+    <Content Include="Views\Research\Create.cshtml" />
+    <Content Include="Views\Meeting\_CreateMeetingPartial.cshtml" />
+    <Content Include="Views\Education\Index.cshtml" />
+    <Content Include="Views\Education\Create.cshtml" />
+    <Content Include="Views\Research\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
