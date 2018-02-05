@@ -122,3 +122,7 @@ textarea {
 #div-blogEntryAttachedFile {
     margin-bottom: 10px;
 }
+.smallPic {
+    height: 100px;
+    width: 100px
+}
