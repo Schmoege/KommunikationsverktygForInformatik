@@ -5,7 +5,7 @@
     @using (Html.BeginForm("", "", FormMethod.Post))
     {
     <div id="superDiv" class="elements events">
-        <div id="userList" class="element red">
+        <div id="userList" class="element">
             <ul class="scrollList">
                 <li class="scrollItem">Användare 1</li>
                 <li class="scrollItem">Användare 2</li>
@@ -15,7 +15,7 @@
                 <li class="scrollItem">Användare 6</li>
             </ul>
         </div>
-        <div id="selectedUserList" class="element red">
+        <div id="selectedUserList" class="element">
             <ul class="scrollList">
                 <li class="scrollItem">Lorem Ipsum</li>
                 <li class="scrollItem">Lorem Ipsum</li>
@@ -23,15 +23,24 @@
                 <li class="scrollItem">Lorem Ipsum</li>
             </ul>
         </div>
-        <div id="creatMeetingTable" class="element red">
+        <div id="creatMeetingTable" class="element">
             <table>
+                <tr>
+                    <td>
+                        @Html.LabelFor(model => model.Item1.Subject)
+                        @Html.TextBoxFor(model => model.Item1.Subject)
+                    </td>
+                    <td>
+                        @Html.ValidationMessageFor(model => model.Item1.Subject, null, new { @id = "SubjectVal"})
+                    </td>
+                </tr>
                 <tr>
                     <td>
                         @Html.LabelFor(model => model.Item1.Place)
                         @Html.TextBoxFor(model => model.Item1.Place)
                     </td>
                     <td>
-                        @Html.ValidationMessageFor(model => model.Item1.Place)
+                        @Html.ValidationMessageFor(model => model.Item1.Place, null, new { @id = "PlaceVal" })
                     </td>
                 </tr>
                 <tr>
@@ -40,13 +49,13 @@
                         @Html.TextBoxFor(model => model.Item1.Date, new { @placeholder = "YYYY-MM-DD", @maxlength = 10})
                     </td>
                     <td>
-                        @Html.ValidationMessageFor(model => model.Item1.Date)
+                        @Html.ValidationMessageFor(model => model.Item1.Date, null, new { @id = "DateVal" })
                     </td>
                 </tr>
                 <tr>
                     <td>
                         @Html.LabelFor(model => model.Item1.Time)
-                        @Html.TextBoxFor(model => model.Item1.Time, new { @placeholder = "hh:mm", @maxlength = 5})
+                        @Html.TextBoxFor(model => model.Item1.Time, new { @placeholder = "hh:mm", @maxlength = 5 })
                     </td>
                     <td>
                         @Html.ValidationMessageFor(model => model.Item1.Time)
@@ -54,23 +63,20 @@
                 </tr>
                 <tr>
                     <td>
-                        <p>Button-Add</p>
+                        <div id="addTime">Lägg till tid</div>
                     </td>
                 </tr>
-                <tr>
+                <tr>                    
                     <td>
-                        <ul class="scrollList">
-                            <li class="scrollItem">Lorem Ipsum</li>
-                            <li class="scrollItem">Lorem Ipsum</li>
-                            <li class="scrollItem">Lorem Ipsum</li>
-                            <li class="scrollItem">Lorem Ipsum</li>
+                        <ul id="timeList" class="scrollList">
                         </ul>
                     </td>
                 </tr>
             </table>
         </div>
-        <div id="createMeetingButton" class="element">
-            <div id="createMeeting" class="createMeeting">Skapa Möte</div>
+        <div id="buttons" class="element">
+            <div id="createMeeting" class="createMeetingButtons">Skapa Möte</div>
+            <div id="cancelMeeting" class="createMeetingButtons">Avbryt</div>
         </div>
     </div>
     }   
