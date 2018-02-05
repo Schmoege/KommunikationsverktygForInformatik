@@ -24,21 +24,16 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             UserRepository ur = new UserRepository();
             var list = ur.GetUserList();
             List<string> names = new List<string>();
-            List<string> IDs = new List<string>();
+            List<string> mails = new List<string>();
             foreach(var v in list)
             {
                 names.Add(v.LastName + ", " + v.FirstName);
-                IDs.Add(v.Id);
+                mails.Add(v.Email);
             }
             var model = new MeetingViewModels
             {
-                Date = "",
-                Place = "",
-                Time = "",
-                Subject = "",
-                Times = names,
                 Names = names,
-                IDs = IDs
+                Mails = mails
             };
             
             return PartialView("_CreateMeetingPartial", Tuple.Create(model, new DateTime()));
@@ -50,6 +45,61 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             return PartialView("_MeetingPartial");
         }
         
+        [HttpPost]
+        public PartialViewResult CreatedMeetings(string subject, string place, string date, string creatorMail, List<string> times, List<string> mails)
+        {
+            UserRepository ur = new UserRepository();
+            MeetingRepository mr = new MeetingRepository();
+            var meetingModel = new Meeting
+            {
+                Subject = subject,
+                Place = place,
+                Date = date
+            };
+            var creator = ur.GetUser(creatorMail);
+            var invitationModel = new Invitation
+            {
+                //Meeting = meetingModel,
+                Date = DateTime.Now,
+                MeetingID = meetingModel.MID,
+                //ApplicationUser = creator,
+                UserID = creator.Id
+            };
+            List<RecieveMeetingInvitation> RMInviteList = new List<RecieveMeetingInvitation>();
+            foreach(string mail in mails)
+            {
+                var RMInvite = new RecieveMeetingInvitation
+                {
+                    InvitationID = invitationModel.IID,
+                    UserID = ur.GetUser(mail).Id
+                };
+                RMInviteList.Add(RMInvite);
+            }
+            List<TimeSuggestion> timeList = new List<TimeSuggestion>();
+            List<TimeAnswer> timeAnswerList = new List<TimeAnswer>();
+            foreach (string time in times)
+            {
+                var timeSuggestionModel = new TimeSuggestion
+                {
+                    MeetingID = meetingModel.MID,
+                    Suggestion = time
+                };
+                foreach(string mail in mails)
+                {
+                    var user = ur.GetUser(mail);
+                    var timeAnswerModel = new TimeAnswer
+                    {
+                        UserID = user.Id,
+                        TimeID = timeSuggestionModel.TID
+                    };
+                    timeAnswerList.Add(timeAnswerModel);
+                }
+                timeList.Add(timeSuggestionModel);
+            }
+            mr.AddMeeting(meetingModel, invitationModel, RMInviteList, timeList, timeAnswerList);
+            return PartialView("_MeetingPartial");
+        }
+
         [HttpPost]
         public ActionResult CheckDate([Bind(Prefix = "Item1.Date")] string dateToControl)
         {

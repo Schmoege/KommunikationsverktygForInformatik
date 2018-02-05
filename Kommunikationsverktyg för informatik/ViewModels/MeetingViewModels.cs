@@ -32,6 +32,6 @@ namespace Kommunikationsverktyg_för_informatik.ViewModels
         public List<string> Times { get; set; }
 
         public List<string> Names { get; set; }
-        public List<string> IDs { get; set; }
+        public List<string> Mails { get; set; }
     }
 }

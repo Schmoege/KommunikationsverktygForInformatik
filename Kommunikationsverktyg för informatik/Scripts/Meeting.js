@@ -29,7 +29,44 @@
         isFormValid();
         if(validSubject && validPlace && validDate && validTimes && validUsers)
         {
-            alert("yay");
+            var sub = $("#Item1_Subject").val();
+            var place = $("#Item1_Place").val();
+            var date = $("#Item1_Date").val();
+            var creatorMail = $("#creatorMail").val();
+            var mails = [];
+            var times = [];
+            $("#selectedUserList ul .remove input").each(function ()
+            {
+                mails.push($(this).val());
+            });
+            $("#timeList .timeSuggestion").each(function ()
+            {
+                times.push($(this).html());
+            });
+            $.ajax(
+                {
+                    url: '/Meeting/CreatedMeetings',
+                    type: "POST",
+                    data:
+                    {
+                        subject: sub,
+                        place: place,
+                        date: date,
+                        creatorMail: creatorMail,
+                        times: times,
+                        mails: mails
+                    },
+                success: function (data)
+                {
+                    $("#Meeting").html(data);
+                },
+                error: function (xhr, status, error)
+                {
+                    var msg = "Response failed with status: " + status + "</br>"
+                    + " Error: " + error;
+                    $("#Meeting").html(msg);
+                }
+            });
             validSubject = false;
             validDate = false;
             validPlace = false;
@@ -66,6 +103,11 @@
         {
             $("#selectedUserList ul").html('<li id="empty" class="scrollItem">Empty</li>');
         }
+    });
+
+    $(document).on('click', '.timeSuggestion', function ()
+    {
+        $(this).remove();
     });
 
     function isFormValid()
@@ -130,7 +172,7 @@
                     time = "00:" + time.substring(3,5);
                 }
                 var html = $("#timeList").html();
-                html += '<li class="scrollItem">' + time + '</li>';
+                html += '<li class="scrollItem timeSuggestion">' + time + '</li>';
                 $("#timeList").html(html);
             }
         }

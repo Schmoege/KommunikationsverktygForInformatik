@@ -19,16 +19,11 @@ namespace DataAccess.Models
         [Required]
         public string Subject { get; set; }
 
-        [MaxLength(150)]
-        [DataType(DataType.MultilineText)]
-        [Required]
-        public string Description { get; set; }
-
         [MaxLength(20)]
         [Required]
         public string Place { get; set; }
 
         [Required]
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
     }
 }
