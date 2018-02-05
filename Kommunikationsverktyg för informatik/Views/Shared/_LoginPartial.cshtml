@@ -18,9 +18,12 @@
             }
             @if (currentUser != null)
             {
+                
                 <li class="loginCell">
                     <br />
-                    <text class="login" title="Logged in as">@User.Identity.GetUserName().ToString()</text>
+                    <div id="loginCell">
+                        <text id="loggedInAs" title="Logged in as">@User.Identity.GetUserName().ToString()</text>
+                    </div>
                 </li>
                 UserRepository ur = new UserRepository();
                 if (ur.IsUserInRole(currentUser.Id, "administrator"))
@@ -29,7 +32,7 @@
                         <li>
                             @*<div id="adminPanelIcon">*@
                             <a href='@Url.Action("Adminpanel", "Admin")'>
-                                <img id="admIcon" src="~/Icons/Menu/AdmIcon.png" title="Admin Panel" alt="Admin" width="32" height="32" />
+                                <img class="Icon" src="~/Icons/Menu/AdmIcon.png" title="Admin Panel" alt="Admin" width="32" height="32" />
                             </a>
                     @*</div>*@
                     </li>
@@ -39,13 +42,13 @@
                 <li>
 
                     <a href='@Url.Action("Index","Blog")'>
-                        <img id="blogIcon" src="~/Icons/Blogg/Blogg.png" title="Blog" alt="Blogg" width="32" height="32" />
+                        <img class="Icon" src="~/Icons/Menu/BlogIcon.png" title="Blog" alt="Blogg" width="32" height="32" />
                     </a>
                 </li>
 
                 <li>
                     <a href='@Url.Action("Index", "Education")'>
-                        <img id="eduIcon" title="Education Blog" src="~/Icons/Admin/274892-24.png" alt="eduAdmin" width="32" height="32" />
+                        <img class="Icon" title="Education Blog" src="~/Icons/Menu/EduIcon.png" alt="eduAdmin" width="32" height="32" />
                     </a>
                 </li>
 
@@ -54,7 +57,7 @@
 
                     <li>
                         <a href='@Url.Action("Index", "Research")'>
-                            <img id="reIcon" title="Research Blog" src="~/Icons/Admin/728987-32.png" alt="resAdmin" width="32" height="32" />
+                            <img class="Icon" title="Research Blog" src="~/Icons/Menu/ResIcon.png" alt="resAdmin" width="32" height="32" />
                         </a>
                     </li>
 
@@ -62,17 +65,17 @@
             }
             <li>
                 <a href='@Url.Action("Calendar", "Calendar")'>
-                    <img id="calIcon" title="Calendar" src="~/Icons/Calendar/if_Calendar_2125602.png" alt="Kalender" width="32" height="32" />
+                    <img class="Icon" title="Calendar" src="~/Icons/Menu/CalendarIcon.png" alt="Kalender" width="32" height="32" />
                 </a>
             </li>
             <li>
                 <a href='@Url.Action("Meeting", "Meeting")'>
-                    <img id="meeIcon" title="Meeting" src="~/Icons/Meeting/Meeting.png" alt="Möte" width="32" height="32" />
+                    <img class="Icon" title="Meeting" src="~/Icons/Menu/Meeting.png" alt="Möte" width="32" height="32" />
                 </a>
             </li>
 
 
-            <li><a href="javascript:document.getElementById('logoutForm').submit()"><img id="loIcon" title="Log Out" src="~/Icons/Logout/2142693-32.png" alt="Log out" width="32" height="32" /></a></li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()"><img class="Icon" title="Log Out" src="~/Icons/Menu/ExitIcon.png" alt="Log out" width="32" height="32" /></a></li>
         </ul>
                     }
                 }

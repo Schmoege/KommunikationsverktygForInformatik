@@ -3,17 +3,12 @@
 @using Microsoft.AspNet.Identity
 
 @{
-    /**/
+    
 
     ViewBag.Title = "Research Blog";
 }
 
-<style>
-    .smallPic {
-        height: 100px;
-        width: 100px
-    }
-</style>
+
 
 <h2>Research Blog</h2>
 @{UserRepository ur = new UserRepository();
@@ -46,7 +41,7 @@
 {
 
     <div id="mainContainer">
-        <div id="@item.AttatchedPost.Id" class="margin5 div-blogEntryMain">
+        <div id="@item.AttatchedPost.Id" class="margin5 div-blogEntryMainRes">
             <div id="div-blogEntryUser">
 
                 <h4>@Html.DisplayFor(m => item.AttatchedPost.ApplicationUser.BlogDisplayName)</h4>

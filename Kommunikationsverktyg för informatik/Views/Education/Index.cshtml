@@ -5,8 +5,10 @@
 @{
     /**/
 
-    ViewBag.Title = "education Blog";
+    ViewBag.Title = "Education Blog";
 }
+
+
 
 <h2>Education Blog</h2>
 @{UserRepository ur = new UserRepository();
@@ -38,57 +40,74 @@
 @foreach (var item in Model.PostFileCombinations)
 {
 
-    <div id="div-blogEntryMain">
+    <div id="mainContainer">
+        <div id="@item.AttatchedPost.Id" class="margin5 div-blogEntryMainEdu">
+            <div id="div-blogEntryUser">
 
-        <div id="div-blogEntryUser">
+                <h4>@Html.DisplayFor(m => item.AttatchedPost.ApplicationUser.BlogDisplayName)</h4>
 
-            <h4>@Html.DisplayFor(m => item.AttatchedPost.ApplicationUser.BlogDisplayName)</h4>
+            </div>
+            <div id="div-blogEntryDate">
 
-        </div>
-        <div id="div-blogEntryDate">
+                <h5>@Html.DisplayFor(modelItem => item.AttatchedPost.Date)</h5>
 
-            <h5>@Html.DisplayFor(modelItem => item.AttatchedPost.Date)</h5>
+            </div>
+            <div id="div-blogEntryTitle">
 
-        </div>
-        <div id="div-blogEntryTitle">
+                <h4>@Html.DisplayFor(modelItem => item.AttatchedPost.Title)</h4>
 
-            <h4>@Html.DisplayFor(modelItem => item.AttatchedPost.Title)</h4>
-
-        </div>
-        <div id="div-blogEntryDescription">
+            </div>
+            <div id="div-blogEntryDescription">
 
 
-            <h5 id="blogText" class="comment more">@Html.DisplayFor(modelItem => item.AttatchedPost.Content)</h5>
+                <h5 id="blogText" class="comment more">@Html.DisplayFor(modelItem => item.AttatchedPost.Content)</h5>
 
-        </div>
-        <div id="div-blogEntryAttachedFile">
-
-            @if (item.AttatchedDocs != null)
+            </div>
+            <div id="attatchedDocumentsNotBootstrap">
+                @if (item.AttatchedDocs.Count > 0)
                 {
-                    foreach (var file in item.AttatchedDocs)
+                    <p>Bifogade filer:</p>
+                    <ul>
+                        @foreach (var file in item.AttatchedDocs)
                     {
-                    @Html.ActionLink(file.FileName as string, "DownloadFile", "Blog", new { downloadFileId = file.FileID }, null)
+                            <li>@Html.ActionLink(file.FileName as string, "DownloadFile", "Blog", new { downloadFileId = file.FileID }, null)</li>
+                        }
+                    </ul>
                 }
-            }
-
-        </div>
-        <div id="div-blogEntryEditDelete">
-
-            <p>
-                @if (item.AttatchedPost.ApplicationUser.Id == User.Identity.GetUserId() && ur.IsUserInRole(User.Identity.GetUserId(), "educationAdministrator"))
+            </div>
+            <div id="div-blogEntryAttachedFile">
+                @if (item.AttatchedPics.Count > 0)
                 {
-                    @Html.ActionLink("Edit", "Edit", "Education", new { Id = item.AttatchedPost.Id }, null)
+                    foreach (var pics in item.AttatchedPics)
+                    {
+                        var base64 = Convert.ToBase64String(pics.FileBytes);
+                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                        <a href="@imgSrc" target="_blank">
+                            <img src="@imgSrc" class="smallPic" />
+                        </a>
+                    }
                 }
-                |
 
-                @if (ur.IsUserInRole(User.Identity.GetUserId(), "administrator") || ur.IsUserInRole(User.Identity.GetUserId(), "educationAdministrator"))
-                {
-                    @Html.ActionLink("Ta bort", "Delete", "Education", new { Id = item.AttatchedPost.Id }, null)
-                }
+            </div>
+            <div id="div-blogEntryEditDelete">
 
-            </p>
+                <p>
+                    @if (item.AttatchedPost.ApplicationUser.Id.Equals(User.Identity.GetUserId()) && ur.IsUserInRole(User.Identity.GetUserId(), "educationAdministrator"))
+                    {
+                        @Html.ActionLink("Edit", "Edit", "Education", new { Id = item.AttatchedPost.Id }, null)
+                    }
+                    |
 
+                    @if (ur.IsUserInRole(User.Identity.GetUserId(), "administrator") || ur.IsUserInRole(User.Identity.GetUserId(), "educationAdministrator"))
+                    {
+                        @Html.ActionLink("Ta bort", "Delete", "Education", new { Id = item.AttatchedPost.Id }, null)
+                    }
+
+                </p>
+
+            </div>
         </div>
+
     </div>
 }
-<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/blogg.css" rel="stylesheet" />

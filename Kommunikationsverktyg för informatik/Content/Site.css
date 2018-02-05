@@ -24,6 +24,22 @@ textarea {
 }
 
 /*Custom styles*/
+.div-blogEntryMainRes {
+    width: 80%;
+    padding: 1% 5% 1% 5%;
+    height: 100%;
+    background-color: palegreen;
+    overflow: hidden;
+    border: 1px solid cornflowerblue;
+}
+    .div-blogEntryMainEdu {
+    width: 80%;
+    padding: 1% 5% 1% 5%;
+    height: 100%;
+    background-color: thistle;
+    overflow: hidden;
+    border: 1px solid cornflowerblue;
+}
 .div-blogEntryMain {
     width: 80%;
     padding: 1% 5% 1% 5%;
@@ -125,4 +141,17 @@ textarea {
 .smallPic {
     height: 100px;
     width: 100px
+}
+
+.Icon:hover {
+    -webkit-filter: brightness(100);
+}
+#loggedInAs {
+    color: black;
+
+}
+#loginCell {
+    border-radius: 7px;
+    padding: 2px;
+    background-color: #5e889e;
 }
