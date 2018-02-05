@@ -11,7 +11,7 @@ namespace Kommunikationsverktyg_för_informatik.ViewModels
 
         public string Author { get; set; }
 
-        public int PostID { get; set; }
+        public Guid PostID { get; set; }
 
         public string ConvertedDateTime { get; set; }
     }

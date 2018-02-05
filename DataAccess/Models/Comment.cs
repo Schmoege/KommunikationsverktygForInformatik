@@ -20,7 +20,7 @@ namespace DataAccess.Models
 
         public string Content { get; set; }
 
-        public int PostID { get; set; }
+        public Guid PostID { get; set; }
         public Post Post;
 
         public string Author { get; set; }

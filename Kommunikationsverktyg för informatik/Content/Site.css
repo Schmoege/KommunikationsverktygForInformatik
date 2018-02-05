@@ -113,3 +113,12 @@ textarea {
 .commentAuthor {
     margin: 5px 5px 5px 5px;
 }
+.linkComment {
+    border: 1px solid blue;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: aliceblue;
+}
+#div-blogEntryAttachedFile {
+    margin-bottom: 10px;
+}

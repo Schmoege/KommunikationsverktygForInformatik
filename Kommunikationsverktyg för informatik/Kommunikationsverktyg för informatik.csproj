@@ -206,6 +206,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\Api\CommentController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\EducationController.cs" />
@@ -223,9 +224,11 @@
     <Compile Include="ViewModels\DayViewModels.cs" />
     <Compile Include="ViewModels\EditViewModels.cs" />
     <Compile Include="ViewModels\EducationBlogViewModel.cs" />
+    <Compile Include="ViewModels\GetCommentViewModels.cs" />
     <Compile Include="ViewModels\MeetingViewModels.cs" />
     <Compile Include="ViewModels\MonthViewModels.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
+    <Compile Include="ViewModels\PostCommentViewModels.cs" />
     <Compile Include="ViewModels\ResearchBlogViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -331,6 +334,7 @@
     <Content Include="Views\Education\Index.cshtml" />
     <Content Include="Views\Education\Create.cshtml" />
     <Content Include="Views\Research\Edit.cshtml" />
+    <Content Include="Views\Calendar\CalendarDay.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
