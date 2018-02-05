@@ -75,3 +75,8 @@ textarea {
     max-width: 80%;
     height: 200px;
 }
+.login
+{
+    color: azure;
+    text-align: center;
+}

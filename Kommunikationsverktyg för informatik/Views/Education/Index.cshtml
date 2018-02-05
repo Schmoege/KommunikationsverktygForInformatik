@@ -1,0 +1,94 @@
+﻿@model Kommunikationsverktyg_för_informatik.ViewModels.EducationBlogViewModel
+@using DataAccess.Repositories
+@using Microsoft.AspNet.Identity
+
+@{
+    /**/
+
+    ViewBag.Title = "education Blog";
+}
+
+<h2>Bloggflöde</h2>
+@{UserRepository ur = new UserRepository();
+    if (ur.IsUserInRole(User.Identity.GetUserId(), "educationAdministrator"))
+    {
+        <p>
+            @Html.ActionLink("Skapa inlägg", "Create")
+        </p>
+    }
+}
+@*@using (Html.BeginForm("Index", "Blog"))
+    {
+        <div id="div-blogCategory">
+                <h4 id="h4-category">Sortera efter kategori</h4>
+                <div id="div-blogCategoryFilter">
+                    <div id="div-blogCategoryButtons">
+                        @Html.DropDownListFor(model => model.SelectCategories, new SelectList(Model.Kategorier.Select(x => x.Namn)), new { id = "dropdown-Filter" })
+                        <input type="submit" value="Filtrera" class="btn btn-default" id="btn-filter" />
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+    }*@
+@foreach (var item in Model.PostFileCombinations)
+{
+
+    <div id="div-blogEntryMain">
+
+        <div id="div-blogEntryUser">
+
+            <h4>@Html.DisplayFor(m => item.AttatchedPost.UserName)</h4>
+
+        </div>
+        <div id="div-blogEntryDate">
+
+            <h5>@Html.DisplayFor(modelItem => item.AttatchedPost.Date)</h5>
+
+        </div>
+        <div id="div-blogEntryTitle">
+
+            <h4>@Html.DisplayFor(modelItem => item.AttatchedPost.Title)</h4>
+
+        </div>
+        <div id="div-blogEntryDescription">
+
+
+            <h5 id="blogText" class="comment more">@Html.DisplayFor(modelItem => item.AttatchedPost.Content)</h5>
+
+        </div>
+        <div id="div-blogEntryAttachedFile">
+
+            @if (item.AttatchedDocs != null)
+                {
+                    foreach (var file in item.AttatchedDocs)
+                    {
+                    @Html.ActionLink(file.FileName as string, "DownloadFile", "Blog", new { downloadFileId = file.FileID }, null)
+                }
+            }
+
+        </div>
+        <div id="div-blogEntryEditDelete">
+
+            <p>
+                @if (item.AttatchedPost.UserName == User.Identity.GetUserName() && ur.IsUserInRole(User.Identity.GetUserId(), "educationAdministrator"))
+                {
+                    @Html.ActionLink("Edit", "Edit", "Education", new { Id = item.AttatchedPost.Id }, null)
+                }
+                |
+
+                @if (ur.IsUserInRole(User.Identity.GetUserId(), "administrator") || ur.IsUserInRole(User.Identity.GetUserId(), "educationAdministrator"))
+                {
+                    @Html.ActionLink("Ta bort", "Delete", "Education", new { Id = item.AttatchedPost.Id }, null)
+                }
+
+            </p>
+
+        </div>
+    </div>
+}
+<link href="~/Content/blogg.css" rel="stylesheet" />

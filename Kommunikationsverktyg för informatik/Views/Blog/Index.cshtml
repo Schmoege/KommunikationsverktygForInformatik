@@ -1,5 +1,5 @@
 ﻿@model Kommunikationsverktyg_för_informatik.ViewModels.BlogPostViewModel
-
+@using DataAccess.Repositories
 
 @{
     /**/
@@ -7,6 +7,14 @@
     ViewBag.Title = "Blogg";
 }
 
+<style>
+    .smallPic {
+        height: 100px;
+        width: 100px
+    }
+</style>
+
+@{UserRepository ur = new UserRepository();}
 <h2>Bloggflöde</h2>
 
 <p>
@@ -56,13 +64,28 @@
             <h5 id="blogText" class="comment more">@Html.DisplayFor(modelItem => item.AttatchedPost.Description)</h5>
             
         </div>
-        <div id="div-blogEntryAttachedFile">
-
-            @if (item.AttatchedDocs != null)
+        <div id="attatchedDocumentsNotBootstrap">
+            @if (item.AttatchedDocs.Count > 0)
             {
-                foreach (var file in item.AttatchedDocs)
+                <p>Bifogade filer:</p>
+                <ul>
+                    @foreach (var file in item.AttatchedDocs)
+                    {
+                        <li>@Html.ActionLink(file.FileName as string, "DownloadFile", "Blog", new { downloadFileId = file.FileID }, null)</li>
+                    }
+                </ul>
+            }
+        </div>
+        <div id="div-blogEntryAttachedFile">
+            @if (item.AttatchedPics.Count > 0)
+            {
+                foreach (var pics in item.AttatchedPics)
                 {
-                    @Html.ActionLink(file.FileName as string, "DownloadFile", "Blog", new { downloadFileId = file.FileID }, null)
+                    var base64 = Convert.ToBase64String(pics.FileBytes);
+                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                    <a href="@imgSrc" target="_blank">
+                        <img src="@imgSrc" class="smallPic" />
+                    </a>
                 }
             }
 
@@ -74,7 +97,7 @@
                 @Html.ActionLink("Edit", "Edit", "Blog", new { Id = item.AttatchedPost.Id }, null)
             }
            |
-            @if (Model.currentUser.Admin || item.AttatchedPost.UserName == Model.currentUser.UserName)
+            @if (ur.IsUserInRole(Model.currentUser.Id, "administrator") || item.AttatchedPost.UserName == Model.currentUser.UserName)
                 {
                 @Html.ActionLink("Ta bort", "BlogCancel", "Blog", new { Id = item.AttatchedPost.Id }, null)
             }

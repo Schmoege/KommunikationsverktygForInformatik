@@ -81,17 +81,17 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             return View(model);
         }
 
-        public ActionResult SetActive(ApplicationUser model)
+        public ActionResult SetActive(string email)
         {
             UserRepository ur = new UserRepository();
-            ur.SetActive(model.Email);
+            ur.SetActive(email);
 
             return RedirectToAction("Adminpanel", "Admin");
         }
-        public ActionResult SetInactive(ApplicationUser model)
+        public ActionResult SetInactive(string email)
         {
             UserRepository ur = new UserRepository();
-            ur.SetInactive(model.Email);
+            ur.SetInactive(email);
 
             return RedirectToAction("Adminpanel", "Admin");
         }
