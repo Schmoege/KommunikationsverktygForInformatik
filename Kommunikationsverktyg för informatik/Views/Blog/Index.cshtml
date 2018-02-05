@@ -7,12 +7,7 @@
     ViewBag.Title = "Blogg";
 }
 
-<style>
-    .smallPic {
-        height: 100px;
-        width: 100px
-    }
-</style>
+
 
 @{UserRepository ur = new UserRepository();}
 <h2>Bloggflöde</h2>
@@ -120,4 +115,4 @@
 @Html.Hidden("currentUser", Model.currentUser.Id)
 @Html.Hidden("displayName", Model.currentUser.BlogDisplayName)
 }
-<link href="~/Content/blogg.css" rel="stylesheet" />
+<link href="~/Content/Site.css" rel="stylesheet" />
