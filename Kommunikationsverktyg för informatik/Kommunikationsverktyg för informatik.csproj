@@ -258,6 +258,14 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Icons\Menu\AdmIcon.png" />
+    <Content Include="Icons\Menu\BlogIcon.png" />
+    <Content Include="Icons\Menu\CalendarIcon.png" />
+    <Content Include="Icons\Menu\EduIcon.png" />
+    <Content Include="Icons\Menu\ExitIcon.png" />
+    <Content Include="Icons\Menu\Meeting.png" />
+    <Content Include="Icons\Menu\ResIcon.png" />
+    <Content Include="Icons\Logout\2142693-32.png" />
     <Content Include="Icons\Meeting\Meeting.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -336,6 +344,7 @@
     <Content Include="Views\Education\Create.cshtml" />
     <Content Include="Views\Research\Edit.cshtml" />
     <Content Include="Views\Calendar\CalendarDay.cshtml" />
+    <Content Include="Views\Education\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -51,14 +51,30 @@ namespace DataAccess.Repositories
             };
         }
 
-        public ApplicationUser GetUser(string email)
+        public ApplicationUser GetUser(string id)
         {
             using (var db = new DataContext())
             {
                 var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
                 try
                 {
-                    var user = UserManager.FindByName(email);
+                    var user = UserManager.FindById(id);
+                    return user;
+                }
+                catch
+                {
+                    return null;
+                }
+            };
+        }
+        public ApplicationUser GetUserByEmail(string email)
+        {
+            using (var db = new DataContext())
+            {
+                var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+                try
+                {
+                    var user = UserManager.FindByEmail(email);
                     return user;
                 }
                 catch

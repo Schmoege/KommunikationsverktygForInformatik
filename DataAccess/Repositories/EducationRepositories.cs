@@ -15,12 +15,16 @@ namespace DataAccess.Repositories
         {
             using (DataContext db = new DataContext())
             {
-                return db.EducationPosts.ToList().OrderByDescending(x => x.Date).Take(10);
+                List<EducationPost> listOfPosts = new List<EducationPost>();
+                listOfPosts.AddRange(db.EducationPosts.ToList().OrderByDescending(x => x.Date).Take(10));
+                foreach (var post in listOfPosts)
+                {
+                    post.ApplicationUser = db.Users.SingleOrDefault(x => x.Id.Equals(post.UserId));
+                }
+                return listOfPosts;
             }
-
         }
-
-        public void AddPost(EducationPost post)
+            public void AddPost(EducationPost post)
         {
             using (DataContext db = new DataContext())
             {
@@ -39,6 +43,25 @@ namespace DataAccess.Repositories
 
             }
 
+        }
+        public EducationPost GetPost(Guid id)
+        {
+            using (DataContext db = new DataContext())
+            {
+                EducationPost post = db.EducationPosts.SingleOrDefault(p => p.Id.Equals(id));
+                return post;
+            }
+        }
+        public void EditPost(EducationPost post)
+        {
+            using (DataContext db = new DataContext())
+            {
+                EducationPost postToEdit = GetPost(post.Id);
+                postToEdit.Title = post.Title;
+                postToEdit.Content = post.Content;
+                db.Entry(postToEdit).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
         }
     }
 }

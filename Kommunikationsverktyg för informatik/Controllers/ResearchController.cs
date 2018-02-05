@@ -12,6 +12,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
 {
     public class ResearchController : Controller
     {
+        UserRepository ur = new UserRepository();
         ResearchRepository rr = new ResearchRepository();
         // GET: Research
         [Authorize]
@@ -58,8 +59,10 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         [Authorize(Roles = "researchAdministrator")]
         public ActionResult Create(ResearchBlogViewModel model)
         {
+            //model.Post.ApplicationUser = ur.GetUser(User.Identity.GetUserId());
+            model.Post.UserId = User.Identity.GetUserId();
             model.Post.Date = DateTime.Now;
-            model.Post.UserName = User.Identity.GetUserName();
+            //model.Post.UserName = User.Identity.GetUserName();
 
             rr.AddPost(model.Post);
             if (model.uploadFiles[0] != null) //Den skickar alltid med någon jävel
@@ -117,12 +120,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         [HttpPost]
         public ActionResult Edit(ResearchPost postInfo)
         {
-            
-            ResearchPost postToEdit = rr.GetPost(postInfo.Id);
-            postToEdit.Title = postInfo.Title;
-            postToEdit.Content = postInfo.Content;
-            //context.Entry(postToEdit).State = System.Data.Entity.EntityState.Modified;
-
+            rr.EditPost(postInfo);
             return RedirectToAction("Index");
         }
     }
