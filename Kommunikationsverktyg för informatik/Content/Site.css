@@ -159,3 +159,6 @@ textarea {
     color: azure;
     text-align: center;
 }
+.post-description-error {
+    margin-left: 17%;
+}
