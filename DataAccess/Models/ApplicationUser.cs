@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
+using DataAccess.Models;
 
 namespace Kommunikationsverktyg_för_informatik.Models
 {
@@ -24,9 +26,22 @@ namespace Kommunikationsverktyg_för_informatik.Models
 
         public bool Active { get; set; } = true;
 
-        public string BlogDisplayName { get { return string.Format("{0} {1}({2})", FirstName, LastName, Email);  } } 
+        public string BlogDisplayName { get { return string.Format("{0} {1}({2})", FirstName, LastName, Email);  } }
 
+        //public List<Post> UnreadBlogPosts { get; set; }
 
+        //public List<EducationPost> UnreadEducationPosts { get; set; }
+
+        public virtual ICollection<ResearchPost> UnreadResearchPosts { get; set; }
+        public virtual ICollection<Post> UnreadPosts { get; set; }
+        public virtual ICollection<EducationPost> UnreadEducationPosts { get; set; }
+
+        public ApplicationUser()
+        {
+            this.UnreadResearchPosts = new HashSet<ResearchPost>();
+            this.UnreadEducationPosts = new HashSet<EducationPost>();
+            this.UnreadPosts = new HashSet<Post>();
+        }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

@@ -18,7 +18,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         public ActionResult Index()
         {
 
-
+            er.ClearUnreadPosts(User.Identity.GetUserId());
             EducationBlogViewModel model = new EducationBlogViewModel();
             model.Posts = er.GetAll().ToList();
 

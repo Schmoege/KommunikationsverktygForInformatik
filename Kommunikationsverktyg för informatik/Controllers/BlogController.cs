@@ -29,6 +29,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
 
         public ActionResult Index(BlogPostViewModel model)
         {
+            blogRepository.ClearUnreadPosts(User.Identity.GetUserId());
             List<Post> filteredPosts = new List<Post>();
             if (model.SelectCategories != null)
             {
@@ -89,7 +90,8 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                 model.Post.KategoriId = context.Categories
                     .Where(x => x.Namn == model.SelectCategories)
                     .Select(x => x.Id).First();
-                context.Posts.Add(model.Post);
+                blogRepository.AddPost(model.Post);
+                //context.Posts.Add(model.Post);
 
                 if (model.uploadFiles[0] != null) //Den skickar alltid med någon jävel
                 {

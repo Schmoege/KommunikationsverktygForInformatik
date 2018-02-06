@@ -28,10 +28,12 @@ namespace DataAccess.Models
         public string UserId { get; set; }
         public ApplicationUser ApplicationUser;
 
+        public virtual ICollection<ApplicationUser> AppUsers { get; set; }
+
         public EducationPost()
         {
             Id = Guid.NewGuid();
-
+            this.AppUsers = new HashSet<ApplicationUser>();
         }
     }
 }

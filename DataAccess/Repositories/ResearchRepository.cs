@@ -1,4 +1,5 @@
 ﻿using DataAccess.Models;
+using Kommunikationsverktyg_för_informatik.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,9 +31,21 @@ namespace DataAccess.Repositories
         {
             using (DataContext db = new DataContext())
             {
-
+                var users = db.Users.ToList();
+                users.ForEach(u => u.UnreadResearchPosts.Add(post));
                 db.ResearchPosts.Add(post);
                 db.SaveChanges();
+            }
+        }
+
+        public int GetUnreadPosts(string userId)
+        {
+            using (DataContext db = new DataContext())
+            {
+                var user = db.Users.SingleOrDefault(u => u.Id.Equals(userId));
+
+                int unread = user.UnreadResearchPosts.Count();
+                return unread;
             }
         }
 
@@ -65,6 +78,15 @@ namespace DataAccess.Repositories
                 postToEdit.Title = post.Title;
                 postToEdit.Content = post.Content;
                 db.Entry(postToEdit).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
+        }
+        public void ClearUnreadPosts(string userId)
+        {
+            using (DataContext db = new DataContext())
+            {
+                var user = db.Users.SingleOrDefault(u => u.Id.Equals(userId));
+                user.UnreadResearchPosts.Clear();
                 db.SaveChanges();
             }
         }
