@@ -142,13 +142,33 @@ textarea {
     height: 100px;
     width: 100px
 }
-
 .Icon:hover {
+    -webkit-filter: brightness(100) !important;
+}
+
+.IconBlog:hover {
     -webkit-filter: brightness(100);
 }
+.bottomleft {
+
+    position: absolute;
+    bottom: 15px;
+    left: 16px;
+    font-size: 17px;
+    color: wheat;
+    text-align: center;
+    background-color: red;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+.number {
+    position: absolute;
+}
+
+
 #loggedInAs {
     color: black;
-
 }
 #loginCell {
     border-radius: 7px;

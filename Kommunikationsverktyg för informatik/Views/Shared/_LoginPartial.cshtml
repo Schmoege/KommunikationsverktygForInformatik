@@ -15,10 +15,13 @@
                 var currentUserId = User.Identity.GetUserId();
                 var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new DataContext()));
                 var currentUser = manager.FindById(currentUserId);
+                var rr = new ResearchRepository();
+                var er = new EducationRepository();
+                var br = new BlogRepository();
             }
             @if (currentUser != null)
             {
-                
+
                 <li class="loginCell">
                     <br />
                     <div id="loginCell">
@@ -28,13 +31,13 @@
                 UserRepository ur = new UserRepository();
                 if (ur.IsUserInRole(currentUser.Id, "administrator"))
                 {
-                   
-                        <li>
-                            @*<div id="adminPanelIcon">*@
-                            <a href='@Url.Action("Adminpanel", "Admin")'>
-                                <img class="Icon" src="~/Icons/Menu/AdmIcon.png" title="Admin Panel" alt="Admin" width="32" height="32" />
-                            </a>
-                    @*</div>*@
+
+                    <li>
+                        @*<div id="adminPanelIcon">*@
+                        <a href='@Url.Action("Adminpanel", "Admin")'>
+                            <img class="Icon" src="~/Icons/Menu/AdmIcon.png" title="Admin Panel" alt="Admin" width="32" height="32" />
+                        </a>
+                        @*</div>*@
                     </li>
 
                 }
@@ -42,24 +45,39 @@
                 <li>
 
                     <a href='@Url.Action("Index","Blog")'>
-                        <img class="Icon" src="~/Icons/Menu/BlogIcon.png" title="Blog" alt="Blogg" width="32" height="32" />
+                        <img class="IconBlog" src="~/Icons/Menu/BlogIcon.png" title="Blog" alt="Blogg" width="32" height="32" />
+                        @if (br.GetUnreadPosts(User.Identity.GetUserId()) > 0)
+                        {
+                            <div class="bottomleft">@br.GetUnreadPosts(User.Identity.GetUserId())</div>
+                        }
                     </a>
+
+
                 </li>
 
                 <li>
                     <a href='@Url.Action("Index", "Education")'>
                         <img class="Icon" title="Education Blog" src="~/Icons/Menu/EduIcon.png" alt="eduAdmin" width="32" height="32" />
+                        @if (er.GetUnreadPosts(User.Identity.GetUserId()) > 0)
+                        {
+                            <div class="bottomleft">@er.GetUnreadPosts(User.Identity.GetUserId()).ToString()</div>
+                        }
                     </a>
                 </li>
 
 
 
 
-                    <li>
-                        <a href='@Url.Action("Index", "Research")'>
-                            <img class="Icon" title="Research Blog" src="~/Icons/Menu/ResIcon.png" alt="resAdmin" width="32" height="32" />
-                        </a>
-                    </li>
+                <li>
+                    <a href='@Url.Action("Index", "Research")'>
+                        <img class="Icon" title="Research Blog" src="~/Icons/Menu/ResIcon.png" alt="resAdmin" width="32" height="32" />
+                        @if (rr.GetUnreadPosts(User.Identity.GetUserId()) > 0)
+                        {
+                            <div class="bottomleft">@rr.GetUnreadPosts(User.Identity.GetUserId()).ToString()</div>
+                        }
+
+                    </a>
+                </li>
 
 
             }
@@ -83,7 +101,7 @@
                 {
                     <ul class="nav navbar-nav navbar-right">
 
-                        
+
                         <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
                     </ul>
                 }
