@@ -25,9 +25,10 @@ namespace DataAccess.Models
 
         public DateTime Date { get; set; }
 
-        public string UserName { get; set; }
+        public string User { get; set; }
         public ApplicationUser ApplicationUser;
 
+        [Required]
         public Guid KategoriId { get; set; }
         public Kategori Kategori;
 

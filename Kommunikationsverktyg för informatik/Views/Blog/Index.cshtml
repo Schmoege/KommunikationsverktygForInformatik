@@ -1,18 +1,12 @@
 ﻿@model Kommunikationsverktyg_för_informatik.ViewModels.BlogPostViewModel
 @using DataAccess.Repositories
-
+@using Microsoft.AspNet.Identity
 @{
     /**/
 
     ViewBag.Title = "Blogg";
 }
 
-<style>
-    .smallPic {
-        height: 100px;
-        width: 100px
-    }
-</style>
 
 @{UserRepository ur = new UserRepository();}
 <h2>Bloggflöde</h2>
@@ -26,7 +20,7 @@
         <h4 id="h4-category">Sortera efter kategori</h4>
         <div id="div-blogCategoryFilter">
             <div id="div-blogCategoryButtons">
-                @Html.DropDownListFor(model => model.SelectCategories, new SelectList(Model.Kategorier.Select(x => x.Namn)), new { id = "dropdown-Filter" })
+                @Html.DropDownListFor(model => model.SelectedCategory, new SelectList(Model.Kategorier.Select(x => x.Namn)), new { id = "dropdown-Filter" })
                 <input type="submit" value="Filtrera" class="btn btn-default" id="btn-filter" />
             </div>
         </div>
@@ -38,87 +32,112 @@
 
 
 }
-@foreach (var item in Model.PostFileCombinations)
-{
-    <div id="mainContainer">
-        <div id="@item.AttatchedPost.Id" class="margin5 div-blogEntryMain">
 
-            <div id="div-blogEntryUser">
+@{
+    int i = 1;
+    foreach (var item in Model.PostFileCombinations)
+    {
 
-                <h4>@Html.DisplayFor(m => m.currentUser.BlogDisplayName)</h4>
 
-            </div>
-            <div id="div-blogEntryDate">
 
-                <h5>@Html.DisplayFor(modelItem => item.AttatchedPost.Date)</h5>
+        <div id="@i">
+            @{i = i + 1; }
 
-            </div>
-            <div id="div-blogEntryTitle">
 
-                <h4>@Html.DisplayFor(modelItem => item.AttatchedPost.Title)</h4>
+            <div id="@item.AttatchedPost.Id" class="margin5 div-blogEntryMain">
 
-            </div>
-            <div id="div-blogEntryDescription">
+                <div id="div-blogEntryUser">
 
-            
-            <h5 id="blogText" class="comment more">@Html.DisplayFor(modelItem => item.AttatchedPost.Description)</h5>
-            
-        </div>
+                    <h4>@Html.DisplayFor(modelItem => item.AttachedUser.BlogDisplayName)</h4>
 
-            <div id="attatchedDocumentsNotBootstrap">
-                @if (item.AttatchedDocs.Count > 0)
-                {
-                    <p>Bifogade filer:</p>
-                    <ul>
-                        @foreach (var file in item.AttatchedDocs)
+                </div>
+                <div id="div-blogEntryDate">
+
+                    <h5>@Html.DisplayFor(modelItem => item.AttatchedPost.Date)</h5>
+
+                </div>
+                <div id="div-blogEntryTitle">
+
+                    <h4>@Html.DisplayFor(modelItem => item.AttatchedPost.Title)</h4>
+
+                </div>
+                <div id="div-blogEntryDescription">
+
+
+                    <h5 id="blogText" class="comment more">@Html.DisplayFor(modelItem => item.AttatchedPost.Description)</h5>
+
+                </div>
+
+
+                <div id="div-blogEntryAttachedFile">
+
+                    @if (item.AttatchedPics.Count > 0)
                     {
-                            <li>@Html.ActionLink(file.FileName as string, "DownloadFile", "Blog", new { downloadFileId = file.FileID }, null)</li>
+                        foreach (var pics in item.AttatchedPics)
+                        {
+                            var base64 = Convert.ToBase64String(pics.FileBytes);
+                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                            <a href="@imgSrc" target="_blank">
+                                <img src="@imgSrc" class="smallPic" />
+                            </a>
                         }
-                    </ul>
-                }
-            </div>
-
-            <div id="div-blogEntryAttachedFile">
-
-                @if (item.AttatchedPics.Count > 0)
-                {
-                    foreach (var pics in item.AttatchedPics)
-                    {
-                        var base64 = Convert.ToBase64String(pics.FileBytes);
-                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-                        <a href="@imgSrc" target="_blank">
-                            <img src="@imgSrc" class="smallPic" />
-                        </a>
                     }
-                }
 
-            </div>
-
-            <div id="div-blogEntryEditDelete">
-
-                <p>
-                    @if (item.AttatchedPost.UserName == Model.currentUser.UserName)
+                </div>
+                <div id="attatchedDocumentsNotBootstrap">
+                    @if (item.AttatchedDocs.Count > 0)
                 {
-                @Html.ActionLink("Edit", "Edit", "Blog", new { Id = item.AttatchedPost.Id }, null)
-            }
-           |
-            @if (ur.IsUserInRole(Model.currentUser.Id, "administrator") || item.AttatchedPost.UserName == Model.currentUser.UserName)
-                {
-                        @Html.ActionLink("Ta bort", "BlogCancel", "Blog", new { Id = item.AttatchedPost.Id }, null)
+                        <p>Bifogade filer:</p>
+                        <ul>
+                            @foreach (var file in item.AttatchedDocs)
+                            {
+                                <li>@Html.ActionLink(file.FileName as string, "DownloadFile", "Blog", new { downloadFileId = file.FileID }, null)</li>
+                            }
+                        </ul>
                     }
-                </p>
+                </div>
+                <div id="div-blogEntryEditDelete">
 
-            </div>
-            <div class="div-blogEntryComment">
+                    <p>
+                        @if (item.AttatchedPost.User == User.Identity.GetUserId())
+                        {
+                            @Html.ActionLink("Edit", "Edit", "Blog", new { Id = item.AttatchedPost.Id }, null)
+                        }
+                        |
+                        @if (ur.IsUserInRole(User.Identity.GetUserId(), "administrator") || item.AttatchedPost.User == User.Identity.GetUserId())
+                        {
+                            @Html.ActionLink("Ta bort", "BlogCancel", "Blog", new { Id = item.AttatchedPost.Id }, null)
+                        }
+                    </p>
 
-                <a href="javascript:void(0)" class="linkComment" id="@item.AttatchedPost.Id">Kommentera</a>
-            </div>
-            <div id="@item.AttatchedPost.Id" class="@item.AttatchedPost.Id blogComments">
+                </div>
+                <div class="div-blogEntryComment">
 
+                    <a href="javascript:void(0)" class="linkComment" id="@item.AttatchedPost.Id">Kommentera</a>
+                </div>
+                <div id="@item.AttatchedPost.Id" class="@item.AttatchedPost.Id blogComments">
+
+                </div>
             </div>
         </div>
-    </div>
-@Html.Hidden("currentUser", Model.currentUser.Id)
-@Html.Hidden("displayName", Model.currentUser.BlogDisplayName)
+
+
+                var user = ur.GetUser(User.Identity.GetUserId());
+                @Html.Hidden("currentUser", User.Identity.GetUserId())
+                @Html.Hidden("displayName", user.BlogDisplayName)
+                }
 }
+<div class="div-blogLoadPosts">
+    @Html.Hidden("oldCountModel", Model.OldCount)
+    @Html.Hidden("newCountModel", Model.NewCount)
+
+    @using (Html.BeginForm("LoadPosts", "Blog", new { count = Model.PostFileCombinations.Count }))
+    {
+        if (Model.DbCount > Model.NewCount)
+        {
+            <input type="submit" value="Ladda fler..." />
+        }
+    }
+
+</div>
 <link href="~/Content/blogg.css" rel="stylesheet" />

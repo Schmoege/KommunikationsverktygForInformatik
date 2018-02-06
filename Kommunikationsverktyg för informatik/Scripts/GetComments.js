@@ -2,8 +2,12 @@
     element.style.height = element.scrollHeight + 'px';
 }
 
+
+
 $(document).ready(function () {
 
+
+    
 
     $('.linkComment').each(function () {
         var id = this.id;
@@ -52,17 +56,25 @@ $(document).ready(function () {
                         data: JSON.stringify(Information),
                         dataType: "json"
                     }).done(function (comment) {
-                        $('#txtarea' + id).val('');
-                        $('#txtarea' + id).height('');
-                        var author = $('#displayName').val();
-                        $('#commentsOn' + id).prepend(
-                            '<div id="div' + comment.Id + '" class="commentMain">' +
-                            '<h5 class="commentAuthor">' + author + '</h5>' +
-                            '<p class="commentContent">' + comment.Content + '</p>' +
-                            '<p class="commentDate" > Skrevs ' + comment.ConvertedDateTime + '</p ></div > ');
+                        if (comment.Content.length < 1) {
+                            $('#txtarea' + id).attr('placeholder', 'Kommentarsfältet får inte vara tomt');
+                        }
+                        else {
+                            $('#txtarea' + id).val('');
+                            $('#txtarea' + id).height('');
+                            var author = $('#displayName').val();
+                            $('#commentsOn' + id).prepend(
+                                '<div id="div' + comment.Id + '" class="commentMain">' +
+                                '<h5 class="commentAuthor">' + author + '</h5>' +
+                                '<p class="commentContent">' + comment.Content + '</p>' +
+                                '<p class="commentDate" > Skrevs ' + comment.ConvertedDateTime + '</p ></div > ');
+                            $('#txtarea' + id).attr('placeholder', ''); 
+                        }
                     });
                 });
             });
         };
     });
+    var anchor = parseInt($('#oldCountModel').val()) + 1;
+    $(document).scrollTop($('#' + anchor).offset().top);
 });

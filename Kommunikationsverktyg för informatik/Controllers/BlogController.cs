@@ -27,42 +27,51 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         // GET: Blog
         [Authorize]
 
-        public ActionResult Index(BlogPostViewModel model)
+        public ActionResult Index(BlogPostViewModel model, int newCount = 5, int oldCount = 5)
         {
             blogRepository.ClearUnreadPosts(User.Identity.GetUserId());
             List<Post> filteredPosts = new List<Post>();
-            if (model.SelectCategories != null)
+            if (model.SelectedCategory != null)
             {
-                var id = context.Categories.Where(x => x.Namn == model.SelectCategories).Select(x => x.Id).First();
-                filteredPosts = context.Posts.Where(x => x.KategoriId == id).ToList();
+                var id = context.Categories.Where(x => x.Namn == model.SelectedCategory).Select(x => x.Id).First();
+                filteredPosts = context.Posts.Where(x => x.KategoriId == id).Take(newCount).ToList();
+                model.DbCount = context.Posts.Where(x => x.KategoriId == id).Count();
+                model.NewCount = filteredPosts.Count;
             }
             else
             {
-                filteredPosts = blogRepository.GetAll().ToList();
+                filteredPosts = blogRepository.GetAll().Take(newCount).ToList();
+                model.DbCount = blogRepository.GetAll().Count();
+                model.NewCount = filteredPosts.Count;
             }
+            model.OldCount = oldCount;
             model.Kategorier = context.Categories.ToList();
             var postCategoriesId = filteredPosts.Select(x => x.Id);
             var categoryFiles = context.UserFiles.Where(x => postCategoriesId.Contains(x.BlogPostId)).ToList();
             var picExtensionList = new List<string>() {".png",".PNG", ".jpg",".JPG",".jpeg",".JPEG" };
             var picList = categoryFiles.Where(x => picExtensionList.Contains(x.FileExtension));
+            var userIdList = filteredPosts.Select(x => x.User).ToList();
+            IEnumerable<ApplicationUser> users = context.Users.Where(x => userIdList.Contains(x.Id));
             foreach (var post in filteredPosts)
             {
                 var newPostFileCombo = new PostFileCombo();
                 newPostFileCombo.AttatchedPost = post;
 
+                newPostFileCombo.AttachedUser = users.SingleOrDefault(x => x.Id == post.User);
+
                 var postPics = picList.Where(x => x.BlogPostId.Equals(post.Id));
-                if (postPics.ToList().Count >= 3)
-                {
-                    newPostFileCombo.ManyPics = true;
-                }
+
                 newPostFileCombo.AttatchedPics = postPics.ToList();
                 newPostFileCombo.AttatchedDocs = categoryFiles.Where(x => x.BlogPostId == post.Id).Where(x => !picExtensionList.Contains(x.FileExtension)).ToList();
                 model.PostFileCombinations.Add(newPostFileCombo);
             }
-            var currentUserId = User.Identity.GetUserId();
-            model.currentUser = context.Users.SingleOrDefault(x => x.Id == currentUserId);
             return View(model);
 
+        }
+        [HttpPost]
+        public ActionResult LoadPosts(int count = 5)
+        {
+            return RedirectToAction("Index", new { oldCount = count, newCount = count + 5 });
         }
 
 
@@ -81,14 +90,20 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
+                if (!ModelState.IsValid || model.SelectedCategory == null)
                 {
-                    return View();
+                    model.Kategorier = context.Categories.ToList();
+                    ViewBag.CategoryError = "Du måste skapa en kategori för att kunna lägga upp ett inlägg";
+                    return View(model);
+                }
+                else
+                {
+                    ViewBag.CategoryError = ""; //Om du lägger till kategori men inte ngn fil så ska du inte få fel här
                 }
                 model.Post.Date = DateTime.Now;
-                model.Post.UserName = User.Identity.GetUserName();
+                model.Post.User = User.Identity.GetUserId(); 
                 model.Post.KategoriId = context.Categories
-                    .Where(x => x.Namn == model.SelectCategories)
+                    .Where(x => x.Namn == model.SelectedCategory)
                     .Select(x => x.Id).First();
                 blogRepository.AddPost(model.Post);
                 //context.Posts.Add(model.Post);
@@ -100,7 +115,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                         if (file.ContentLength > 15728640) //15MB i Bytes
                         {
                             model.Kategorier = context.Categories.ToList();
-                            ViewBag.Error = file.FileName + " är för stor. Storlek: " + (file.ContentLength / 1024).ToString() + "KB"; ;
+                            ViewBag.FileError = file.FileName + " är för stor. Storlek: " + (file.ContentLength / 1024).ToString() + "KB"; ;
                             return View(model);
                         }
                         
