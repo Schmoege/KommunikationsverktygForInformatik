@@ -63,6 +63,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                     Subject = meeting.Subject,
                     Place = meeting.Place,
                     Date = meeting.Date,
+                    MeetingID = meeting.MID,
                     Sender = user.FirstName + user.LastName
                 };
                 meetings.Add(mod);
@@ -124,6 +125,23 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             }
             mr.AddMeeting(meetingModel, invitationModel, RMInviteList, timeList, timeAnswerList);
             return RedirectToAction("ViewMeetings");
+        }
+
+        [HttpGet]
+        public PartialViewResult SpecificMeeting(int meetingID)
+        {
+            MeetingRepository mr = new MeetingRepository();
+            var meeting = mr.GetMeeting(meetingID);
+            var user = mr.GetMeetingCreator(meetingID);
+            var model = new MeetingInvitationsViewModels
+            {
+                Place = meeting.Place,
+                Subject = meeting.Subject,
+                Date = meeting.Date,
+                Sender = user.FirstName + " " + user.LastName,
+                SuggestionsOfTimes = null
+            };
+            return PartialView("_SpecificMeetingPartial", model);
         }
 
         [HttpPost]

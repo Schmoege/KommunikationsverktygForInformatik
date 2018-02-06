@@ -17,6 +17,8 @@ namespace Kommunikationsverktyg_för_informatik.ViewModels
         
         public bool Can { get; set; }
 
+        public int MeetingID { get; set; }
+
         public List<string> SuggestionsOfTimes { get; set; }
     }
 }

@@ -139,6 +139,11 @@
     border-bottom: 1px solid #ccc;
 }
 
+.scrollItem:hover
+{
+    cursor: pointer;
+}
+
 .scrollItem:last-child
 {
     border-bottom: none;

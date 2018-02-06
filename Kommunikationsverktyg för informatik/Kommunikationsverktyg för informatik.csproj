@@ -346,6 +346,7 @@
     <Content Include="Views\Research\Edit.cshtml" />
     <Content Include="Views\Calendar\CalendarDay.cshtml" />
     <Content Include="Views\Education\Edit.cshtml" />
+    <Content Include="Views\Meeting\_SpecificMeetingPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -75,8 +75,26 @@
         }
         else
         {
-            alert("Nay");
+            alert("Vänligen fyll i formuläret korrekt.");
         }
+    });
+
+    $(document).on('click', '.specific', function ()
+    {
+        var id = parseInt($(this).attr("id"));
+        $.ajax({
+            url: '/Meeting/SpecificMeeting',
+            type: "GET",
+            data: { meetingID: id },
+            success: function (data) {
+                $("#Meeting").html(data);
+            },
+            error: function (xhr, status, error) {
+                var msg = "Response failed with status: " + status + "</br>"
+                + " Error: " + error;
+                $("#Meeting").html(msg);
+            }
+        });
     });
 
     $(document).on('click', '.add', function ()

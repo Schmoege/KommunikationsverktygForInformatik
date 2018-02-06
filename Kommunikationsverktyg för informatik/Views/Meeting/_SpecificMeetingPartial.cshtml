@@ -1,0 +1,22 @@
+﻿@model Kommunikationsverktyg_för_informatik.ViewModels.MeetingInvitationsViewModels
+
+<div class="elements events">
+    <div class="element">
+        <p>Sammankallande: @Model.Sender</p>
+        <p>Ämne: @Model.Subject</p>
+        <p>Datum: @Model.Date</p>
+        <p>Plats: @Model.Place</p>
+    </div>
+    <fieldset class="element">
+        <legend>Tidsförslag</legend>
+    </fieldset>
+    <fieldset class="element">
+        <legend>Godkända tider</legend>
+    </fieldset>
+    <div class="element">
+        <form>
+            <input type="radio" name="attendance" value="can" /> Kan närvara <br />
+            <input type="radio" name="attendance" value="cannot" /> Kan icke närvara
+        </form>
+    </div>
+</div>

@@ -103,6 +103,23 @@ namespace DataAccess.Repositories
                     return null;
                 }
             }
+        }
+        
+        public Meeting GetMeeting(int meetingID)
+        {
+            using (DataContext db = new DataContext())
+            {
+                try
+                {
+                    Meeting meeting = new Meeting();
+                    meeting = db.Meetings.Single(x => x.MID.Equals(meetingID));
+                    return meeting;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
         }        
     }
 }
