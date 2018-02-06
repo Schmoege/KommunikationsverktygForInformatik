@@ -25,13 +25,16 @@ namespace DataAccess.Models
 
         public DateTime Date { get; set; }
 
-        public string UserName { get; set; }
+        //[ForeignKey("Id")]
+        public string UserId { get; set; }
         public ApplicationUser ApplicationUser;
+
+        public virtual ICollection<ApplicationUser> AppUsers { get; set; }
 
         public ResearchPost()
         {
             Id = Guid.NewGuid();
-     
+            this.AppUsers = new HashSet<ApplicationUser>();
         }
     }
 }

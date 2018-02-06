@@ -1,4 +1,4 @@
-﻿@model DataAccess.Models.Post
+﻿@model DataAccess.Models.EducationPost
 
 @{
     ViewBag.Title = "Edit";
@@ -26,10 +26,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" }, id = "txtarea-createpost" })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                @Html.TextAreaFor(model => model.Content, new { htmlAttributes = new { @class = "form-control" }, id = "txtarea-createpost" })
+                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -42,7 +42,7 @@
 }
 
 <div>
-    @Html.ActionLink("Tillbaka", "Index")
+    @Html.ActionLink("Back to List", "Index")
 </div>
 
 @section Scripts {

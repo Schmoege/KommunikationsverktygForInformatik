@@ -15,57 +15,85 @@
                 var currentUserId = User.Identity.GetUserId();
                 var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new DataContext()));
                 var currentUser = manager.FindById(currentUserId);
+                var rr = new ResearchRepository();
+                var er = new EducationRepository();
+                var br = new BlogRepository();
             }
             @if (currentUser != null)
             {
+
+                <li class="loginCell">
+                    <br />
+                    <div id="loginCell">
+                        <text id="loggedInAs" title="Logged in as">@User.Identity.GetUserName().ToString()</text>
+                    </div>
+                </li>
                 UserRepository ur = new UserRepository();
                 if (ur.IsUserInRole(currentUser.Id, "administrator"))
                 {
+
                     <li>
+                        @*<div id="adminPanelIcon">*@
                         <a href='@Url.Action("Adminpanel", "Admin")'>
-                            <img src="~/Icons/Admin/1041638-24.png" alt="Admin" width="32" height="32" />
+                            <img class="Icon" src="~/Icons/Menu/AdmIcon.png" title="Admin Panel" alt="Admin" width="32" height="32" />
                         </a>
+                        @*</div>*@
                     </li>
+
                 }
 
+                <li>
 
+                    <a href='@Url.Action("Index","Blog")'>
+                        <img class="IconBlog" src="~/Icons/Menu/BlogIcon.png" title="Blog" alt="Blogg" width="32" height="32" />
+                        @if (br.GetUnreadPosts(User.Identity.GetUserId()) > 0)
+                        {
+                            <div class="bottomleft">@br.GetUnreadPosts(User.Identity.GetUserId())</div>
+                        }
+                    </a>
+
+
+                </li>
 
                 <li>
-                    <a href='@Url.Action("EducationBlog", "Education")'>
-                        <img src="~/Icons/Admin/274892-24.png" alt="eduAdmin" width="32" height="32" />
+                    <a href='@Url.Action("Index", "Education")'>
+                        <img class="Icon" title="Education Blog" src="~/Icons/Menu/EduIcon.png" alt="eduAdmin" width="32" height="32" />
+                        @if (er.GetUnreadPosts(User.Identity.GetUserId()) > 0)
+                        {
+                            <div class="bottomleft">@er.GetUnreadPosts(User.Identity.GetUserId()).ToString()</div>
+                        }
                     </a>
                 </li>
 
 
 
 
-                    <li>
-                        <a href='@Url.Action("Index", "Research")'>
-                            <img src="~/Icons/Admin/728987-32.png" alt="resAdmin" width="32" height="32" />
-                        </a>
-                    </li>
+                <li>
+                    <a href='@Url.Action("Index", "Research")'>
+                        <img class="Icon" title="Research Blog" src="~/Icons/Menu/ResIcon.png" alt="resAdmin" width="32" height="32" />
+                        @if (rr.GetUnreadPosts(User.Identity.GetUserId()) > 0)
+                        {
+                            <div class="bottomleft">@rr.GetUnreadPosts(User.Identity.GetUserId()).ToString()</div>
+                        }
+
+                    </a>
+                </li>
 
 
             }
             <li>
                 <a href='@Url.Action("Calendar", "Calendar")'>
-                    <img src="~/Icons/Calendar/if_Calendar_2125602.png" alt="Kalender" width="32" height="32" />
+                    <img class="Icon" title="Calendar" src="~/Icons/Menu/CalendarIcon.png" alt="Kalender" width="32" height="32" />
                 </a>
             </li>
             <li>
                 <a href='@Url.Action("Meeting", "Meeting")'>
-                    <img src="~/Icons/Meeting/Meeting.png" alt="Möte" width="32" height="32" />
+                    <img class="Icon" title="Meeting" src="~/Icons/Menu/Meeting.png" alt="Möte" width="32" height="32" />
                 </a>
             </li>
-            <li>
-                <a href='@Url.Action("Index","Blog")'>
-                    <img src="~/Icons/Blogg/Blogg.png" alt="Blogg" width="32" height="32" />
-                </a>
-            </li>
-            <li>
-                <text class="login">@User.Identity.GetUserName().ToString()</text>
-            </li>
-            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+
+
+            <li><a href="javascript:document.getElementById('logoutForm').submit()"><img class="Icon" title="Log Out" src="~/Icons/Menu/ExitIcon.png" alt="Log out" width="32" height="32" /></a></li>
         </ul>
                     }
                 }

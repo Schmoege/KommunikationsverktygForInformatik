@@ -16,13 +16,16 @@ namespace DataAccess.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        public DateTime PostedAt { get; set; }
+
+        [Required]
+        [MinLength(1, ErrorMessage = "Fett dålig kommentar")]
         public string Content { get; set; }
 
-        public int PostID { get; set; }
+        public Guid PostID { get; set; }
         public Post Post;
 
         public string Author { get; set; }
         public ApplicationUser ApplicationUser;
-
     }
 }
