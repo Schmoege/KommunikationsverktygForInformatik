@@ -225,6 +225,7 @@
     <Compile Include="ViewModels\EditViewModels.cs" />
     <Compile Include="ViewModels\EducationBlogViewModel.cs" />
     <Compile Include="ViewModels\FrontPageViewModel.cs" />
+    <Compile Include="ViewModels\MeetingInvitationsViewModels.cs" />
     <Compile Include="ViewModels\GetCommentViewModels.cs" />
     <Compile Include="ViewModels\MeetingViewModels.cs" />
     <Compile Include="ViewModels\MonthViewModels.cs" />

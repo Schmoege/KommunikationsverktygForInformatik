@@ -10,24 +10,23 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Models
 {
-    public class Invitation
+    public class TimeAnswer
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int IID { get; set; }
+        public int ID { get; set; }
 
-        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime Date { get; set; }
-
+        [Required]
         [DefaultValue(0)]
         public int Answer { get; set; }
 
+        [Required]
         [DefaultValue(false)]
         public bool Answered { get; set; }
 
-        [ForeignKey("Meeting")]
-        public int MeetingID { get; set; }
-        public Meeting Meeting { get; set; }
+        [ForeignKey("TimeSuggestion")]
+        public int TimeID { get; set; }
+        public TimeSuggestion TimeSuggestion { get; set; }
 
         [ForeignKey("ApplicationUser")]
         public string UserID { get; set; }

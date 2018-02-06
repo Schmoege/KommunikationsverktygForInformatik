@@ -29,6 +29,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
 
         public ActionResult Index(BlogPostViewModel model, int newCount = 5, int oldCount = 5)
         {
+            blogRepository.ClearUnreadPosts(User.Identity.GetUserId());
             List<Post> filteredPosts = new List<Post>();
             if (model.SelectedCategory != null)
             {
@@ -104,7 +105,8 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                 model.Post.KategoriId = context.Categories
                     .Where(x => x.Namn == model.SelectedCategory)
                     .Select(x => x.Id).First();
-                context.Posts.Add(model.Post);
+                blogRepository.AddPost(model.Post);
+                //context.Posts.Add(model.Post);
 
                 if (model.uploadFiles[0] != null) //Den skickar alltid med någon jävel
                 {
@@ -202,6 +204,10 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         public ActionResult BlogCancel (Guid id)
         {
             Post postDelete = context.Posts.Find(id);
+            IEnumerable<Comment> relatedComments = context.Comments
+                .Where(x => x.PostID == id);
+
+            context.Comments.RemoveRange(relatedComments);
             context.Posts.Remove(postDelete);
             context.SaveChanges();
             return RedirectToAction("Index");

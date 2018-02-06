@@ -15,6 +15,10 @@ namespace DataAccess.Repositories
         {
             this.dataContext = dataContext;
         }
+        public BlogRepository()
+        {
+
+        }
 
 
         public IEnumerable<Post> GetAll()
@@ -23,7 +27,36 @@ namespace DataAccess.Repositories
             return dataContext.Posts.ToList().OrderByDescending(x => x.Date).Take(10);
         }
 
+        public void AddPost(Post post)
+        {
+            using (DataContext db = new DataContext())
+            {
+                var users = db.Users.ToList();
+                users.ForEach(u => u.UnreadPosts.Add(post));
+                db.Posts.Add(post);
+                db.SaveChanges();
+            }
+        }
 
+        public int GetUnreadPosts(string userId)
+        {
+            using (DataContext db = new DataContext())
+            {
+                var user = db.Users.SingleOrDefault(u => u.Id.Equals(userId));
+
+                int unread = user.UnreadPosts.Count();
+                return unread;
+            }
+        }
+        public void ClearUnreadPosts(string userId)
+        {
+            using (DataContext db = new DataContext())
+            {
+                var user = db.Users.SingleOrDefault(u => u.Id.Equals(userId));
+                user.UnreadPosts.Clear();
+                db.SaveChanges();
+            }
+        }
 
     }
 }

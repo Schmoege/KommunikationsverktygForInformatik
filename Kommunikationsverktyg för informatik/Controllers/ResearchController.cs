@@ -21,6 +21,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             
 
             ResearchBlogViewModel model = new ResearchBlogViewModel();
+            rr.ClearUnreadPosts(User.Identity.GetUserId());
             model.Posts = rr.GetAll().ToList();
             
 

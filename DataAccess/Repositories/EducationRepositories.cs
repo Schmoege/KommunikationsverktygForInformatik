@@ -24,14 +24,7 @@ namespace DataAccess.Repositories
                 return listOfPosts;
             }
         }
-            public void AddPost(EducationPost post)
-        {
-            using (DataContext db = new DataContext())
-            {
-                db.EducationPosts.Add(post);
-                db.SaveChanges();
-            }
-        }
+        
 
         public void DeletePost(Guid id)
         {
@@ -60,6 +53,36 @@ namespace DataAccess.Repositories
                 postToEdit.Title = post.Title;
                 postToEdit.Content = post.Content;
                 db.Entry(postToEdit).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
+        }
+        public void AddPost(EducationPost post)
+        {
+            using (DataContext db = new DataContext())
+            {
+                var users = db.Users.ToList();
+                users.ForEach(u => u.UnreadEducationPosts.Add(post));
+                db.EducationPosts.Add(post);
+                db.SaveChanges();
+            }
+        }
+
+        public int GetUnreadPosts(string userId)
+        {
+            using (DataContext db = new DataContext())
+            {
+                var user = db.Users.SingleOrDefault(u => u.Id.Equals(userId));
+                int unread = user.UnreadEducationPosts.Count();
+                return unread;
+            }
+        }
+        
+        public void ClearUnreadPosts(string userId)
+        {
+            using (DataContext db = new DataContext())
+            {
+                var user = db.Users.SingleOrDefault(u => u.Id.Equals(userId));
+                user.UnreadEducationPosts.Clear();
                 db.SaveChanges();
             }
         }

@@ -1,4 +1,6 @@
-﻿<div class="elements">
+﻿@model Tuple<List<Kommunikationsverktyg_för_informatik.ViewModels.MeetingInvitationsViewModels>>
+
+<div class="elements">
     <div class="elements events">
         <div class="element">
             <fieldset>
@@ -10,9 +12,10 @@
         <div class="element">
             <fieldset>
                 <legend>Inbjudningar</legend>
-                <p>Lorem ipsum</p>
-                <p>Lorem ipsum</p>
-                <p>Lorem ipsum</p>
+                @foreach(Kommunikationsverktyg_för_informatik.ViewModels.MeetingInvitationsViewModels item in Model.Item1)
+                {
+                    <p>@item.Subject, @item.Sender</p>
+                }
             </fieldset>
         </div>
     </div>

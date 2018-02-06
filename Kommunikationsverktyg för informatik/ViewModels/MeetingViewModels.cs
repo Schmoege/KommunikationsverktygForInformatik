@@ -30,5 +30,8 @@ namespace Kommunikationsverktyg_för_informatik.ViewModels
         [Required, Display(Name = "Tid")]
         public string Time { get; set; }
         public List<string> Times { get; set; }
+
+        public List<string> Names { get; set; }
+        public List<string> Mails { get; set; }
     }
 }

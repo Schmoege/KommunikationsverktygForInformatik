@@ -37,7 +37,7 @@
             @Html.LabelFor(model => model.Post.Description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="">
                 @Html.TextAreaFor(model => model.Post.Description, new { htmlAttributes = new { @class = "form-control" }, id = "txtarea-createpost"  })
-                @Html.ValidationMessageFor(model => model.Post.Description, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.Post.Description, "", new { @class = "text-danger post-description-error" })
             </div>
         </div>
         

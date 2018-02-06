@@ -23,6 +23,11 @@
     width: 220px;
 }
 
+#superDiv .element ul
+{
+    min-height: 20px;
+}
+
 #buttons
 {
     float: right;
