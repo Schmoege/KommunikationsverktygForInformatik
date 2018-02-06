@@ -43,8 +43,9 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         }
 
         [HttpGet]
-        public PartialViewResult ViewMeetings(string userID)
+        public PartialViewResult ViewMeetings()
         {
+            var userID = User.Identity.GetUserId();
             List<MeetingInvitationsViewModels> meetings = FetchInvitedMeetings(userID);
             return PartialView("_MeetingPartial", Tuple.Create(meetings));
         }
@@ -71,7 +72,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         }
 
         [HttpPost]
-        public PartialViewResult CreatedMeetings(string subject, string place, string date, string creatorMail, List<string> times, List<string> mails)
+        public ActionResult CreatedMeetings(string subject, string place, string date, string creatorMail, List<string> times, List<string> mails)
         {
             UserRepository ur = new UserRepository();
             MeetingRepository mr = new MeetingRepository();
@@ -81,7 +82,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                 Place = place,
                 Date = date
             };
-            var creator = ur.GetUser(creatorMail);
+            var creator = ur.GetUserByEmail(creatorMail);
             var invitationModel = new Invitation
             {
                 //Meeting = meetingModel,
@@ -96,7 +97,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                 var RMInvite = new RecieveMeetingInvitation
                 {
                     InvitationID = invitationModel.IID,
-                    UserID = ur.GetUser(mail).Id
+                    UserID = ur.GetUserByEmail(mail).Id
                 };
                 RMInviteList.Add(RMInvite);
             }
@@ -111,7 +112,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                 };
                 foreach(string mail in mails)
                 {
-                    var user = ur.GetUser(mail);
+                    var user = ur.GetUserByEmail(mail);
                     var timeAnswerModel = new TimeAnswer
                     {
                         UserID = user.Id,
@@ -122,7 +123,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                 timeList.Add(timeSuggestionModel);
             }
             mr.AddMeeting(meetingModel, invitationModel, RMInviteList, timeList, timeAnswerList);
-            return PartialView("_MeetingPartial");
+            return RedirectToAction("ViewMeetings");
         }
 
         [HttpPost]
