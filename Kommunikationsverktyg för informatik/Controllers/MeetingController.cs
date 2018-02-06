@@ -1,6 +1,7 @@
 ﻿using Kommunikationsverktyg_för_informatik.ViewModels;
 using DataAccess.Repositories;
 using DataAccess.Models;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,9 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         // GET: Meeting
         public ActionResult Meeting()
         {
-            return View();
+            var userID = User.Identity.GetUserId();
+            List<MeetingInvitationsViewModels> meetings = FetchInvitedMeetings(userID);
+            return View(meetings);
         }
 
         [HttpGet]
@@ -40,11 +43,33 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         }
 
         [HttpGet]
-        public PartialViewResult ViewMeetings()
+        public PartialViewResult ViewMeetings(string userID)
         {
-            return PartialView("_MeetingPartial");
+            List<MeetingInvitationsViewModels> meetings = FetchInvitedMeetings(userID);
+            return PartialView("_MeetingPartial", Tuple.Create(meetings));
         }
-        
+
+        private static List<MeetingInvitationsViewModels> FetchInvitedMeetings(string userID)
+        {
+            MeetingRepository mr = new MeetingRepository();
+            var list = mr.GetInvitedMeetings(userID);
+            List<MeetingInvitationsViewModels> meetings = new List<MeetingInvitationsViewModels>();
+            foreach (Meeting meeting in list)
+            {
+                var user = mr.GetMeetingCreator(meeting.MID);
+                var mod = new MeetingInvitationsViewModels
+                {
+                    Subject = meeting.Subject,
+                    Place = meeting.Place,
+                    Date = meeting.Date,
+                    Sender = user.FirstName + user.LastName
+                };
+                meetings.Add(mod);
+            }
+
+            return meetings;
+        }
+
         [HttpPost]
         public PartialViewResult CreatedMeetings(string subject, string place, string date, string creatorMail, List<string> times, List<string> mails)
         {

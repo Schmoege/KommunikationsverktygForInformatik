@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity.Validation;
+using System.Data.SqlClient;
+using Kommunikationsverktyg_för_informatik.Models;
 
 namespace DataAccess.Repositories
 {
@@ -65,6 +67,40 @@ namespace DataAccess.Repositories
                         }
                     }
                     throw;
+                }
+            }
+        }
+        
+        public List<Meeting> GetInvitedMeetings(string userID)
+        {
+            using (DataContext db = new DataContext())
+            {
+                try
+                {
+                    List<Meeting> meetingList = new List<Meeting>();
+                    meetingList = db.Meetings.SqlQuery("select * from dbo.Meetings where MID in (select MeetingID from Invitations where IID in (select InvitationID from RecieveMeetingInvitations where UserID = @p0))", userID).ToList();
+                    return meetingList;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
+        
+        public ApplicationUser GetMeetingCreator(int meetingID)
+        {
+            using (DataContext db = new DataContext())
+            {
+                try
+                {
+                    var inv = db.Invitations.Single(x => x.MeetingID.Equals(meetingID));
+                    var user = db.Users.Single(x => x.Id.Equals(inv.UserID));
+                    return user;
+                }
+                catch
+                {
+                    return null;
                 }
             }
         }        
