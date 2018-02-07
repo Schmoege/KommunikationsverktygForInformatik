@@ -204,6 +204,10 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         public ActionResult BlogCancel (Guid id)
         {
             Post postDelete = context.Posts.Find(id);
+            IEnumerable<Comment> relatedComments = context.Comments
+                .Where(x => x.PostID == id);
+
+            context.Comments.RemoveRange(relatedComments);
             context.Posts.Remove(postDelete);
             context.SaveChanges();
             return RedirectToAction("Index");

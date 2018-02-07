@@ -232,3 +232,6 @@ textarea {
     height: 100px;
     width: 100px
 }
+.post-description-error {
+    margin-left: 17%;
+}

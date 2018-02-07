@@ -84,6 +84,23 @@ namespace DataAccess.Repositories
             };
         }
 
+        public List<ApplicationUser> GetUserList()
+        {
+            using (var db = new DataContext())
+            {
+                var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+                try
+                {
+                    List<ApplicationUser> userList = UserManager.Users.ToList<ApplicationUser>();
+                    return userList;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
+
         public string GetUsername(string id)
         {
             using (DataContext db = new DataContext())

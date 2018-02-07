@@ -76,6 +76,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IdentityConfig.cs" />
+    <Compile Include="Models\RecieveMeetingInvitation.cs" />
+    <Compile Include="Models\TimeAnswer.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\EducationPost.cs" />
     <Compile Include="Models\Invitation.cs" />
@@ -84,6 +86,7 @@
     <Compile Include="Models\Meeting.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="Models\ResearchPost.cs" />
+    <Compile Include="Models\TimeSuggestion.cs" />
     <Compile Include="Models\UserFile.cs" />
     <Compile Include="Repositories\BlogRepository.cs" />
     <Compile Include="Repositories\DataContext.cs" />

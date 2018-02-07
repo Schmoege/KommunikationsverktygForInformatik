@@ -1,26 +1,33 @@
-﻿@model Tuple< Kommunikationsverktyg_för_informatik.ViewModels.MeetingViewModels, DateTime>
+﻿@using Kommunikationsverktyg_för_informatik.Models
+@using DataAccess.Models
+@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.EntityFramework
+@using DataAccess.Repositories
+
+@model Tuple< Kommunikationsverktyg_för_informatik.ViewModels.MeetingViewModels, DateTime>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+@{
+    var currentUserId = User.Identity.GetUserId();
+    var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new DataContext()));
+    var currentUser = manager.FindById(currentUserId);
+ }
 <div id="createNewMeeting">
     @using (Html.BeginForm("", "", FormMethod.Post))
     {
     <div id="superDiv" class="elements events">
+        @Html.Hidden("creatorMail",currentUser.Email, new { @id = "creatorMail"});
         <div id="userList" class="element">
             <ul class="scrollList">
-                <li class="scrollItem">Användare 1</li>
-                <li class="scrollItem">Användare 2</li>
-                <li class="scrollItem">Användare 3</li>
-                <li class="scrollItem">Användare 4</li>
-                <li class="scrollItem">Användare 5</li>
-                <li class="scrollItem">Användare 6</li>
+                @for (int i = 0; i < Model.Item1.Mails.Count; i++)
+                {
+                    <li class="scrollItem add">@Model.Item1.Names[i] @Html.Hidden(Model.Item1.Names[i], Model.Item1.Mails[i])</li>                    
+                }
             </ul>
         </div>
         <div id="selectedUserList" class="element">
             <ul class="scrollList">
-                <li class="scrollItem">Lorem Ipsum</li>
-                <li class="scrollItem">Lorem Ipsum</li>
-                <li class="scrollItem">Lorem Ipsum</li>
-                <li class="scrollItem">Lorem Ipsum</li>
+                <li id="empty" class="scrollItem">Empty</li>
             </ul>
         </div>
         <div id="creatMeetingTable" class="element">
