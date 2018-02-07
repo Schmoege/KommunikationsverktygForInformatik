@@ -103,6 +103,40 @@ namespace DataAccess.Repositories
                     return null;
                 }
             }
-        }        
+        }
+        
+        public Meeting GetMeeting(int meetingID)
+        {
+            using (DataContext db = new DataContext())
+            {
+                try
+                {
+                    Meeting meeting = new Meeting();
+                    meeting = db.Meetings.Single(x => x.MID.Equals(meetingID));
+                    return meeting;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }     
+        
+        public List<TimeSuggestion> GetTimeSuggestions(int meetingID)
+        {
+            using (DataContext db = new DataContext())
+            {
+                try
+                {
+                    List<TimeSuggestion> timeList = new List<TimeSuggestion>();
+                    timeList = db.TimeSuggestions.Where(x => x.MeetingID.Equals(meetingID)).ToList();
+                    return timeList;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }   
     }
 }

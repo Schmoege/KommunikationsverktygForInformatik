@@ -1,0 +1,42 @@
+﻿@model Kommunikationsverktyg_för_informatik.ViewModels.MeetingInvitationsViewModels
+
+<div id="answer" class="elements events">
+    <div class="element">
+        <p class="info header">Sammankallande</p>
+        <p class="info">@Model.Sender</p>
+        <p class="info header">Ämne</p>
+        <p class="info">@Model.Subject</p>
+        <p class="info header">Datum</p>
+        <p class="info">@Model.Date</p>
+        <p class="info header">Plats</p>
+        <p class="info">@Model.Place</p>
+    </div>
+    <fieldset id="cannot" class="element">
+        <legend>Tidsförslag</legend>
+        <ul class="scrollList">
+            @foreach(string time in Model.SuggestionsOfTimes)
+            {
+                <li class="scrollItem cannot">@time</li>
+            }
+        </ul>
+    </fieldset>
+    <fieldset id="can" class="element">
+        <legend>Godkända tider</legend>
+        <ul class="scrollList">
+        </ul>
+    </fieldset>
+    <div class="element">
+        <form id="acceptForm">
+            <div>
+                <input id="radioCan" class="option" type="radio" name="attendance" value="can" />
+                <label for="radioCan">Kan närvara</label>
+            </div>
+            <div>
+                <input id="radioCannot" class="option" type="radio" name="attendance" value="cannot" />
+                <label for="radioCannot">Kan icke närvara</label>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="acceptTimesButton">Svara</div>
