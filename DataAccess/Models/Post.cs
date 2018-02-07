@@ -27,6 +27,8 @@ namespace DataAccess.Models
 
         public DateTime Date { get; set; }
 
+        public bool Hidden { get; set; } = false;
+
         public string User { get; set; }
         public ApplicationUser ApplicationUser;
 

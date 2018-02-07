@@ -12,9 +12,9 @@
 <h2>Bloggflöde</h2>
 
 <p>
-    @Html.ActionLink("Skapa inlägg", "Create")
+    @Html.ActionLink("Skapa inlägg", "Create", new { formal = Model.Formal })
 </p>
-@using (Html.BeginForm("Index", "Blog"))
+@using (Html.BeginForm("Index", "Blog", new { formal = Model.Formal }))
 {
     <div id="div-blogCategory">
         <h4 id="h4-category">Sortera efter kategori</h4>
@@ -23,6 +23,21 @@
                 @Html.DropDownListFor(model => model.SelectedCategory, new SelectList(Model.Kategorier.Select(x => x.Namn)), new { id = "dropdown-Filter" })
                 <input type="submit" value="Filtrera" class="btn btn-default" id="btn-filter" />
             </div>
+            <div id="div-blogHiddenPosts">
+                @if (!Model.Formal)
+                {
+                    if (Model.Hidden)
+                    {
+                        @Html.ActionLink("Synliga inlägg", "Index")
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Mina gömda inlägg", "MyHiddenPosts")
+                    }
+                }
+
+            </div>
+
         </div>
     </div>
 

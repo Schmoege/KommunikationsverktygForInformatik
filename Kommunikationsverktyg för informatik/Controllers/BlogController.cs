@@ -27,31 +27,38 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         // GET: Blog
         [Authorize]
 
-        public ActionResult Index(BlogPostViewModel model, int newCount = 5, int oldCount = 5)
+        public ActionResult Index(BlogPostViewModel model, bool formal = false, bool hidden = false, int newCount = 5, int oldCount = 5)
         {
+            model.Formal = formal;
             blogRepository.ClearUnreadPosts(User.Identity.GetUserId());
             List<Post> filteredPosts = new List<Post>();
             if (model.SelectedCategory != null)
             {
                 var id = context.Categories.Where(x => x.Namn == model.SelectedCategory).Select(x => x.Id).First();
-                filteredPosts = context.Posts.Where(x => x.KategoriId == id).Take(newCount).ToList();
+                filteredPosts = context.Posts.Where(x => x.KategoriId == id && x.Hidden == false).Take(newCount).ToList();
                 model.DbCount = context.Posts.Where(x => x.KategoriId == id).Count();
                 model.NewCount = filteredPosts.Count;
             }
             else
             {
-                filteredPosts = blogRepository.GetAll().Take(newCount).ToList();
-                model.DbCount = blogRepository.GetAll().Count();
+                filteredPosts = blogRepository.GetAll(formal).Take(newCount).ToList();
+                model.DbCount = blogRepository.GetAll(formal).Count();
                 model.NewCount = filteredPosts.Count;
             }
             model.OldCount = oldCount;
-            model.Kategorier = context.Categories.ToList();
+            model.Kategorier = context.Categories.Where(x => x.Formell == formal).ToList();
             var postCategoriesId = filteredPosts.Select(x => x.Id);
             var categoryFiles = context.UserFiles.Where(x => postCategoriesId.Contains(x.BlogPostId)).ToList();
             var picExtensionList = new List<string>() {".png",".PNG", ".jpg",".JPG",".jpeg",".JPEG" };
             var picList = categoryFiles.Where(x => picExtensionList.Contains(x.FileExtension));
             var userIdList = filteredPosts.Select(x => x.User).ToList();
             IEnumerable<ApplicationUser> users = context.Users.Where(x => userIdList.Contains(x.Id));
+            if(hidden)
+            {
+                string myID = User.Identity.GetUserId();
+                model.Hidden = true;
+                filteredPosts = context.Posts.Where(x => x.Hidden == true && x.User == myID).ToList();
+            }
             foreach (var post in filteredPosts)
             {
                 var newPostFileCombo = new PostFileCombo();
@@ -76,10 +83,11 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
 
 
         [Authorize]
-        public ActionResult Create()
+        public ActionResult Create(bool formal = false)
         {
             BlogPostViewModel model = new BlogPostViewModel();
-            model.Kategorier = context.Categories.ToList();
+            model.Formal = formal;
+            model.Kategorier = context.Categories.Where(x => x.Formell == formal).ToList();
             return View(model);
 
         }
@@ -125,23 +133,24 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                 }
 
                 context.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { formal = model.Formal });
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.Write(e.Message);
             }
-           return RedirectToAction("Index");
+           return RedirectToAction("Index", new { formal = model.Formal });
         }
 
         [Authorize]
-        public ActionResult CreateKategori()
+        public ActionResult CreateKategori(bool formal = false)
         {
+            ViewBag.Formal = formal;
             return View();
         }
 
         [HttpPost]
-        public ActionResult CreateKategori(Kategori kategori)
+        public ActionResult CreateKategori(Kategori kategori, bool formal = false)
         {
             if (!ModelState.IsValid)
             {
@@ -149,7 +158,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             }
             context.Categories.Add(kategori);
             context.SaveChanges();
-            return RedirectToAction("Create");
+            return RedirectToAction("Create", new { formal = formal });
         }
 
         [HttpPost]
@@ -195,6 +204,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             Post postToEdit = context.Posts.SingleOrDefault(x => x.Id == postInfo.Id);
             postToEdit.Title = postInfo.Title;
             postToEdit.Description = postInfo.Description;
+            postToEdit.Hidden = postInfo.Hidden;
             context.Entry(postToEdit).State = System.Data.Entity.EntityState.Modified;
             context.SaveChanges();
 
@@ -214,6 +224,11 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
 
 
            
+        }
+        
+        public ActionResult MyHiddenPosts()
+        {
+            return RedirectToAction("Index", new { hidden = true });
         }
 
     }
