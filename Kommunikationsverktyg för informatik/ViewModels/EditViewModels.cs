@@ -14,6 +14,7 @@ namespace Kommunikationsverktyg_för_informatik.ViewModels
         public SetPasswordViewModel setPassword { get; set; }
         public string Id;
 
+        //[System.Web.Mvc.Remote("IsEmailAvailable", "Validation")]
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
