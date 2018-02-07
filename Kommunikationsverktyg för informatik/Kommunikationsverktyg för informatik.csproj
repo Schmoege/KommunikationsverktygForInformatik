@@ -210,6 +210,7 @@
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\EducationController.cs" />
+    <Compile Include="Controllers\FileSearchController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MeetingController.cs" />
@@ -224,6 +225,7 @@
     <Compile Include="ViewModels\DayViewModels.cs" />
     <Compile Include="ViewModels\EditViewModels.cs" />
     <Compile Include="ViewModels\EducationBlogViewModel.cs" />
+    <Compile Include="ViewModels\FileSearchViewModel.cs" />
     <Compile Include="ViewModels\FrontPageViewModel.cs" />
     <Compile Include="ViewModels\MeetingInvitationsViewModels.cs" />
     <Compile Include="ViewModels\GetCommentViewModels.cs" />
@@ -274,6 +276,7 @@
     <Content Include="Scripts\Calendar.js" />
     <Content Include="Scripts\CommentMore.js" />
     <Content Include="Scripts\GetComments.js" />
+    <Content Include="Scripts\getFileSearchResult.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
@@ -347,6 +350,8 @@
     <Content Include="Views\Research\Edit.cshtml" />
     <Content Include="Views\Calendar\CalendarDay.cshtml" />
     <Content Include="Views\Education\Edit.cshtml" />
+    <Content Include="Views\FileSearch\FileSearch.cshtml" />
+    <Content Include="Views\FileSearch\_SearchResultPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
