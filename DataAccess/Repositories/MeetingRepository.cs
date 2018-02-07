@@ -120,6 +120,23 @@ namespace DataAccess.Repositories
                     return null;
                 }
             }
-        }        
+        }     
+        
+        public List<TimeSuggestion> GetTimeSuggestions(int meetingID)
+        {
+            using (DataContext db = new DataContext())
+            {
+                try
+                {
+                    List<TimeSuggestion> timeList = new List<TimeSuggestion>();
+                    timeList = db.TimeSuggestions.Where(x => x.MeetingID.Equals(meetingID)).ToList();
+                    return timeList;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }   
     }
 }

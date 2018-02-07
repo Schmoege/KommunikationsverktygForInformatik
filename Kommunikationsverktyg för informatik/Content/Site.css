@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    margin-top:20px;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -32,7 +33,8 @@ textarea {
     overflow: hidden;
     border: 1px solid cornflowerblue;
 }
-    .div-blogEntryMainEdu {
+
+.div-blogEntryMainEdu {
     width: 80%;
     padding: 1% 5% 1% 5%;
     height: 100%;
@@ -40,6 +42,7 @@ textarea {
     overflow: hidden;
     border: 1px solid cornflowerblue;
 }
+
 .div-blogEntryMain {
     width: 80%;
     padding: 1% 5% 1% 5%;
@@ -48,21 +51,26 @@ textarea {
     overflow: hidden;
     border: 1px solid cornflowerblue;
 }
+
 .margin5 {
     margin: 0 0 5% 0;
 }
+
 #div-blogEntryEditDelete {
-    float:right;
+    float: right;
 }
+
 #div-blogCategory {
     overflow: hidden;
     width: 80%;
     padding-bottom: 2%;
 }
+
 #div-blogCategoryFilter {
     width: 70%;
     float: right;
 }
+
 #div-blogCategoryButtons {
     float: right;
     width: 60%;
@@ -71,12 +79,14 @@ textarea {
 #blogText {
     background-color: inherit;
 }
+
 #btn-filter {
     padding-top: 0;
     padding-bottom: 0;
     float: left;
     width: 30%;
 }
+
 #dropdown-Filter {
     float: left;
     width: 70%;
@@ -87,70 +97,89 @@ textarea {
     margin: 0;
     float: left;
 }
+
 #txtarea-createpost {
     resize: none;
     width: 80%;
     max-width: 80%;
     height: 200px;
 }
+
 .btnComment {
     float: left;
     margin: 10px 0 10px 0;
 }
+
 .inputComment {
     min-width: 40%;
     margin: 10px 5px 10px 1%;
-    float: left;    
+    float: left;
     resize: none;
     overflow: hidden;
 }
+
 .blogComments {
-    background-color : gainsboro;
-    width : 100%;
-    float : left;
-    height : 100%;
+    background-color: gainsboro;
+    width: 100%;
+    float: left;
+    height: 100%;
     border-radius: 5px;
 }
+
 .commentMain {
-    width : 97%;
-    border-radius : 5px;
-    float : left;
-    background-color : antiquewhite;
+    width: 97%;
+    border-radius: 5px;
+    float: left;
+    background-color: antiquewhite;
     margin: 10px;
 }
+
 .commentContent {
-    word-break : break-all;
+    word-break: break-all;
     margin: 5px 5px 5px 5px;
 }
+
 .commentDate {
     font-size: small;
     margin: 5px 5px 5px 5px;
 }
+
 .commentAuthor {
     margin: 5px 5px 5px 5px;
 }
+
 .linkComment {
     border: 1px solid blue;
     border-radius: 5px;
     padding: 5px;
     background-color: aliceblue;
 }
+
 #div-blogEntryAttachedFile {
     margin-bottom: 10px;
 }
+
 .smallPic {
     height: 100px;
     width: 100px
 }
+
 .Icon:hover {
     -webkit-filter: brightness(100) !important;
 }
 
-.IconBlog:hover {
-    -webkit-filter: brightness(100);
+.Icon {
+    margin: 0px;
+    padding: 0px;
 }
-.bottomleft {
 
+
+.IconPic {
+    display: block;
+    margin: 0 auto;
+}
+
+.bottomleft {
     position: absolute;
     bottom: 15px;
     left: 16px;
@@ -162,22 +191,46 @@ textarea {
     height: 20px;
     border-radius: 50%;
 }
+
 .number {
     position: absolute;
 }
 
 
+
+#loggedInAs:hover {
+    color: white;
+    text-decoration: none;
+}
+
 #loggedInAs {
     color: black;
 }
+
 #loginCell {
     border-radius: 7px;
     padding: 2px;
     background-color: #5e889e;
+    display: block;
+    margin: auto;
+    margin-top:5px;
 }
+#loggedInAsLi {
+    height: 77px;
+}
+
+    #loginCell:hover {
+        color: white;
+    }
+
 .login {
     color: azure;
     text-align: center;
+}
+
+.smallPic {
+    height: 100px;
+    width: 100px
 }
 .post-description-error {
     margin-left: 17%;

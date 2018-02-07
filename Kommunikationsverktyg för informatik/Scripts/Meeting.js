@@ -97,6 +97,31 @@
         });
     });
 
+    $(document).on('click', '#radioCannot', function ()
+    {
+        $("#can ul li").addClass("disable");
+        $("#cannot ul li").addClass("disable");
+    });
+
+    $(document).on('click', '#radioCan', function () {
+        $("#can ul li").removeClass("disable");
+        $("#cannot ul li").removeClass("disable");
+    });
+
+    $(document).on('click', '.cannot', function () {
+        $(this).toggleClass("cannot can");
+        var selected = $(this);
+        $("#can ul").append($(selected).clone());
+        $(selected).remove();
+    });
+
+    $(document).on('click', '.can', function () {
+        $(this).toggleClass("cannot can");
+        var selected = $(this);
+        $("#cannot ul").append($(selected).clone());
+        $(selected).remove();
+    });
+
     $(document).on('click', '.add', function ()
     {
         $("#selectedUserList ul #empty").remove();

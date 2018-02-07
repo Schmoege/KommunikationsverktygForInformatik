@@ -224,7 +224,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         // POST: /Manage/ChangePassword
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
+        public async Task<ActionResult> ChangePassword(ChangeUserModel model)
         {
             if (!ModelState.IsValid)
             {

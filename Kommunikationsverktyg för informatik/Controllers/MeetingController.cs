@@ -133,13 +133,19 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             MeetingRepository mr = new MeetingRepository();
             var meeting = mr.GetMeeting(meetingID);
             var user = mr.GetMeetingCreator(meetingID);
+            List<TimeSuggestion> timeList = mr.GetTimeSuggestions(meetingID);
+            List<string> times = new List<string>();
+            foreach(TimeSuggestion time in timeList)
+            {
+                times.Add(time.Suggestion);
+            }
             var model = new MeetingInvitationsViewModels
             {
                 Place = meeting.Place,
                 Subject = meeting.Subject,
                 Date = meeting.Date,
                 Sender = user.FirstName + " " + user.LastName,
-                SuggestionsOfTimes = null
+                SuggestionsOfTimes = times
             };
             return PartialView("_SpecificMeetingPartial", model);
         }

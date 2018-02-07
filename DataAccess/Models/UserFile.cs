@@ -16,5 +16,14 @@ namespace DataAccess.Models
         public Guid BlogPostId { get; set; }
         public string FileExtension { get; set; }
     }
+    public class DateFile
+    {
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime StartDate { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime EndDate { get; set; }
+    }
 }
 
