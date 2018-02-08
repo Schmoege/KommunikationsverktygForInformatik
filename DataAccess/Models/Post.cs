@@ -38,6 +38,8 @@ namespace DataAccess.Models
 
         public virtual ICollection<ApplicationUser> AppUsers { get; set; }
 
+        public Location Location { get; set; }
+
         public Post()
         {
             Id = Guid.NewGuid();
