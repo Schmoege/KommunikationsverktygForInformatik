@@ -17,7 +17,7 @@
 
             if (matchedFiles.length > 0) {
 
-                var titleAppend = "<h2>Dessa filer postades mellan " + fromDate + " och " + toDate + "<ul>";
+                var titleAppend = "<h2>Dessa filer postades mellan " + fromDate + " och " + toDate + ": </h2><ul>";
                 $("#fileSearchResult").append(titleAppend);
 
                 $.each(matchedFiles, function (key, item) {
@@ -27,7 +27,7 @@
 
                 $("#fileSearchResult").append("</ul>");
             } else {
-                var noFilesFound = "<h2>Inga filer postades postades mellan " + fromDate + " och " + toDate;
+                var noFilesFound = "<h3>Inga filer postades postades mellan datumen eller så angav du inga eller bara ett datum.<h3>";
                 $("#fileSearchResult").append(noFilesFound);
             }
             
