@@ -355,7 +355,6 @@
     <Content Include="Views\Education\Edit.cshtml" />
     <Content Include="Views\Meeting\_SpecificMeetingPartial.cshtml" />
     <Content Include="Views\FileSearch\FileSearch.cshtml" />
-    <Content Include="Views\FileSearch\_SearchResultPartialView.cshtml" />
     <Content Include="Views\EditUser\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>

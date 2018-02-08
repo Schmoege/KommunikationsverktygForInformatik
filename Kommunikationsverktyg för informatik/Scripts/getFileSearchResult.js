@@ -1,25 +1,32 @@
-﻿//alert("fhhgnhb");
-$(document).ready(function () {
-    $(body).on("click", "#searchBtn", function () {
-        alert("Hej");
-    });
-});
-function fuck() {
-    var fromDate = $("#from").val();
-    var toDate = $("#to").val();
-    $.ajax({
-        type: "POST",
-        contentType: "application/json; charset=utf-8",
-        url: "filesearch/filesearch",
-        data: JSON.stringify(post),
-        dataType: "json"
-    }).done(function (comments) {
-        $.each(comments, function (key, item) {
-            $('#commentsOn' + id).append(
-                '<div id="div' + item.Comment.Id + '" class="commentMain">' +
-                '<h5 class="commentAuthor">' + item.User.BlogDisplayName + '</h5>' +
-                '<p class="commentContent">' + item.Comment.Content + '</p>' +
-                '<p class="commentDate" > Skrevs ' + item.ConvertedDateTime + '</p ></div > ');
+﻿$(document).ready(function () {
+    $(document).on("click", "#searchBtn", function () {
+        var fromDate = $("#from").val();
+        var toDate = $("#to").val();
+        var dates = {};
+        dates.dateFrom = fromDate;
+        dates.dateTo = toDate;
+
+        $.ajax({
+            url: '/FileSearch/getFileSearchResult',
+            type: "POST",
+            data: JSON.stringify(dates),
+            contentType: 'application/json',
+        }).done(function (matchedFiles) {
+            $("#fileSearchResult").empty();
+            alert(matchedFiles.length);
+            if (matchedFiles.length > 0) {
+                var titleAppend = "<h2>Dessa filer postades mellan " + fromDate + " och " + toDate + "<ul>";
+                $("#fileSearchResult").append(titleAppend);
+                $.each(matchedFiles, function (key, item) {
+                    var appendString = "<li><a href=\"/Blog/DownloadFile?downloadFileId=" + item.FileID + "\">" + item.FileName + "</a></li>";
+                    $("#fileSearchResult").append(appendString);
+                });
+                $("#fileSearchResult").append("</ul>");
+            } else {
+                var noFilesFound = "<h2>Inga filer postades postades mellan " + fromDate + " och " + toDate;
+                $("#fileSearchResult").append(noFilesFound);
+            }
+            
         });
     });
-}
+});
