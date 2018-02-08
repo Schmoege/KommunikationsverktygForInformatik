@@ -16,14 +16,18 @@ namespace DataAccess.Models
         [Required]
         public Guid Id { get; set; }
 
-        [MaxLength(30)]
+        [Required]
+        [MaxLength (30)]
         [DisplayName("Titel")]
         public string Title { get; set; }
 
+        [Required]
         [DisplayName("Innehåll")]
         public string Description { get; set; }
 
         public DateTime Date { get; set; }
+
+        public bool Hidden { get; set; } = false;
 
         public string User { get; set; }
         public ApplicationUser ApplicationUser;

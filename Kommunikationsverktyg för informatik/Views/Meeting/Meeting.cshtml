@@ -1,5 +1,6 @@
-﻿<div id="Meeting">
-    @{ Html.RenderPartial("_MeetingPartial");}
+﻿@model List<Kommunikationsverktyg_för_informatik.ViewModels.MeetingInvitationsViewModels>
+<div id="Meeting">
+    @{ Html.RenderPartial("_MeetingPartial", Tuple.Create(Model));}
 </div>
 @section Scripts
 {

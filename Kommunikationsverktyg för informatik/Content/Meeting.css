@@ -23,6 +23,11 @@
     width: 220px;
 }
 
+#superDiv .element ul
+{
+    min-height: 20px;
+}
+
 #buttons
 {
     float: right;
@@ -88,6 +93,77 @@
     cursor: pointer;
 }
 
+#answer
+{
+    height: 350px;
+}
+
+#answer fieldset
+{
+    padding: 0px;
+    margin:20px;
+}
+
+#answer fieldset legend
+{
+    padding: 0px;
+    margin: 0px;
+}
+
+#acceptTimesButton
+{
+    background-color: lightgrey;
+    width: 80%;
+    height: 80px;
+    margin: auto;
+    box-shadow: 2px 2px 2px #888888;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 3em;
+    font-weight: bold;
+    padding-top: 10px;
+}
+
+#acceptTimesButton:hover
+{
+    cursor:pointer;
+}
+
+.info
+{
+    font-size: 1.5em;
+    margin: 0px;
+    padding: 0px;
+}
+
+.info:not(.header)
+{
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.header
+{
+    border-bottom: 1px solid grey;
+    color: navy;
+}
+
+.option
+{
+    transform: scale(1.4);
+}
+
+#acceptForm div
+{
+    margin-bottom: 30px;
+}
+
+.disable
+{
+    pointer-events: none;
+    opacity: 0.5;
+}
+
 /*==================================================================================================
     Scroll List
 ==================================================================================================*/
@@ -123,6 +199,13 @@
     white-space: nowrap;
 }
 
+#answer .scrollList
+{
+    width: 100%;
+    height: 300px;
+    border: none;
+}
+
 #creatMeetingTable .scrollList
 {
     height: 200px;
@@ -132,6 +215,11 @@
 {
     padding: 10px 20px;
     border-bottom: 1px solid #ccc;
+}
+
+.scrollItem:hover
+{
+    cursor: pointer;
 }
 
 .scrollItem:last-child

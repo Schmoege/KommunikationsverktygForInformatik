@@ -6,9 +6,6 @@
 
 $(document).ready(function () {
 
-
-    
-
     $('.linkComment').each(function () {
         var id = this.id;
         var events = $._data(document.getElementById(id), "events");

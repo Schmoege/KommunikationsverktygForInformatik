@@ -1,5 +1,4 @@
 ﻿@model DataAccess.Models.Kategori
-
 @{
     ViewBag.Title = "Kategori";
 }
@@ -7,7 +6,7 @@
 <h2>Skapa kategori</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm(new { formal = ViewBag.Formal }))
 {
     @Html.AntiForgeryToken()
 
@@ -42,7 +41,7 @@
 }
 
 <div>
-    @Html.ActionLink("Tillbaka", "Create")
+    @Html.ActionLink("Tillbaka", "Create", new { formal = ViewBag.Formal })
 </div>
 
 @section Scripts {

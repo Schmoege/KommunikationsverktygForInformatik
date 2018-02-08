@@ -49,36 +49,39 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName};
-                var result = await UserManager.CreateAsync(user, model.Password);
-
                 UserRepository ur = new UserRepository();
-                bool sometypeOfAdmin = false;
-                if (model.Admin)
-                {
-                    ur.AddUserToRole(model.Email, "administrator");
-                    sometypeOfAdmin = true;
-                }
-                if (model.ResarchAdmin)
-                {
-                    ur.AddUserToRole(model.Email, "researchAdministrator");
-                    sometypeOfAdmin = true;
-                }
-                if (model.EducationAdmin)
-                {
-                    ur.AddUserToRole(model.Email, "educationAdministrator");
-                    sometypeOfAdmin = true;
-                }
-                if (!sometypeOfAdmin)
-                {
-                    ur.AddUserToRole(model.Email, "user");
-                }
-
-
-                return RedirectToAction("Adminpanel", "Admin");
+                //if (ur.CheckEmailAvailable(model.Email))
+                //{
+                    var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName };
+                    var result = await UserManager.CreateAsync(user, model.Password);
+                    bool sometypeOfAdmin = false;
+                    if (model.Admin)
+                    {
+                        ur.AddUserToRole(model.Email, "administrator");
+                        sometypeOfAdmin = true;
+                    }
+                    if (model.ResarchAdmin)
+                    {
+                        ur.AddUserToRole(model.Email, "researchAdministrator");
+                        sometypeOfAdmin = true;
+                    }
+                    if (model.EducationAdmin)
+                    {
+                        ur.AddUserToRole(model.Email, "educationAdministrator");
+                        sometypeOfAdmin = true;
+                    }
+                    if (!sometypeOfAdmin)
+                    {
+                        ur.AddUserToRole(model.Email, "user");
+                    }
+                    return RedirectToAction("Adminpanel", "Admin");
+                //}
+                //else
+                //{
+                    //ModelState.AddModelError("", "User with email already exist");
+                //}
             }
-
-            return View(model);
+            return View();
         }
 
         public ActionResult SetActive(string email)
@@ -179,7 +182,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                     {
                         user.LastName = model.LastName;
                     }
-                    if (model.Email != null)
+                    if (model.Email != null && !model.Email.Equals(user.Email))
                     {
                         user.Email = model.Email;
                         user.UserName = model.Email;
@@ -193,7 +196,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                     UserStore<ApplicationUser> store = new UserStore<ApplicationUser>();
                     await store.SetPasswordHashAsync(user, hashedNewPassword);
                     }
-                   
+
 
                     //if (ModelState.IsValid)
                     //{
@@ -212,7 +215,15 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                     //    AddErrors(resultPass);
                     //}
 
-                    db.SaveChanges();
+                    try
+                    {
+                        db.SaveChanges();
+                    }
+                    catch
+                    {
+                        ModelState.AddModelError("", "User with that email already exists");
+                        return View(model);
+                    }
                     //var result = await UserManager.UpdateAsync(user);
                 }
                 return RedirectToAction("Adminpanel", "Admin");

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace Kommunikationsverktyg_för_informatik.Models
 {
@@ -66,6 +67,7 @@ namespace Kommunikationsverktyg_för_informatik.Models
     {
         [Required]
         [EmailAddress]
+        [Remote("IsEmailAvailable", "Validation")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
@@ -89,7 +91,7 @@ namespace Kommunikationsverktyg_för_informatik.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
         [Required]
@@ -120,7 +122,7 @@ namespace Kommunikationsverktyg_för_informatik.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
