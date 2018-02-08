@@ -7,14 +7,14 @@
 <h2>Skapa inlägg</h2>
 
 
-@using (Html.BeginForm("Create", "Blog", FormMethod.Post, new { enctype="multipart/form-data" }))
+@using (Html.BeginForm("Create", "Blog", new { formal = Model.Formal } ,FormMethod.Post, new { enctype="multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
         <hr />
        
-            <h5>Välj kategori eller @Html.ActionLink("Skapa", "CreateKategori")</h5>
+            <h5>Välj kategori eller @Html.ActionLink("Skapa", "CreateKategori", new { formal = Model.Formal })</h5>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Kategorier, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -64,7 +64,7 @@
 }
 
 <div>
-    @Html.ActionLink("Tillbaka", "Index")
+    @Html.ActionLink("Tillbaka", "Index", new { formal = Model.Formal })
 </div>
 
 @section Scripts {

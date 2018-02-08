@@ -26,6 +26,8 @@ namespace Kommunikationsverktyg_för_informatik.ViewModels
         public int NewCount { get; set; }
         public int DbCount { get; set; }
 
+        public bool Hidden { get; set; } = false;
+        public bool Formal { get; set; } = false;
     }
     public class PostFileCombo
     {

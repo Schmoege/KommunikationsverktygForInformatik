@@ -28,7 +28,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             {
                 model = new FrontPageViewModel();
             }
-            model.Posts = context.Posts.Take(5).OrderByDescending(x => x.Date).ToList();
+            model.Posts = context.Posts.Where(x => x.Hidden == false).Take(5).OrderByDescending(x => x.Date).ToList();
             foreach (var item in model.Posts)
             {
                 model.Users.Add(context.Users.SingleOrDefault(x => x.Id == item.User));
