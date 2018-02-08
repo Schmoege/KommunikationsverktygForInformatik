@@ -14,7 +14,7 @@ namespace DataAccess.Models
     {
         [Key]
         [Required]
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
         [Required]
         [MaxLength (30)]
@@ -34,11 +34,15 @@ namespace DataAccess.Models
         public Guid KategoriId { get; set; }
         public Kategori Kategori;
 
+        public virtual Location Location { get; set; }
+
+
+
         public virtual ICollection<ApplicationUser> AppUsers { get; set; }
 
         public Post()
         {
-            Id = Guid.NewGuid();
+            Id = Guid.NewGuid().ToString();
             this.AppUsers = new HashSet<ApplicationUser>();
         }
 

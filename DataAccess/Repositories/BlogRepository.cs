@@ -23,7 +23,7 @@ namespace DataAccess.Repositories
 
         public IEnumerable<Post> GetAll()
         {
-           
+
             return dataContext.Posts.ToList().OrderByDescending(x => x.Date).Take(10);
         }
 
@@ -57,6 +57,8 @@ namespace DataAccess.Repositories
                 db.SaveChanges();
             }
         }
+
+        
 
     }
 }

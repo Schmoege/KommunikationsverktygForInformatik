@@ -18,7 +18,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers.Api
         public List<GetCommentViewModels> GetComments(Post post)
         {
             List<Comment> comments =  db.Comments.
-                Where(x => x.PostID == post.Id).OrderByDescending(x => x.PostedAt).ToList();
+                Where(x => x.PostID.ToString() == post.Id).OrderByDescending(x => x.PostedAt).ToList();
             var userIDs = comments.Select(x => x.Author);
             List<ApplicationUser> users = db.Users
                 .Where(x => userIDs.Contains(x.Id)).ToList();

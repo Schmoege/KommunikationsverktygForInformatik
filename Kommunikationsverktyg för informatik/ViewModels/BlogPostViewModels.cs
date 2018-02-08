@@ -18,7 +18,6 @@ namespace Kommunikationsverktyg_för_informatik.ViewModels
         public Post Post { get; set; }
         public List<Kategori> Kategorier { get; set; }
         public string SelectedCategory { set; get; }
-        
         public HttpPostedFileBase[] uploadFiles { get; set; }
         public List<PostFileCombo> PostFileCombinations { get; set; }
 

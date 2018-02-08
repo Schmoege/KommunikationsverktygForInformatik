@@ -10,10 +10,10 @@ namespace DataAccess.Models
     public class UserFile
     {
         [Key]
-        public Guid FileID { get; set; }
+        public string FileID { get; set; }
         public byte[] FileBytes { get; set; }
         public String FileName { get; set; }
-        public Guid BlogPostId { get; set; }
+        public string BlogPostId { get; set; }
         public string FileExtension { get; set; }
     }
     public class DateFile
