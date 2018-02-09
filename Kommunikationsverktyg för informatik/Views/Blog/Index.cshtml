@@ -108,7 +108,7 @@
                 </div>
                 <div id="attatchedDocumentsNotBootstrap">
                     @if (item.AttatchedDocs.Count > 0)
-                {
+                    {
                         <p>Bifogade filer:</p>
                         <ul>
                             @foreach (var file in item.AttatchedDocs)
@@ -128,7 +128,7 @@
                         |
                         @if (ur.IsUserInRole(User.Identity.GetUserId(), "administrator") || item.AttatchedPost.User == User.Identity.GetUserId())
                         {
-                            @Html.ActionLink("Ta bort", "BlogCancel", "Blog", new { Id = item.AttatchedPost.Id }, null)
+                            @Html.ActionLink("Ta bort", "BlogCancel", "Blog", new { Id = item.AttatchedPost.Id, }, null)
                         }
                     </p>
 
@@ -142,12 +142,12 @@
                 </div>
             </div>
         </div>
+        
 
-
-                var user = ur.GetUser(User.Identity.GetUserId());
-                @Html.Hidden("currentUser", User.Identity.GetUserId())
-                @Html.Hidden("displayName", user.BlogDisplayName)
-                }
+        var user = ur.GetUser(User.Identity.GetUserId());
+        @Html.Hidden("currentUser", User.Identity.GetUserId())
+        @Html.Hidden("displayName", user.BlogDisplayName)
+    }
 }
 <div class="div-blogLoadPosts">
     @Html.Hidden("oldCountModel", Model.OldCount)

@@ -1,5 +1,6 @@
 ﻿@model Kommunikationsverktyg_för_informatik.ViewModels.MeetingInvitationsViewModels
 
+@Html.HiddenFor(model => model.MeetingID, new { @id = "meetingID"});
 <div id="answer" class="elements events">
     <div class="element">
         <p class="info header">Sammankallande</p>
