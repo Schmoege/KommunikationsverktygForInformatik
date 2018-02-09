@@ -25,5 +25,8 @@ namespace DataAccess.Models
 
         [Required]
         public string Date { get; set; }
+
+       
+       
     }
 }
