@@ -203,5 +203,29 @@ namespace DataAccess.Repositories
                 }
             }
         }
+
+        public List<string> GetMeetingParticipants(int meetingID)
+        {
+            using (DataContext db = new DataContext())
+            {
+                try
+                {
+                    UserRepository ur = new UserRepository();
+                    List<string> names = new List<string>();
+                    Invitation inv = db.Invitations.Single(x => x.MeetingID.Equals(meetingID));
+                    var RMInv = db.RMInvites.Where(x => x.InvitationID.Equals(inv.IID) && x.Answer.Equals(1)).ToList();
+                    foreach (RecieveMeetingInvitation RM in RMInv)
+                    {
+                        ApplicationUser user = ur.GetUser(RM.UserID);
+                        names.Add(user.FirstName + " " + user.LastName);
+                    }
+                    return names;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
     }
 }

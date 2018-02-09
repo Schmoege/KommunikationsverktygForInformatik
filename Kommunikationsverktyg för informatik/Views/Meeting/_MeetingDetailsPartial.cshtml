@@ -1,0 +1,21 @@
+﻿@model Kommunikationsverktyg_för_informatik.ViewModels.MeetingViewModels
+
+<div id="details" class="elements events">
+    <fieldset class="element">
+        <legend id="detailsSubject"><h1>@Model.Subject: @Model.Date</h1></legend>
+        <h3>Klockan: @Model.Time</h3>
+        <h3>Plats: @Model.Place</h3>
+        <fieldset>
+            <legend id="inbjudna">Inbjudna</legend>
+            <ul class="scrollList">
+                @foreach (string name in Model.Names)
+                {
+                    <li class="scrollItem">@name</li>
+                }
+            </ul>
+        </fieldset>
+        <h5>Sammankallare: @Model.Sender</h5>
+    </fieldset>
+
+    <div id="cancelMeeting" class="element createMeetingButtons">Tillbaka</div>
+</div>
