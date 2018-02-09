@@ -79,6 +79,47 @@
         }
     });
 
+    $(document).on('click', '#acceptTimesButton', function ()
+    {
+        var meetingID = parseInt($("#meetingID").val());
+        var answer = 0;
+        var times = [];
+        if ($('input[name=attendance]:checked', '#acceptForm').val() == "can")
+        {
+            answer = 1;
+        }
+        $("#can ul .can").each(function ()
+        {
+            times.push($(this).html());
+        });
+        if(answer == 1 && times.length == 0)
+        {
+            alert("Måste välja minst en tid,\nannars välj att du inte kan närvara.");
+        }
+        else
+        {
+            $.ajax(
+            {
+                url: '/Meeting/AnswerMeeting',
+                type: "POST",
+                data:
+                {
+                    meetingID: meetingID,
+                    answer: answer,
+                    times: times
+                },
+                success: function (data) {
+                    $("#Meeting").html(data);
+                },
+                error: function (xhr, status, error) {
+                    var msg = "Response failed with status: " + status + "</br>"
+                    + " Error: " + error;
+                    $("#Meeting").html(msg);
+                }
+            });
+        }
+    });
+
     $(document).on('click', '.specific', function ()
     {
         var id = parseInt($(this).attr("id"));
