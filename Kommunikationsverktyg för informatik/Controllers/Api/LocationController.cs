@@ -18,7 +18,8 @@ namespace Kommunikationsverktyg_för_informatik.Controllers.Api
                 Location loc = new Location()
                 {
                     Longitude = pos.Longitude,
-                    Latitude = pos.Latitude
+                    Latitude = pos.Latitude,
+                    Id = pos.PostId
                 };
                 db.Location.Add(loc);
                 db.SaveChanges();

@@ -9,5 +9,6 @@ namespace Kommunikationsverktyg_för_informatik.ViewModels
     {
         public string Longitude { get; set; }
         public string Latitude { get; set; }
+        public string PostId { get; set; }
     }
 }

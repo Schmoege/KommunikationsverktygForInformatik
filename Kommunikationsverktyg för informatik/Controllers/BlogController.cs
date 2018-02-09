@@ -47,7 +47,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             model.OldCount = oldCount;
             model.Kategorier = context.Categories.ToList();
             var postCategoriesId = filteredPosts.Select(x => x.Id);
-            var categoryFiles = context.UserFiles.Where(x => postCategoriesId.ToString().Contains(x.BlogPostId.ToString())).ToList();
+            var categoryFiles = context.UserFiles.Where(x => postCategoriesId.Contains(x.BlogPostId)).ToList();
             var picExtensionList = new List<string>() {".png",".PNG", ".jpg",".JPG",".jpeg",".JPEG" };
             var picList = categoryFiles.Where(x => picExtensionList.Contains(x.FileExtension));
             var userIdList = filteredPosts.Select(x => x.User).ToList();
@@ -62,7 +62,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                 var postPics = picList.Where(x => x.BlogPostId.Equals(post.Id));
 
                 newPostFileCombo.AttatchedPics = postPics.ToList();
-                newPostFileCombo.AttatchedDocs = categoryFiles.Where(x => x.BlogPostId.ToString() == post.Id).Where(x => !picExtensionList.Contains(x.FileExtension)).ToList();
+                newPostFileCombo.AttatchedDocs = categoryFiles.Where(x => x.BlogPostId == post.Id).Where(x => !picExtensionList.Contains(x.FileExtension)).ToList();
                 model.PostFileCombinations.Add(newPostFileCombo);
             }
             return View(model);
@@ -160,7 +160,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             {
                 var newFile = new UserFile();
                 newFile.BlogPostId = ownerPost.Id;
-                newFile.FileID = Guid.NewGuid().ToString();
+                newFile.FileID = Guid.NewGuid();
                 newFile.FileName = fileToUpload.FileName;
                 newFile.FileExtension = System.IO.Path.GetExtension(fileToUpload.FileName).ToString();
                 using (var reader = new System.IO.BinaryReader(fileToUpload.InputStream))
@@ -185,7 +185,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
 
         public ActionResult Edit(Guid Id)
         {
-            Post post = context.Posts.SingleOrDefault(x => x.Id == Id.ToString());
+            Post post = context.Posts.SingleOrDefault(x => x.Id.Equals(Id));
 
             return View(post);
         }

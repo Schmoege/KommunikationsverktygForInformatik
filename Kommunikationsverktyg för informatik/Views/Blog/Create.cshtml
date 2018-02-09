@@ -52,7 +52,7 @@
         </div>
 
 
-
+        
 
 
         <div class="form-group">
@@ -89,14 +89,22 @@
     // failed.", it means you probably did not give permission for the browser to
     // locate you.
     function GetLocation() {
-        navigator.geolocation.getCurrentPosition(function (position) {
-            var pos =
-                {
-                    Latitude: position.coords.latitude,
-                    Longitude: position.coords.longitude
-                };
-            AddLocation(pos);
-        })
+        
+       
+            navigator.geolocation.getCurrentPosition(function (position)
+            {
+                var pos =
+                    {
+                        Latitude: position.coords.latitude,
+                        Longitude: position.coords.longitude,
+                        @*PostId: @Html.Raw(Json.Encode(Model.Post.Id))*@
+                    };
+
+
+                @*pos.PostId = @Html.Raw(Json.Encode(Model.Post.Id));*@
+                AddLocation(pos);
+            })
+        
     };
 
     function AddLocation(pos) {

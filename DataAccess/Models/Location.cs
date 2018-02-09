@@ -10,7 +10,8 @@ namespace DataAccess.Models
 {
     public class Location
     {
-        [ForeignKey("Post")]
+        [Key]
+        [Required]
         public string Id { get; set; }
 
         [Required]
@@ -18,8 +19,6 @@ namespace DataAccess.Models
 
         [Required]
         public string Longitude { get; set; }
-       
-        public virtual Post Post { get; set; }
 
         //public Location()
         //{
