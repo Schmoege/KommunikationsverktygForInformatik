@@ -11,6 +11,9 @@ namespace Kommunikationsverktyg_för_informatik.ViewModels
     {
         public List<UserFile> ReturnFiles { get; set; }
         public string Testing { get; set; }
+        public DateTime DateTo { get; set; }
+        public DateTime DateFrom { get; set; }
+
         public FileSearchViewModel()
         {
             this.ReturnFiles = new List<UserFile>();

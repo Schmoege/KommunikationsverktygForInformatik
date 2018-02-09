@@ -64,6 +64,15 @@
                 </li>
 
                 <li class="Icon">
+
+                    <a href="@Url.Action("Index", "Blog", new { formal = true })">
+                        <img class="IconPic" src="~/Icons/Menu/FormalBlogIcon.png" title="Formal blog" alt="Formell Blogg" width="32" height="32" />
+                        <p>Formal blog</p>
+                    </a>
+
+                </li>
+
+                <li>
                     <a href='@Url.Action("Index", "Education")'>
                         <img class="IconPic" title="Education Blog" src="~/Icons/Menu/EduIcon.png" alt="eduAdmin" width="32" height="32" />
                         <p>Education</p>
@@ -88,7 +97,12 @@
 
                     </a>
                 </li>
-
+                <li class="Icon">
+                    <a href='@Url.Action("FileSearch", "FileSearch")'>
+                        <img class="IconPic" title="File search" src="~/Icons/Menu/FileIcon.png" alt="fileSearch" width="32" height="32" />
+                        <p>Filsökning</p>
+                    </a>
+                </li>
 
             }
             <li class="Icon">

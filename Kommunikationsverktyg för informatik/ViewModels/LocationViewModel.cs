@@ -7,8 +7,8 @@ namespace Kommunikationsverktyg_för_informatik.ViewModels
 {
     public class LocationViewModel
     {
-        public string Longitude { get; set; }
-        public string Latitude { get; set; }
         public string PostId { get; set; }
+        public string lat { get; set; }
+        public string lng { get; set; }
     }
 }

@@ -13,11 +13,14 @@ namespace Kommunikationsverktyg_för_informatik.ViewModels
         public BlogPostViewModel()
         {
             this.PostFileCombinations = new List<PostFileCombo>();
+            this.Location = new Location();
         }
 
         public Post Post { get; set; }
         public List<Kategori> Kategorier { get; set; }
         public string SelectedCategory { set; get; }
+        public Location Location { get; set; }
+
         public HttpPostedFileBase[] uploadFiles { get; set; }
         public List<PostFileCombo> PostFileCombinations { get; set; }
 
@@ -25,6 +28,8 @@ namespace Kommunikationsverktyg_för_informatik.ViewModels
         public int NewCount { get; set; }
         public int DbCount { get; set; }
 
+        public bool Hidden { get; set; } = false;
+        public bool Formal { get; set; } = false;
     }
     public class PostFileCombo
     {

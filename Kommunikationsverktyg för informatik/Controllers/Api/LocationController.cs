@@ -11,17 +11,17 @@ namespace Kommunikationsverktyg_för_informatik.Controllers.Api
     public class LocationController : ApiController
     {
         [HttpPost]
-        public void Add(LocationViewModel pos)
+        public void Set(LocationViewModel loc)
         {
             using (DataContext db = new DataContext())
             {
-                Location loc = new Location()
+                Location location = new Location()
                 {
-                    Longitude = pos.Longitude,
-                    Latitude = pos.Latitude,
-                    Id = pos.PostId
+                    Latitude = loc.lat,
+                    Longitude = loc.lng,
+                    PostId = new Guid(loc.PostId)
                 };
-                db.Location.Add(loc);
+                db.Location.Add(location);
                 db.SaveChanges();
             }
         }

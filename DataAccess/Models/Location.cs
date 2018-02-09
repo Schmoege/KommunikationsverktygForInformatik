@@ -10,20 +10,11 @@ namespace DataAccess.Models
 {
     public class Location
     {
-        [Key]
-        [Required]
-        public string Id { get; set; }
+        [Key, ForeignKey("Post")]
+        public Guid PostId { get; set; }
 
-        [Required]
-        public string Latitude { get; set; }
-
-        [Required]
+        public Post Post { get; set; }
         public string Longitude { get; set; }
-
-        //public Location()
-        //{
-        //    Id = Guid.NewGuid();
-        //}
+        public string Latitude { get; set; }
     }
-
 }

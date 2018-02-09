@@ -86,8 +86,8 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -273,6 +273,7 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Icons\Menu\FormalBlogIcon.png" />
     <Content Include="Icons\Menu\AdmIcon.png" />
     <Content Include="Icons\Menu\BlogIcon.png" />
     <Content Include="Icons\Menu\CalendarIcon.png" />
@@ -363,11 +364,11 @@
     <Content Include="Views\Education\Edit.cshtml" />
     <Content Include="Views\Meeting\_SpecificMeetingPartial.cshtml" />
     <Content Include="Views\FileSearch\FileSearch.cshtml" />
-    <Content Include="Views\FileSearch\_SearchResultPartialView.cshtml" />
     <Content Include="Views\EditUser\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Location\" />
     <Folder Include="Views\Validation\" />
   </ItemGroup>
   <ItemGroup>
