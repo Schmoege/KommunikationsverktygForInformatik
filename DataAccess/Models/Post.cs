@@ -27,6 +27,8 @@ namespace DataAccess.Models
 
         public DateTime Date { get; set; }
 
+        public bool Hidden { get; set; } = false;
+
         public string User { get; set; }
         public ApplicationUser ApplicationUser;
 
@@ -35,6 +37,8 @@ namespace DataAccess.Models
         public Kategori Kategori;
 
         public virtual ICollection<ApplicationUser> AppUsers { get; set; }
+
+        public Location Location { get; set; }
 
         public Post()
         {

@@ -15,6 +15,7 @@
                 var currentUserId = User.Identity.GetUserId();
                 var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new DataContext()));
                 var currentUser = manager.FindById(currentUserId);
+                var ur = new UserRepository();
                 var rr = new ResearchRepository();
                 var er = new EducationRepository();
                 var br = new BlogRepository();
@@ -22,30 +23,37 @@
             @if (currentUser != null)
             {
 
-                <li class="loginCell">
+                <li id="loggedInAsLi">
                     <br />
+
                     <div id="loginCell">
-                        <text id="loggedInAs" title="Logged in as">@User.Identity.GetUserName().ToString()</text>
+                        @*<a href='@Url.Action("Index", "EditUserController", new { userId = User.Identity.GetUserId() })'>*@
+                            @Html.ActionLink(ur.GetUsername(User.Identity.GetUserId()), "Edit","EditUser", new { userId = User.Identity.GetUserId() }, new { @id = "loggedInAs" })
+
+                            @*<text id="loggedInAs" title="Logged in as">@User.Identity.GetUserName().ToString()</text>*@
+                        @*</a>*@
                     </div>
+
                 </li>
-                UserRepository ur = new UserRepository();
                 if (ur.IsUserInRole(currentUser.Id, "administrator"))
                 {
 
-                    <li>
+                    <li class="Icon">
                         @*<div id="adminPanelIcon">*@
                         <a href='@Url.Action("Adminpanel", "Admin")'>
-                            <img class="Icon" src="~/Icons/Menu/AdmIcon.png" title="Admin Panel" alt="Admin" width="32" height="32" />
+                            <img class="IconPic" src="~/Icons/Menu/AdmIcon.png" title="Admin Panel" alt="Admin" width="32" height="32" />
+                            <p>Admin</p>
                         </a>
                         @*</div>*@
                     </li>
 
                 }
 
-                <li>
+                <li class="Icon">
 
                     <a href='@Url.Action("Index","Blog")'>
-                        <img class="IconBlog" src="~/Icons/Menu/BlogIcon.png" title="Blog" alt="Blogg" width="32" height="32" />
+                        <img class="IconPic" src="~/Icons/Menu/BlogIcon.png" title="Blog" alt="Blogg" width="32" height="32" />
+                        <p>Blog</p>
                         @if (br.GetUnreadPosts(User.Identity.GetUserId()) > 0)
                         {
                             <div class="bottomleft">@br.GetUnreadPosts(User.Identity.GetUserId())</div>
@@ -55,9 +63,19 @@
 
                 </li>
 
+                <li class="Icon">
+
+                    <a href="@Url.Action("Index", "Blog", new { formal = true })">
+                        <img class="IconPic" src="~/Icons/Menu/FormalBlogIcon.png" title="Formal blog" alt="Formell Blogg" width="32" height="32" />
+                        <p>Formal blog</p>
+                    </a>
+
+                </li>
+
                 <li>
                     <a href='@Url.Action("Index", "Education")'>
-                        <img class="Icon" title="Education Blog" src="~/Icons/Menu/EduIcon.png" alt="eduAdmin" width="32" height="32" />
+                        <img class="IconPic" title="Education Blog" src="~/Icons/Menu/EduIcon.png" alt="eduAdmin" width="32" height="32" />
+                        <p>Education</p>
                         @if (er.GetUnreadPosts(User.Identity.GetUserId()) > 0)
                         {
                             <div class="bottomleft">@er.GetUnreadPosts(User.Identity.GetUserId()).ToString()</div>
@@ -68,9 +86,10 @@
 
 
 
-                <li>
+                <li class="Icon">
                     <a href='@Url.Action("Index", "Research")'>
-                        <img class="Icon" title="Research Blog" src="~/Icons/Menu/ResIcon.png" alt="resAdmin" width="32" height="32" />
+                        <img class="IconPic" title="Research Blog" src="~/Icons/Menu/ResIcon.png" alt="resAdmin" width="32" height="32" />
+                        <p>Research</p>
                         @if (rr.GetUnreadPosts(User.Identity.GetUserId()) > 0)
                         {
                             <div class="bottomleft">@rr.GetUnreadPosts(User.Identity.GetUserId()).ToString()</div>
@@ -78,22 +97,29 @@
 
                     </a>
                 </li>
-
+                <li class="Icon">
+                    <a href='@Url.Action("FileSearch", "FileSearch")'>
+                        <img class="IconPic" title="File search" src="~/Icons/Menu/FileIcon.png" alt="fileSearch" width="32" height="32" />
+                        <p>Filsökning</p>
+                    </a>
+                </li>
 
             }
-            <li>
+            <li class="Icon">
                 <a href='@Url.Action("Calendar", "Calendar")'>
-                    <img class="Icon" title="Calendar" src="~/Icons/Menu/CalendarIcon.png" alt="Kalender" width="32" height="32" />
+                    <img class="IconPic" title="Calendar" src="~/Icons/Menu/CalendarIcon.png" alt="Kalender" width="32" height="32" />
+                    <p>Calendar</p>
                 </a>
             </li>
-            <li>
+            <li class="Icon">
                 <a href='@Url.Action("Meeting", "Meeting")'>
-                    <img class="Icon" title="Meeting" src="~/Icons/Menu/Meeting.png" alt="Möte" width="32" height="32" />
+                    <img class="IconPic" title="Meeting" src="~/Icons/Menu/Meeting.png" alt="Möte" width="32" height="32" />
+                    <p>Meeting</p>
                 </a>
             </li>
 
 
-            <li><a href="javascript:document.getElementById('logoutForm').submit()"><img class="Icon" title="Log Out" src="~/Icons/Menu/ExitIcon.png" alt="Log out" width="32" height="32" /></a></li>
+            <li class="Icon"><a href="javascript:document.getElementById('logoutForm').submit()"><img class="IconPic" title="Log Out" src="~/Icons/Menu/ExitIcon.png" alt="Log out" width="32" height="32" /><p>Log out</p></a></li>
         </ul>
                     }
                 }

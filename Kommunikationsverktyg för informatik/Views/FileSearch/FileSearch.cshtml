@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "Filsökning";
+}
+
+<h2>Filsökning</h2>
+
+<p>Välj mellan vilka datum du vill söka genom:</p>
+
+
+<input type="date" id='from' name='dateFrom' />
+<input type="date" id='to' name='dateTo' />
+<button id="searchBtn">Sök</button>
+<div id="fileSearchResult">
+</div>
+@section Scripts
+{
+    @Scripts.Render("~/Scripts/getFileSearchResult.js")
+}

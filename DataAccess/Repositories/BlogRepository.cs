@@ -21,10 +21,11 @@ namespace DataAccess.Repositories
         }
 
 
-        public IEnumerable<Post> GetAll()
+        public IEnumerable<Post> GetAll(bool formal)
         {
-           
-            return dataContext.Posts.ToList().OrderByDescending(x => x.Date).Take(10);
+            var categories = dataContext.Categories
+                 .Where(x => x.Formell == formal).Select(x => x.Id);
+            return dataContext.Posts.Where(x => x.Hidden == false && categories.Contains(x.KategoriId)).OrderByDescending(x => x.Date).Take(5);
         }
 
         public void AddPost(Post post)

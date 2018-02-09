@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IdentityConfig.cs" />
+    <Compile Include="Models\Location.cs" />
     <Compile Include="Models\RecieveMeetingInvitation.cs" />
     <Compile Include="Models\TimeAnswer.cs" />
     <Compile Include="Models\ApplicationUser.cs" />

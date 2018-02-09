@@ -80,6 +80,9 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -146,9 +149,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http.Formatting">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
@@ -207,13 +207,17 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\Api\CommentController.cs" />
+    <Compile Include="Controllers\Api\LocationController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
+    <Compile Include="Controllers\EditUserController.cs" />
     <Compile Include="Controllers\EducationController.cs" />
+    <Compile Include="Controllers\FileSearchController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MeetingController.cs" />
     <Compile Include="Controllers\ResearchController.cs" />
+    <Compile Include="Controllers\ValidationController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -221,10 +225,13 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="ViewModels\BlogPostViewModels.cs" />
+    <Compile Include="ViewModels\ChangeUserViewModel.cs" />
     <Compile Include="ViewModels\DayViewModels.cs" />
     <Compile Include="ViewModels\EditViewModels.cs" />
     <Compile Include="ViewModels\EducationBlogViewModel.cs" />
+    <Compile Include="ViewModels\FileSearchViewModel.cs" />
     <Compile Include="ViewModels\FrontPageViewModel.cs" />
+    <Compile Include="ViewModels\LocationViewModel.cs" />
     <Compile Include="ViewModels\MeetingInvitationsViewModels.cs" />
     <Compile Include="ViewModels\GetCommentViewModels.cs" />
     <Compile Include="ViewModels\MeetingViewModels.cs" />
@@ -260,6 +267,7 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Icons\Menu\FormalBlogIcon.png" />
     <Content Include="Icons\Menu\AdmIcon.png" />
     <Content Include="Icons\Menu\BlogIcon.png" />
     <Content Include="Icons\Menu\CalendarIcon.png" />
@@ -274,6 +282,7 @@
     <Content Include="Scripts\Calendar.js" />
     <Content Include="Scripts\CommentMore.js" />
     <Content Include="Scripts\GetComments.js" />
+    <Content Include="Scripts\getFileSearchResult.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
@@ -348,9 +357,13 @@
     <Content Include="Views\Calendar\CalendarDay.cshtml" />
     <Content Include="Views\Education\Edit.cshtml" />
     <Content Include="Views\Meeting\_SpecificMeetingPartial.cshtml" />
+    <Content Include="Views\FileSearch\FileSearch.cshtml" />
+    <Content Include="Views\EditUser\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Location\" />
+    <Folder Include="Views\Validation\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

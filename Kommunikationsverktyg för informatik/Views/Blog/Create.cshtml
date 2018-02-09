@@ -7,66 +7,156 @@
 <h2>Skapa inlägg</h2>
 
 
-@using (Html.BeginForm("Create", "Blog", FormMethod.Post, new { enctype="multipart/form-data" }))
+@using (Html.BeginForm("Create", "Blog", new { formal = Model.Formal }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <hr />
-       
-            <h5>Välj kategori eller @Html.ActionLink("Skapa", "CreateKategori")</h5>
+<div class="form-horizontal">
+    <hr />
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.Kategorier, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.SelectedCategory, new SelectList(Model.Kategorier.Select(x => x.Namn)))
-                    <p class="text-danger">@ViewBag.CategoryError</p>
-                </div>
-            </div>
-        
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Post.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Post.Title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Post.Title, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    <h5>Välj kategori eller @Html.ActionLink("Skapa", "CreateKategori", new { formal = Model.Formal })</h5>
 
-        <div class="">
-            @Html.LabelFor(model => model.Post.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="">
-                @Html.TextAreaFor(model => model.Post.Description, new { htmlAttributes = new { @class = "form-control" }, id = "txtarea-createpost"  })
-                @Html.ValidationMessageFor(model => model.Post.Description, "", new { @class = "text-danger post-description-error" })
-            </div>
-        </div>
-        
-        <div class="form-group">
-            <div class="col-md-10">
-                
-                @Html.AntiForgeryToken()
-                <p>Högsta tillåtna filstorlek: 15MB</p>
-                <input type="file" name="uploadFiles" multiple="multiple" accept=".png,.jpg,.jpeg,.doc,.docx,.pdf,.ppt,.pptx,.xlsx,.xls,.xlt" />
-                <p class = "text-danger">@ViewBag.FileError</p>
-            </div>
-        </div>
-        
-
-        
-        
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Skapa" class="btn btn-default" />
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Kategorier, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.SelectedCategory, new SelectList(Model.Kategorier.Select(x => x.Namn)))
+            <p class="text-danger">@ViewBag.CategoryError</p>
         </div>
     </div>
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Post.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Post.Title, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Post.Title, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="">
+        @Html.LabelFor(model => model.Post.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="">
+            @Html.TextAreaFor(model => model.Post.Description, new { htmlAttributes = new { @class = "form-control" }, id = "txtarea-createpost" })
+            @Html.ValidationMessageFor(model => model.Post.Description, "", new { @class = "text-danger post-description-error" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-10">
+
+            @Html.AntiForgeryToken()
+            <p>Högsta tillåtna filstorlek: 15MB</p>
+            <input type="file" name="uploadFiles" multiple="multiple" accept=".png,.jpg,.jpeg,.doc,.docx,.pdf,.ppt,.pptx,.xlsx,.xls,.xlt" />
+            <p class="text-danger">@ViewBag.FileError</p>
+        </div>
+    </div>
+
+
+    <textarea name="long" Id="long" class="hidden">asdfa</textarea>
+    <textarea name="lat" Id="lat" class="hidden"></textarea>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Skapa" class="btn btn-default" onclick="GetLocation();" />
+        </div>
+    </div>
+</div>
 }
 
 <div>
-    @Html.ActionLink("Tillbaka", "Index")
+    @Html.ActionLink("Tillbaka", "Index", new { formal = Model.Formal })
 </div>
+
+
+
+<script>
+
+    //ready(function () {
+    //    GetLocation()
+    //});
+    GetLocation();
+    //$(document).ready(GetLocation());
+
+        function GetLocation() {
+            console.log("GetLocation called")
+            {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    console.log("In nav")
+                    document.getElementById("long").value = position.coords.longitude;
+                    document.getElementById("lat").value = position.coords.latitude;
+                })
+            }
+        }
+    // Note: This example requires that you consent to location sharing when
+    // prompted by your browser. If you see the error "The Geolocation service
+    // failed.", it means you probably did not give permission for the browser to
+    // locate you.
+    //var map, infoWindow;
+    //function initMap() {
+    //    map = new google.maps.Map(document.getElementById('map'), {
+    //        center: { lat: -34.397, lng: 150.644 },
+    //        zoom: 6
+    //    });
+    //    infoWindow = new google.maps.InfoWindow;
+
+    //    // Try HTML5 geolocation.
+    //    if (navigator.geolocation) {
+    //        navigator.geolocation.getCurrentPosition(function (position) {
+    //            var pos = {
+    //                lat: position.coords.latitude,
+    //                lng: position.coords.longitude
+    //            };
+
+    //            infoWindow.setPosition(pos);
+    //            infoWindow.setContent('Location found.');
+    //            infoWindow.open(map);
+    //            map.setCenter(pos);
+    //        }, function () {
+    //            handleLocationError(true, infoWindow, map.getCenter());
+    //        });
+    //    } else {
+    //        // Browser doesn't support Geolocation
+    //        handleLocationError(false, infoWindow, map.getCenter());
+    //    }
+    //}
+    //console.log("2");
+    //$(document).ready(function () {
+    //    console.log("Hej");
+    //    navigator.geolocation.getCurrentPosition(function (position) {
+    //        console.log("Long: " + position.coords.longitude);
+    //        document.getElementById("long").value = position.coords.longitude;
+    //        document.getElementById("lat").value = position.coords.latitude;
+    //    });
+    //});
+        //function SetLocation(pos) {
+        //    console.log("SetLocation called");
+        //    console.log("Model id: " + pos.PostId);
+        //    if (model.Post != null) {
+        //        pos.PostId = postId;
+
+        //$.ajax({
+        //            type: "POST",
+        //    url: "/Api/Location/Set",
+        //    data: JSON.stringify(pos),
+        //    contentType: "application/json; charset=utf-8"
+        //});
+
+        //        console.log(pos.lat + " " + pos.lng);
+        //    }
+        //}
+
+
+
+
+</script>
+
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSWVBSfbcef96qaP3AcCFlZ25DkuFyE-8&callback=initMap">
+</script>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
 }
