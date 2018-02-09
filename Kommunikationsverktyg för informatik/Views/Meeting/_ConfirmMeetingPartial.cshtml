@@ -1,1 +1,25 @@
-﻿
+﻿@model Kommunikationsverktyg_för_informatik.ViewModels.ConfirmMeetingViewModels
+
+<div id="confirm" class="elements events">
+    <div class="element">
+        <fieldset id="@Model.meetingID">
+            <legend>@Model.Subject, @Model.Place, @Model.Date</legend>
+            <ul class="scrollList">
+                @foreach (KeyValuePair<string, int> meetingTime in Model.Times)
+                {
+                    <li id="@meetingTime.Key" class="confirmTime scrollItem">@meetingTime.Key: @meetingTime.Value kan denna tid</li>
+                }
+            </ul>
+        </fieldset>
+    </div>
+    <div class="element">
+        <div>
+            <span class="confirmText">Vald tid:</span><br />
+            <span id="chosenTime">Välj en tid</span>
+        </div>
+        <div id="buttons">
+            <div id="confirmBook" class="createMeetingButtons">Boka</div>
+            <div id="confirmCancel" class="createMeetingButtons">Avbryt</div>
+        </div>
+    </div> 
+</div>

@@ -66,7 +66,8 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                     Date = meeting.Date,
                     MeetingID = meeting.MID,
                     Sender = user.FirstName + user.LastName,
-                    Answered = answered
+                    Answered = answered,
+                    Confirmed = meeting.Confirmed
                 };
                 meetings.Add(mod);
             }
@@ -186,6 +187,23 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
 
             };
             return PartialView("_MeetingDetailsPartial", model);
+        }
+
+        [HttpGet]
+        public PartialViewResult ConfirmMeeting(int meetingID)
+        {
+            MeetingRepository mr = new MeetingRepository();
+            var meeting = mr.GetMeeting(meetingID);
+            Dictionary<string, int> times = mr.GetAnsweredTimes(meetingID);
+            var model = new ConfirmMeetingViewModels
+            {
+                Subject = meeting.Subject,
+                Place = meeting.Place,
+                Date = meeting.Date,
+                meetingID = meeting.MID,
+                Times = times
+            };
+            return PartialView("_ConfirmMeetingPartial", model);
         }
 
         [HttpPost]
