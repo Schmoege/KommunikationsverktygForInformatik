@@ -70,86 +70,6 @@
 
 
 
-<script>
-
-    //ready(function () {
-    //    GetLocation()
-    //});
-    GetLocation();
-    //$(document).ready(GetLocation());
-
-        function GetLocation() {
-            console.log("GetLocation called")
-            {
-                navigator.geolocation.getCurrentPosition(function (position) {
-                    console.log("In nav")
-                    document.getElementById("long").value = position.coords.longitude;
-                    document.getElementById("lat").value = position.coords.latitude;
-                })
-            }
-        }
-    // Note: This example requires that you consent to location sharing when
-    // prompted by your browser. If you see the error "The Geolocation service
-    // failed.", it means you probably did not give permission for the browser to
-    // locate you.
-    //var map, infoWindow;
-    //function initMap() {
-    //    map = new google.maps.Map(document.getElementById('map'), {
-    //        center: { lat: -34.397, lng: 150.644 },
-    //        zoom: 6
-    //    });
-    //    infoWindow = new google.maps.InfoWindow;
-
-    //    // Try HTML5 geolocation.
-    //    if (navigator.geolocation) {
-    //        navigator.geolocation.getCurrentPosition(function (position) {
-    //            var pos = {
-    //                lat: position.coords.latitude,
-    //                lng: position.coords.longitude
-    //            };
-
-    //            infoWindow.setPosition(pos);
-    //            infoWindow.setContent('Location found.');
-    //            infoWindow.open(map);
-    //            map.setCenter(pos);
-    //        }, function () {
-    //            handleLocationError(true, infoWindow, map.getCenter());
-    //        });
-    //    } else {
-    //        // Browser doesn't support Geolocation
-    //        handleLocationError(false, infoWindow, map.getCenter());
-    //    }
-    //}
-    //console.log("2");
-    //$(document).ready(function () {
-    //    console.log("Hej");
-    //    navigator.geolocation.getCurrentPosition(function (position) {
-    //        console.log("Long: " + position.coords.longitude);
-    //        document.getElementById("long").value = position.coords.longitude;
-    //        document.getElementById("lat").value = position.coords.latitude;
-    //    });
-    //});
-        //function SetLocation(pos) {
-        //    console.log("SetLocation called");
-        //    console.log("Model id: " + pos.PostId);
-        //    if (model.Post != null) {
-        //        pos.PostId = postId;
-
-        //$.ajax({
-        //            type: "POST",
-        //    url: "/Api/Location/Set",
-        //    data: JSON.stringify(pos),
-        //    contentType: "application/json; charset=utf-8"
-        //});
-
-        //        console.log(pos.lat + " " + pos.lng);
-        //    }
-        //}
-
-
-
-
-</script>
 
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSWVBSfbcef96qaP3AcCFlZ25DkuFyE-8&callback=initMap">
@@ -158,5 +78,24 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+<script>
 
+    //ready(function () {
+    //    GetLocation()
+    //});
+    //GetLocation();
+    $(document).ready(GetLocation());
+
+    function GetLocation() {
+        console.log("GetLocation called")
+        {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                console.log("In nav")
+                document.getElementById("long").value = position.coords.longitude;
+                document.getElementById("lat").value = position.coords.latitude;
+            })
+        }
+    }
+    
+    </script>
 }

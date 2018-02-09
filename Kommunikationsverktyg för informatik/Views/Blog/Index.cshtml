@@ -16,6 +16,7 @@
 </p>
 @using (Html.BeginForm("Index", "Blog", new { formal = Model.Formal }))
 {
+    @*<div id="map"></div>*@
     <div id="div-blogCategory">
         <h4 id="h4-category">Sortera efter kategori</h4>
         <div id="div-blogCategoryFilter">
@@ -48,6 +49,8 @@
 
 }
 
+<div id="mapDiv" onclick="hideMap();">some text</div>
+
 @{
     int i = 1;
     foreach (var item in Model.PostFileCombinations)
@@ -68,7 +71,11 @@
                 </div>
                 <div id="div-blogEntryDate">
 
-                    <h5>@Html.DisplayFor(modelItem => item.AttatchedPost.Date)</h5>
+                    <h5>@Html.DisplayFor(modelItem => item.AttatchedPost.Date) </h5>
+                    
+                    
+                    <label id="mapLabel" onclick="showMap(event,'mapDiv',this);" data-longitude="@item.AttatchedPost.Location.Longitude" data-latitude="@item.AttatchedPost.Location.Latitude">Show location</label>
+                    
 
                 </div>
                 <div id="div-blogEntryTitle">
@@ -155,4 +162,69 @@
     }
 
 </div>
+<style>
+    #mapDiv
+    {
+        height:400px;
+        width:600px;
+        background-color:black;
+    }
+    #map
+    {
+        height: 200px;
+        width: 300px;
+        background-color:grey;
+    }
+</style>
+@section Scripts {
+<script>
+    $(document).ready(hideMap());
+
+    //function showWelcome() {
+    //    var welcome = document.getElementById('mapDiv');
+        
+    //    welcome.style.display = 'block';
+    //}
+
+    function showMap(e,divid,elem) {
+
+        var left = e.clientX + "px";
+        var top = e.clientY + "px";
+        $("#" + divid).css('left', left);
+        $("#" + divid).css('top', top);
+        $("#" + divid).css('position', 'fixed');
+        var lat = $(elem).data('latitude');
+        var lng = $(elem).data('longitude');
+        
+        $("#" + divid).toggle();
+        setTimeout(50);
+        initMap(lat,lng);
+        //$("#" + divid).html(lat + " " + lng);
+        
+        //$("#" + divid).style.display = 'block';
+        return false;
+    }
+
+    function hideMap() {
+        var map = document.getElementById('mapDiv');
+        //map.toggle();
+        map.style.display = 'none';
+    }
+
+    function initMap(lati,longi) {
+        var uluru = { lat: lati, lng: longi };
+        var map = new google.maps.Map(document.getElementById('mapDiv'), {
+            zoom: 4,
+            center: uluru
+        });
+        var marker = new google.maps.Marker({
+            position: uluru,
+            map: map
+        });
+    }
+</script>
+    }
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSWVBSfbcef96qaP3AcCFlZ25DkuFyE-8&callback=initMap">
+</script>
 <link href="~/Content/blogg.css" rel="stylesheet" />
