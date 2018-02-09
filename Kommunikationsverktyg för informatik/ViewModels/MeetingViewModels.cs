@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Kommunikationsverktyg_för_informatik.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,6 +10,15 @@ namespace Kommunikationsverktyg_för_informatik.ViewModels
 {
     public class MeetingViewModels
     {
+
+        [DataType(DataType.EmailAddress)]
+        public string FromEmail { get; set; }
+        public ApplicationUser FromUser;
+
+        [DataType(DataType.EmailAddress)]
+        public string ToEmail { get; set; }
+        public ApplicationUser ToUser;
+
         [MaxLength(100)]
         [RegularExpression(@"[A-Öa-ö0-9@#., !?_-]+", ErrorMessage = "Inga specialtecken.")]
         [Required, Display(Name = "Ämne")]
@@ -32,6 +42,8 @@ namespace Kommunikationsverktyg_för_informatik.ViewModels
         public List<string> Times { get; set; }
             
         public string Sender { get; set; }
+
+       
 
         public List<string> Names { get; set; }
         public List<string> Mails { get; set; }

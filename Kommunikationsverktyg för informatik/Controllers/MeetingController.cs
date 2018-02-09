@@ -8,6 +8,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Collections;
+using System.Web.Helpers;
+using Kommunikationsverktyg_för_informatik.Models;
 
 namespace Kommunikationsverktyg_för_informatik.Controllers
 {
@@ -76,27 +78,55 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreatedMeetings(string subject, string place, string date, string creatorMail, List<string> times, List<string> mails)
+        public ActionResult CreatedMeetings(MeetingViewModels obj, string subject,string place, string date, string creatorMail, string reicevMail, List<string> times, List<string> mails)
         {
+
+            //Configuring webMail class to send emails  
+            //gmail smtp server  
+            WebMail.SmtpServer = "smtp.gmail.com";
+            //gmail port to send emails  
+            WebMail.SmtpPort = 587;
+            WebMail.SmtpUseDefaultCredentials = true;
+            //sending emails with secure protocol  
+            WebMail.EnableSsl = true;
+            //EmailId used to send emails from application  
+            WebMail.UserName = "bimbosson@gmail.com";
+            WebMail.Password = "bimbobimbo11";
+           
+
+
+            DataContext db = new DataContext();
             UserRepository ur = new UserRepository();
             MeetingRepository mr = new MeetingRepository();
             var meetingModel = new Meeting
             {
                 Subject = subject,
                 Place = place,
-                Date = date
+                Date = date,
+               
+        
             };
             var creator = ur.GetUserByEmail(creatorMail);
+
             var invitationModel = new Invitation
             {
                 //Meeting = meetingModel,
                 Date = DateTime.Now,
                 MeetingID = meetingModel.MID,
                 //ApplicationUser = creator,
-                UserID = creator.Id
+                UserID = creator.Id,
             };
+
+            var f = db.Users.Single(x => x.Id == invitationModel.UserID);
+            WebMail.From = f.Email;
             List<RecieveMeetingInvitation> RMInviteList = new List<RecieveMeetingInvitation>();
-            foreach(string mail in mails)
+            RecieveMeetingInvitation receiver = new RecieveMeetingInvitation();
+            string allTimes = "";
+            foreach (string time in times)
+            {
+                allTimes += time + "<br>";
+            }
+            foreach (string mail in mails)
             {
                 var RMInvite = new RecieveMeetingInvitation
                 {
@@ -104,7 +134,12 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                     UserID = ur.GetUserByEmail(mail).Id
                 };
                 RMInviteList.Add(RMInvite);
+                var t = db.Users.Single(x => x.Id == RMInvite.UserID);
+                string body = String.Format("Du är inbjuden till mötet på/i {0} den {1} med dessa tidsförslag : <br> {2} <br> Vänligen logga in på <a href = 'https://github.com/'>hemsidan</a> för att svara på inbjudan. <hr> Det här är en automatisk inbjudan från Informatiks webbtjänst. <br> Svara inte på detta mejl.", 
+                    place, date, allTimes);
+                WebMail.Send(from: f.Email, to: t.Email, subject: obj.Subject, body:body, isBodyHtml: true);
             }
+
             List<TimeSuggestion> timeList = new List<TimeSuggestion>();
             List<TimeAnswer> timeAnswerList = new List<TimeAnswer>();
             foreach (string time in times)
@@ -126,6 +161,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                 }
                 timeList.Add(timeSuggestionModel);
             }
+           
             mr.AddMeeting(meetingModel, invitationModel, RMInviteList, timeList, timeAnswerList);
             return RedirectToAction("ViewMeetings");
         }

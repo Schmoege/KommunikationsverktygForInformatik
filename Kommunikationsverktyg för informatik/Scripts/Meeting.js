@@ -27,7 +27,7 @@
     $(document).on('click', '#createMeeting', function ()
     {
         isFormValid();
-        if(validSubject && validPlace && validDate && validTimes && validUsers)
+        if (validSubject && validPlace && validDate && validTimes && validUsers)
         {
             var sub = $("#Item1_Subject").val();
             var place = $("#Item1_Place").val();
