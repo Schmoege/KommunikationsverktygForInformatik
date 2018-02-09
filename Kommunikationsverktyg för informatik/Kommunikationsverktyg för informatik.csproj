@@ -232,6 +232,7 @@
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="ViewModels\BlogPostViewModels.cs" />
     <Compile Include="ViewModels\ChangeUserViewModel.cs" />
+    <Compile Include="ViewModels\ConfirmMeetingViewModels.cs" />
     <Compile Include="ViewModels\DayViewModels.cs" />
     <Compile Include="ViewModels\EditViewModels.cs" />
     <Compile Include="ViewModels\EducationBlogViewModel.cs" />
@@ -365,9 +366,13 @@
     <Content Include="Views\Meeting\_SpecificMeetingPartial.cshtml" />
     <Content Include="Views\FileSearch\FileSearch.cshtml" />
     <Content Include="Views\EditUser\Edit.cshtml" />
+    <Content Include="Views\Meeting\_MeetingDetailsPartial.cshtml" />
+    <Content Include="Views\Meeting\_ConfirmMeetingPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\EMail\" />
+    <Folder Include="Views\SendMail\" />
     <Folder Include="Views\Location\" />
     <Folder Include="Views\Validation\" />
   </ItemGroup>

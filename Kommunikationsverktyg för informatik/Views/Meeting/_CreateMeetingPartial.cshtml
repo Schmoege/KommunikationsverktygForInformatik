@@ -38,9 +38,10 @@
                         @Html.TextBoxFor(model => model.Item1.Subject)
                     </td>
                     <td>
-                        @Html.ValidationMessageFor(model => model.Item1.Subject, null, new { @id = "SubjectVal"})
+                        @Html.ValidationMessageFor(model => model.Item1.Subject, null, new { @id = "SubjectVal" })
                     </td>
                 </tr>
+
                 <tr>
                     <td>
                         @Html.LabelFor(model => model.Item1.Place)
@@ -53,7 +54,7 @@
                 <tr>
                     <td>
                         @Html.LabelFor(model => model.Item1.Date)
-                        @Html.TextBoxFor(model => model.Item1.Date, new { @placeholder = "YYYY-MM-DD", @maxlength = 10})
+                        @Html.TextBoxFor(model => model.Item1.Date, new { @placeholder = "YYYY-MM-DD", @maxlength = 10 })
                     </td>
                     <td>
                         @Html.ValidationMessageFor(model => model.Item1.Date, null, new { @id = "DateVal" })
@@ -65,7 +66,7 @@
                         @Html.TextBoxFor(model => model.Item1.Time, new { @placeholder = "hh:mm", @maxlength = 5 })
                     </td>
                     <td>
-                        @Html.ValidationMessageFor(model => model.Item1.Time)
+                        @Html.ValidationMessageFor(model => model.Item1.Time, null, new { @id = "TimeVal"})
                     </td>
                 </tr>
                 <tr>
@@ -73,10 +74,9 @@
                         <div id="addTime">Lägg till tid</div>
                     </td>
                 </tr>
-                <tr>                    
+                <tr>
                     <td>
-                        <ul id="timeList" class="scrollList">
-                        </ul>
+                        <ul id="timeList" class="scrollList"></ul>
                     </td>
                 </tr>
             </table>

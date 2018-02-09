@@ -1,6 +1,7 @@
 ﻿using Kommunikationsverktyg_för_informatik.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -17,6 +18,9 @@ namespace DataAccess.Models
 
         [Required]
         public string Suggestion { get; set; }
+        
+        [DefaultValue(false)]
+        public bool ConfirmedTime { get; set; }
 
         [ForeignKey("Meeting")]
         public int MeetingID { get; set; }

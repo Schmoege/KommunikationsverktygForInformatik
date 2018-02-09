@@ -164,6 +164,36 @@
     opacity: 0.5;
 }
 
+h3, h1
+{
+    padding: 0;
+    margin: 0;
+}
+
+#inbjudna
+{   
+    border: none;
+}
+
+#details legend
+{
+    margin: 0;
+    padding: 0;
+}
+
+#chosenTime
+{
+    font-size: 2em;
+    padding-bottom: 20px;
+}
+
+.confirmText
+{
+    font-weight:bold;
+    font-size: 22px;
+    border-bottom: 1px solid lightgrey;
+}
+
 /*==================================================================================================
     Scroll List
 ==================================================================================================*/
@@ -204,6 +234,29 @@
     width: 100%;
     height: 300px;
     border: none;
+}
+
+#confirm .scrollList
+{
+    width: 100%;
+    border: none;
+}
+
+#details .scrollList
+{
+    height: 200px;
+    width: 100%;
+}
+
+#details .scrollItem
+{
+    text-align: center;
+    list-style: none;
+}
+
+#details .scrollItem:hover
+{
+    cursor: default;
 }
 
 #creatMeetingTable .scrollList
