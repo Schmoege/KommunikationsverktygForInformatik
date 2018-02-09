@@ -37,14 +37,22 @@ namespace DataAccess.Repositories
                         db.TimeSuggestions.Add(time);
                         db.SaveChanges();
                     }
+                    int meetingID = meeting.MID;
+                    List<TimeSuggestion> timeList = new List<TimeSuggestion>();
+                    timeList = db.TimeSuggestions.Where(x => x.MeetingID.Equals(meetingID)).ToList();
                     int i = 0;
-                    foreach(TimeAnswer timeAnswer in timeAnswers)
+                    int j = 0;
+                    foreach (TimeAnswer timeAnswer in timeAnswers)
                     {
-                        timeAnswer.TimeID = timeSuggestions[i].TID;
+
+                        timeAnswer.TimeID = timeList[j].TID;
                         db.TimeAnswers.Add(timeAnswer);
                         db.SaveChanges();
                         i++;
-                        i = i % timeSuggestions.Count;
+                        if(i % timeSuggestions.Count == 0)
+                        {
+                            j++;
+                        }
                     }
                     foreach(RecieveMeetingInvitation rminvite in rminvitelist)
                     {
@@ -138,5 +146,62 @@ namespace DataAccess.Repositories
                 }
             }
         }   
+
+        public void SetMeetingAnswer(int newAnswer, int meetingID, string userID)
+        {
+            using (DataContext db = new DataContext())
+            {
+                try
+                {
+                    Invitation inv = db.Invitations.Single(x => x.MeetingID.Equals(meetingID));
+                    var answer = db.RMInvites.Single(x => x.InvitationID.Equals(inv.IID) && x.UserID.Equals(userID));
+                    answer.Answered = true;
+                    answer.Answer = newAnswer;
+                    db.SaveChanges();
+                }
+                catch
+                {
+                    throw;
+                }
+            }
+        }
+
+        public void SetTimeAnswer(int meetingID, string time, string userID)
+        {
+            using (DataContext db = new DataContext())
+            {
+                try
+                {
+                    string ud = userID;
+                    TimeSuggestion suggestion = db.TimeSuggestions.Single(x => x.MeetingID.Equals(meetingID) && x.Suggestion.Equals(time));
+                    var answer = db.TimeAnswers.Single(x => x.UserID.Equals(ud) && x.TimeID.Equals(suggestion.TID));
+                    answer.Answered = true;
+                    answer.Answer = 1;
+                    db.SaveChanges();
+                }
+                catch
+                {
+                    throw;
+                }
+            }
+        }
+
+        public bool GetAnswer(int meetingID, string userID)
+        {
+            using (DataContext db = new DataContext())
+            {
+                try
+                {
+                    bool answered;
+                    var invID = db.Invitations.Single(x => x.MeetingID.Equals(meetingID)).IID;
+                    answered = db.RMInvites.Single(x => x.UserID.Equals(userID) && x.InvitationID.Equals(invID)).Answered;
+                    return answered;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
     }
 }
