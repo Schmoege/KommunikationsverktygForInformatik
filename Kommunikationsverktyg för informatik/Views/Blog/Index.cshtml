@@ -9,6 +9,7 @@
 
 
 @{UserRepository ur = new UserRepository();}
+<div id="mapDiv" onclick="hideMap();">some text</div>
 <h2>Bloggflöde</h2>
 
 <p>
@@ -49,7 +50,7 @@
 
 }
 
-<div id="mapDiv" onclick="hideMap();">some text</div>
+
 
 @{
     int i = 1;
@@ -70,15 +71,16 @@
 
                 </div>
                 <div id="div-blogEntryDate">
+                    <div style="clear:both">
+                        <h5 style="float:left">@Html.DisplayFor(modelItem => item.AttatchedPost.Date) </h5>
 
-                    <h5>@Html.DisplayFor(modelItem => item.AttatchedPost.Date) </h5>
-                    
-                    
-                    <label id="mapLabel" onclick="showMap(event,'mapDiv',this);" data-longitude="@item.AttatchedPost.Location.Longitude" data-latitude="@item.AttatchedPost.Location.Latitude">Show location</label>
-                    
+
+                        <label style="float:right" id="mapLabel" onclick="showMap(event,'mapDiv',this);" data-longitude="@item.AttatchedPost.Location.Longitude" data-latitude="@item.AttatchedPost.Location.Latitude">Show location</label>
+                    </div>
 
                 </div>
-                <div id="div-blogEntryTitle">
+               <br />
+                <div style="clear:both" id="div-blogEntryTitle">
 
                     <h4>@Html.DisplayFor(modelItem => item.AttatchedPost.Title)</h4>
 
@@ -162,59 +164,46 @@
     }
 
 </div>
+
 <style>
     #mapDiv
     {
-        height:400px;
-        width:600px;
-        background-color:black;
-    }
-    #map
-    {
-        height: 200px;
-        width: 300px;
+        height:300px;
+        width:400px;
         background-color:grey;
+        left:0px;
+        top:0px;
     }
 </style>
 @section Scripts {
 <script>
     $(document).ready(hideMap());
 
-    //function showWelcome() {
-    //    var welcome = document.getElementById('mapDiv');
-        
-    //    welcome.style.display = 'block';
-    //}
 
     function showMap(e,divid,elem) {
-
-        var left = e.clientX + "px";
+        hideMap();
+        var left = e.clientX + "px"; //puts coords to mousepointer coords
         var top = e.clientY + "px";
-        $("#" + divid).css('left', left);
+        $("#" + divid).css('left', left); //sets the position in css
         $("#" + divid).css('top', top);
-        $("#" + divid).css('position', 'fixed');
-        var lat = $(elem).data('latitude');
+        $("#" + divid).css('position', 'absolute');
+        var lat = $(elem).data('latitude'); //gets the coord values from the label 'data-latitude' and 'data-longitude'
         var lng = $(elem).data('longitude');
+        $("#" + divid).toggle(); //toggles visibility
+        initMap(lat,lng); //initiates map
         
-        $("#" + divid).toggle();
-        setTimeout(50);
-        initMap(lat,lng);
-        //$("#" + divid).html(lat + " " + lng);
-        
-        //$("#" + divid).style.display = 'block';
         return false;
     }
 
     function hideMap() {
         var map = document.getElementById('mapDiv');
-        //map.toggle();
-        map.style.display = 'none';
+        map.style.display = 'none'; //hides the map
     }
 
-    function initMap(lati,longi) {
+    function initMap(lati,longi) { //function for setting map coords through google api
         var uluru = { lat: lati, lng: longi };
         var map = new google.maps.Map(document.getElementById('mapDiv'), {
-            zoom: 4,
+            zoom: 8,
             center: uluru
         });
         var marker = new google.maps.Marker({
