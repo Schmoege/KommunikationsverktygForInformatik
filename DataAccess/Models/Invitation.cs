@@ -18,13 +18,7 @@ namespace DataAccess.Models
 
         //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime Date { get; set; }
-
-        [DefaultValue(0)]
-        public int Answer { get; set; }
-
-        [DefaultValue(false)]
-        public bool Answered { get; set; }
-
+        
         [ForeignKey("Meeting")]
         public int MeetingID { get; set; }
         public Meeting Meeting { get; set; }

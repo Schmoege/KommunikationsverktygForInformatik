@@ -85,16 +85,20 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         [Authorize]
         public ActionResult Create(bool formal = false)
         {
-            BlogPostViewModel model = new BlogPostViewModel();
+            BlogPostViewModel model = new BlogPostViewModel()
+            {
+                Post = new Post()
+            };
             model.Formal = formal;
             model.Kategorier = context.Categories.Where(x => x.Formell == formal).ToList();
             return View(model);
 
         }
 
+        [AcceptVerbs(HttpVerbs.Post)]
         [Authorize]
         [HttpPost]
-        public ActionResult Create(BlogPostViewModel model)
+        public ActionResult Create(BlogPostViewModel model, FormCollection collection)
         {
             try
             {
@@ -114,6 +118,10 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                     .Where(x => x.Namn == model.SelectedCategory)
                     .Select(x => x.Id).First();
                 blogRepository.AddPost(model.Post);
+                model.Location.Latitude = collection["lat"];
+                model.Location.Longitude = collection["long"];
+                model.Location.PostId = model.Post.Id;
+                context.Location.Add(model.Location);
                 //context.Posts.Add(model.Post);
 
                 if (model.uploadFiles[0] != null) //Den skickar alltid med någon jävel
@@ -216,10 +224,12 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
 
             
             Post postDelete = context.Posts.Find(id);
+            Location locationDelete = context.Location.Find(id);
             IEnumerable<Comment> relatedComments = context.Comments
                 .Where(x => x.PostID == id);
 
             context.Comments.RemoveRange(relatedComments);
+            context.Location.Remove(locationDelete);
             context.Posts.Remove(postDelete);
             
          

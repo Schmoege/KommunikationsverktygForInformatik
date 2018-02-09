@@ -1,20 +1,18 @@
-﻿@model Kommunikationsverktyg_för_informatik.ViewModels.FileSearchViewModel
-@{
-    ViewBag.Title = "FileSearch";
+﻿@{
+    ViewBag.Title = "Filsökning";
 }
 
-<h2>FileSearch</h2>
+<h2>Filsökning</h2>
 
-<p>Välj vilka datum du vill söka genom:</p>
-@*@using (Html.BeginForm("Search", "FileSearch"))*@
+<p>Välj mellan vilka datum du vill söka genom:</p>
 
 
 <input type="date" id='from' name='dateFrom' />
 <input type="date" id='to' name='dateTo' />
-<button id="searchBtn" onclick="fuck()">Sök</button>
-@{Html.RenderAction("Search", "FileSearch");}
+<button id="searchBtn">Sök</button>
+<div id="fileSearchResult">
+</div>
 @section Scripts
 {
     @Scripts.Render("~/Scripts/getFileSearchResult.js")
 }
-@*@{ Html.Partial("_SearchResultPartialView"); }*@

@@ -80,6 +80,9 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -146,9 +149,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http.Formatting">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
@@ -207,6 +207,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\Api\CommentController.cs" />
+    <Compile Include="Controllers\Api\LocationController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\EditUserController.cs" />
@@ -230,6 +231,7 @@
     <Compile Include="ViewModels\EducationBlogViewModel.cs" />
     <Compile Include="ViewModels\FileSearchViewModel.cs" />
     <Compile Include="ViewModels\FrontPageViewModel.cs" />
+    <Compile Include="ViewModels\LocationViewModel.cs" />
     <Compile Include="ViewModels\MeetingInvitationsViewModels.cs" />
     <Compile Include="ViewModels\GetCommentViewModels.cs" />
     <Compile Include="ViewModels\MeetingViewModels.cs" />
@@ -356,13 +358,15 @@
     <Content Include="Views\Education\Edit.cshtml" />
     <Content Include="Views\Meeting\_SpecificMeetingPartial.cshtml" />
     <Content Include="Views\FileSearch\FileSearch.cshtml" />
-    <Content Include="Views\FileSearch\_SearchResultPartialView.cshtml" />
     <Content Include="Views\EditUser\Edit.cshtml" />
+    <Content Include="Views\Meeting\_MeetingDetailsPartial.cshtml" />
+    <Content Include="Views\Meeting\_ConfirmMeetingPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\EMail\" />
     <Folder Include="Views\SendMail\" />
+    <Folder Include="Views\Location\" />
     <Folder Include="Views\Validation\" />
   </ItemGroup>
   <ItemGroup>

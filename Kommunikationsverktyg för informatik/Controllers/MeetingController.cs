@@ -60,13 +60,15 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             foreach (Meeting meeting in list)
             {
                 var user = mr.GetMeetingCreator(meeting.MID);
+                var answered = mr.GetAnswer(meeting.MID, userID);
                 var mod = new MeetingInvitationsViewModels
                 {
                     Subject = meeting.Subject,
                     Place = meeting.Place,
                     Date = meeting.Date,
                     MeetingID = meeting.MID,
-                    Sender = user.FirstName + user.LastName
+                    Sender = user.FirstName + user.LastName,
+                    Answered = answered
                 };
                 meetings.Add(mod);
             }
@@ -163,6 +165,22 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             return RedirectToAction("ViewMeetings");
         }
 
+        [HttpPost]
+        public ActionResult AnswerMeeting(int meetingID, int answer, List<string> times)
+        {
+            MeetingRepository rm = new MeetingRepository();
+            string userID = User.Identity.GetUserId();
+            rm.SetMeetingAnswer(answer, meetingID, userID);
+            if (answer == 1)
+            {
+                foreach(string time in times)
+                {
+                    rm.SetTimeAnswer(meetingID, time, userID);
+                }
+            }
+            return RedirectToAction("ViewMeetings");
+        }
+
         [HttpGet]
         public PartialViewResult SpecificMeeting(int meetingID)
         {
@@ -181,9 +199,29 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                 Subject = meeting.Subject,
                 Date = meeting.Date,
                 Sender = user.FirstName + " " + user.LastName,
-                SuggestionsOfTimes = times
+                SuggestionsOfTimes = times,
+                MeetingID = meetingID
             };
             return PartialView("_SpecificMeetingPartial", model);
+        }
+
+        [HttpGet]
+        public PartialViewResult MeetingDetails(int meetingID)
+        {
+            MeetingRepository mr = new MeetingRepository();
+            var meeting = mr.GetMeeting(meetingID);
+            var user = mr.GetMeetingCreator(meetingID);
+            var names = mr.GetMeetingParticipants(meetingID);
+            var model = new MeetingViewModels
+            {
+                Subject = meeting.Subject,
+                Place = meeting.Place,
+                Date = meeting.Date,
+                Sender = user.FirstName + " " + user.LastName,
+                Names = names
+
+            };
+            return PartialView("_MeetingDetailsPartial", model);
         }
 
         [HttpPost]
