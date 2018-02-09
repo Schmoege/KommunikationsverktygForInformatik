@@ -138,6 +138,24 @@
         });
     });
 
+    $(document).on('click', '.details', function ()
+    {
+        var id = parseInt($(this).attr("id"));
+        $.ajax({
+            url: '/Meeting/MeetingDetails',
+            type: "GET",
+            data: { meetingID: id },
+            success: function (data) {
+                $("#Meeting").html(data);
+            },
+            error: function (xhr, status, error) {
+                var msg = "Response failed with status: " + status + "</br>"
+                + " Error: " + error;
+                $("#Meeting").html(msg);
+            }
+        });
+    });
+
     $(document).on('click', '#radioCannot', function ()
     {
         $("#can ul li").addClass("disable");

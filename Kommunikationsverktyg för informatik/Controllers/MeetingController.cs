@@ -169,6 +169,25 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             return PartialView("_SpecificMeetingPartial", model);
         }
 
+        [HttpGet]
+        public PartialViewResult MeetingDetails(int meetingID)
+        {
+            MeetingRepository mr = new MeetingRepository();
+            var meeting = mr.GetMeeting(meetingID);
+            var user = mr.GetMeetingCreator(meetingID);
+            var names = mr.GetMeetingParticipants(meetingID);
+            var model = new MeetingViewModels
+            {
+                Subject = meeting.Subject,
+                Place = meeting.Place,
+                Date = meeting.Date,
+                Sender = user.FirstName + " " + user.LastName,
+                Names = names
+
+            };
+            return PartialView("_MeetingDetailsPartial", model);
+        }
+
         [HttpPost]
         public ActionResult CheckDate([Bind(Prefix = "Item1.Date")] string dateToControl)
         {
