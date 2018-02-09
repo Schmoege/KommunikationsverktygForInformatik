@@ -19,7 +19,7 @@ namespace DataAccess.Models
         public DateTime PostedAt { get; set; }
 
         [Required]
-        [MinLength(1, ErrorMessage = "Fett dålig kommentar")]
+       
         public string Content { get; set; }
 
         public Guid PostID { get; set; }

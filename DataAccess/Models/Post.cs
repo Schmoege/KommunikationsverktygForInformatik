@@ -36,6 +36,7 @@ namespace DataAccess.Models
         public Guid KategoriId { get; set; }
         public Kategori Kategori;
 
+        
         public virtual ICollection<ApplicationUser> AppUsers { get; set; }
 
         public Location Location { get; set; }

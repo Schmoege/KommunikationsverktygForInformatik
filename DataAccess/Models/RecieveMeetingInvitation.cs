@@ -16,6 +16,12 @@ namespace DataAccess.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
+        [DefaultValue(0)]
+        public int Answer { get; set; }
+
+        [DefaultValue(false)]
+        public bool Answered { get; set; }
+
         [ForeignKey("ApplicationUser")]
         public string UserID { get; set; }
         public ApplicationUser ApplicationUser { get; set; }

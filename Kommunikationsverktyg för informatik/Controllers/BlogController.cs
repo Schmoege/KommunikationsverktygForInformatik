@@ -221,6 +221,8 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
 
         public ActionResult BlogCancel (Guid id)
         {
+
+            
             Post postDelete = context.Posts.Find(id);
             Location locationDelete = context.Location.Find(id);
             IEnumerable<Comment> relatedComments = context.Comments
@@ -229,7 +231,12 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             context.Comments.RemoveRange(relatedComments);
             context.Location.Remove(locationDelete);
             context.Posts.Remove(postDelete);
+            
+         
+          
+
             context.SaveChanges();
+
             return RedirectToAction("Index");
 
 
