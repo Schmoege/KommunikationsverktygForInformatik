@@ -1,6 +1,7 @@
 ﻿using Kommunikationsverktyg_för_informatik.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -26,7 +27,7 @@ namespace DataAccess.Models
         [Required]
         public string Date { get; set; }
 
-       
-       
+        [DefaultValue(false)]
+        public bool Confirmed { get; set; }
     }
 }

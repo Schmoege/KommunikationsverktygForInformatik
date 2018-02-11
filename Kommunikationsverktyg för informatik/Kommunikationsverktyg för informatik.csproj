@@ -226,6 +226,7 @@
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="ViewModels\BlogPostViewModels.cs" />
     <Compile Include="ViewModels\ChangeUserViewModel.cs" />
+    <Compile Include="ViewModels\ConfirmMeetingViewModels.cs" />
     <Compile Include="ViewModels\DayViewModels.cs" />
     <Compile Include="ViewModels\EditViewModels.cs" />
     <Compile Include="ViewModels\EducationBlogViewModel.cs" />

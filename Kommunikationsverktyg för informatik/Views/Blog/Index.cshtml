@@ -9,6 +9,7 @@
 
 
 @{UserRepository ur = new UserRepository();}
+<div id="mapDiv" onclick="hideMap();">some text</div>
 <h2>Bloggflöde</h2>
 
 <p>
@@ -16,6 +17,7 @@
 </p>
 @using (Html.BeginForm("Index", "Blog", new { formal = Model.Formal }))
 {
+    @*<div id="map"></div>*@
     <div id="div-blogCategory">
         <h4 id="h4-category">Sortera efter kategori</h4>
         <div id="div-blogCategoryFilter">
@@ -48,6 +50,8 @@
 
 }
 
+
+
 @{
     int i = 1;
     foreach (var item in Model.PostFileCombinations)
@@ -67,11 +71,16 @@
 
                 </div>
                 <div id="div-blogEntryDate">
+                    <div style="clear:both">
+                        <h5 style="float:left">@Html.DisplayFor(modelItem => item.AttatchedPost.Date) </h5>
 
-                    <h5>@Html.DisplayFor(modelItem => item.AttatchedPost.Date)</h5>
+
+                        <label style="float:right" id="mapLabel" onclick="showMap(event,'mapDiv',this);" data-longitude="@item.AttatchedPost.Location.Longitude" data-latitude="@item.AttatchedPost.Location.Latitude">Show location</label>
+                    </div>
 
                 </div>
-                <div id="div-blogEntryTitle">
+               <br />
+                <div style="clear:both" id="div-blogEntryTitle">
 
                     <h4>@Html.DisplayFor(modelItem => item.AttatchedPost.Title)</h4>
 
@@ -155,4 +164,56 @@
     }
 
 </div>
+
+<style>
+    #mapDiv
+    {
+        height:300px;
+        width:400px;
+        background-color:grey;
+        left:0px;
+        top:0px;
+    }
+</style>
+@section Scripts {
+<script>
+    $(document).ready(hideMap());
+
+
+    function showMap(e,divid,elem) {
+        hideMap();
+        var left = e.clientX + "px"; //puts coords to mousepointer coords
+        var top = e.clientY + "px";
+        $("#" + divid).css('left', left); //sets the position in css
+        $("#" + divid).css('top', top);
+        $("#" + divid).css('position', 'absolute');
+        var lat = $(elem).data('latitude'); //gets the coord values from the label 'data-latitude' and 'data-longitude'
+        var lng = $(elem).data('longitude');
+        $("#" + divid).toggle(); //toggles visibility
+        initMap(lat,lng); //initiates map
+        
+        return false;
+    }
+
+    function hideMap() {
+        var map = document.getElementById('mapDiv');
+        map.style.display = 'none'; //hides the map
+    }
+
+    function initMap(lati,longi) { //function for setting map coords through google api
+        var uluru = { lat: lati, lng: longi };
+        var map = new google.maps.Map(document.getElementById('mapDiv'), {
+            zoom: 8,
+            center: uluru
+        });
+        var marker = new google.maps.Marker({
+            position: uluru,
+            map: map
+        });
+    }
+</script>
+    }
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSWVBSfbcef96qaP3AcCFlZ25DkuFyE-8&callback=initMap">
+</script>
 <link href="~/Content/blogg.css" rel="stylesheet" />

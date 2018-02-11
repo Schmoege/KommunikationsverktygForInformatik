@@ -5,14 +5,14 @@
         <div class="element">
             <fieldset>
                 <legend>Möten</legend>
-            </fieldset>
-            @foreach (Kommunikationsverktyg_för_informatik.ViewModels.MeetingInvitationsViewModels item in Model.Item1)
-            {
-                if (item.Answered)
+                @foreach (Kommunikationsverktyg_för_informatik.ViewModels.MeetingInvitationsViewModels item in Model.Item1)
                 {
-                    <div id="@item.MeetingID" class="details scrollItem">@item.Subject, @item.Sender</div>
+                    if (item.Answered && item.Confirmed)
+                    {
+                       <div id="@item.MeetingID" class="details scrollItem">@item.Subject, @item.Sender</div>
+                    }
                 }
-            }
+            </fieldset>
         </div>
         <div class="element">
             <fieldset>
@@ -22,6 +22,18 @@
                     if (!item.Answered)
                     {
                         <div id="@item.MeetingID" class="specific scrollItem">@item.Subject, @item.Sender</div>
+                    }
+                }
+            </fieldset>
+        </div>
+        <div class="element">
+            <fieldset>
+                <legend>Spika möte</legend>
+                @foreach (Kommunikationsverktyg_för_informatik.ViewModels.MeetingInvitationsViewModels item in Model.Item1)
+                {
+                    if (item.Answered && !item.Confirmed)
+                    {
+                        <div id="@item.MeetingID" class="confirmed scrollItem">@item.Subject, @item.Sender</div>
                     }
                 }
             </fieldset>

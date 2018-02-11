@@ -1,4 +1,5 @@
-﻿using Kommunikationsverktyg_för_informatik.Models;
+﻿using DataAccess.Repositories;
+using Kommunikationsverktyg_för_informatik.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,6 +13,7 @@ namespace DataAccess.Models
 {
     public class Post
     {
+
         [Key]
         [Required]
         public Guid Id { get; set; }
@@ -45,6 +47,7 @@ namespace DataAccess.Models
         {
             Id = Guid.NewGuid();
             this.AppUsers = new HashSet<ApplicationUser>();
+            
         }
 
     }
