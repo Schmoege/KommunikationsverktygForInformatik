@@ -20,5 +20,7 @@ namespace DataAccess.Models
         {
             Id = Guid.NewGuid();
         }
+
+
     }
 }

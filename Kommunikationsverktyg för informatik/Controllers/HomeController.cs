@@ -28,7 +28,9 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             {
                 model = new FrontPageViewModel();
             }
-            model.Posts = context.Posts.Where(x => x.Hidden == false).Take(5).OrderByDescending(x => x.Date).ToList();
+            var informalCategories = context.Categories.Where(c => !c.Formell);
+           
+            model.Posts = context.Posts.Where(x => x.Hidden == false && informalCategories.Select(c => c.Id).Contains(x.KategoriId)).Take(5).OrderByDescending(x => x.Date).ToList();
             foreach (var item in model.Posts)
             {
                 model.Users.Add(context.Users.SingleOrDefault(x => x.Id == item.User));
@@ -43,6 +45,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             {
                 model.ResearchUsers.Add(context.Users.SingleOrDefault(x => x.Id == item.UserId));
             }
+            model.FormalPosts = context.Posts.Where(x => x.Hidden == false && !informalCategories.Select(c => c.Id).Contains(x.KategoriId)).Take(5).OrderByDescending(x => x.Date).ToList();
             return View(model);
 
         }
