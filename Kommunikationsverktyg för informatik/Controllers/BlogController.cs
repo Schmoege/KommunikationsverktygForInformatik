@@ -49,8 +49,8 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             model.Kategorier = context.Categories.Where(x => x.Formell == formal).ToList();
             var postCategoriesId = filteredPosts.Select(x => x.Id);
             var categoryFiles = context.UserFiles.Where(x => postCategoriesId.Contains(x.BlogPostId)).ToList();
-            var picExtensionList = new List<string>() {".png",".PNG", ".jpg",".JPG",".jpeg",".JPEG" };
-            var picList = categoryFiles.Where(x => picExtensionList.Contains(x.FileExtension));
+            var picExtensionList = new List<string>() {".PNG",".JPG",".JPEG" };
+            var picList = categoryFiles.Where(x => picExtensionList.Contains(x.FileExtension.ToUpper()));
             var userIdList = filteredPosts.Select(x => x.User).ToList();
             IEnumerable<ApplicationUser> users = context.Users.Where(x => userIdList.Contains(x.Id));
             if(hidden)
@@ -164,6 +164,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             {
                 return View();
             }
+            kategori.Formell = formal;
             context.Categories.Add(kategori);
             context.SaveChanges();
             return RedirectToAction("Create", new { formal = formal });
@@ -222,9 +223,10 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
 
         public ActionResult BlogCancel (Guid id, BlogPostViewModel model)
         {
-
+            
             
             Post postDelete = context.Posts.Find(id);
+            
             Location locationDelete = context.Location.Find(id);
             IEnumerable<Comment> relatedComments = context.Comments
                 .Where(x => x.PostID == id);
@@ -233,9 +235,6 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             context.Location.Remove(locationDelete);
             context.Posts.Remove(postDelete);
             
-         
-          
-
             context.SaveChanges();
 
             return RedirectToAction("Index", new { formal = model.Formal });

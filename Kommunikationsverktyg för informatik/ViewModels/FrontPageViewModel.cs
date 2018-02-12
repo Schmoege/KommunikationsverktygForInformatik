@@ -16,6 +16,7 @@ namespace Kommunikationsverktyg_för_informatik.ViewModels
         public List<ApplicationUser> EducationUsers { get; set; }
 
         public List<Post> Posts { get; set; }
+        public List<Post> FormalPosts { get; set; }
         public List<ApplicationUser> Users { get; set; }
 
         public FrontPageViewModel()
