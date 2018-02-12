@@ -181,6 +181,19 @@ h3, h1
     padding: 0;
 }
 
+#chosenTime
+{
+    font-size: 2em;
+    padding-bottom: 20px;
+}
+
+.confirmText
+{
+    font-weight:bold;
+    font-size: 22px;
+    border-bottom: 1px solid lightgrey;
+}
+
 /*==================================================================================================
     Scroll List
 ==================================================================================================*/
@@ -220,6 +233,12 @@ h3, h1
 {
     width: 100%;
     height: 300px;
+    border: none;
+}
+
+#confirm .scrollList
+{
+    width: 100%;
     border: none;
 }
 

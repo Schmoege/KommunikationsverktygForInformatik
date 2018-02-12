@@ -23,9 +23,22 @@ namespace DataAccess.Repositories
 
         public IEnumerable<Post> GetAll(bool formal)
         {
-            var categories = dataContext.Categories
+            
+            using (var db = new DataContext())
+            {
+                var categories = db.Categories
                  .Where(x => x.Formell == formal).Select(x => x.Id);
-            return dataContext.Posts.Where(x => x.Hidden == false && categories.Contains(x.KategoriId)).OrderByDescending(x => x.Date).Take(5);
+                List<Post> postList = db.Posts.Where(x => x.Hidden == false && categories.Contains(x.KategoriId)).OrderByDescending(x => x.Date).Take(5).ToList();
+                foreach (var p in postList)
+                {
+                    p.Location = db.Location.SingleOrDefault(l => l.PostId.ToString().Equals(p.Id.ToString()));
+                }
+                return postList;
+            }
+
+
+            
+            /*return dataContext.Posts.Where(x => x.Hidden == false && categories.Contains(x.KategoriId)).OrderByDescending(x => x.Date).Take(5);*/
         }
 
         public void AddPost(Post post)
@@ -56,6 +69,22 @@ namespace DataAccess.Repositories
                 var user = db.Users.SingleOrDefault(u => u.Id.Equals(userId));
                 user.UnreadPosts.Clear();
                 db.SaveChanges();
+            }
+        }
+
+        public Location GetLocation(string postId)
+        {
+            using (var db = new DataContext())
+            {
+                try
+                {
+                    Location loc = db.Location.Find(postId);
+                    return loc;
+                }
+                catch
+                {
+                    return new Location();
+                }
             }
         }
 

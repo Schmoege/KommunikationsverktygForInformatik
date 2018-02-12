@@ -227,5 +227,35 @@ namespace DataAccess.Repositories
                 }
             }
         }
+
+        public Dictionary<string, int> GetAnsweredTimes(int meetingID)
+        {
+            using (DataContext db = new DataContext())
+            {
+                try
+                {
+                    Dictionary<string, int> timeDictionary = new Dictionary<string, int>();
+                    var timeSuggestions = db.TimeSuggestions.Where(x => x.MeetingID.Equals(meetingID)).ToList();
+                    foreach (TimeSuggestion timeSugg in timeSuggestions)
+                    {
+                        var answers = db.TimeAnswers.Where(x => x.TimeID.Equals(timeSugg.TID)).ToList();
+                        int count = 0;
+                        foreach (TimeAnswer answer in answers)
+                        {
+                            if(answer.Answered && answer.Answer == 1)
+                            {
+                                count++;
+                            }
+                        }
+                        timeDictionary.Add(timeSugg.Suggestion, count);
+                    }
+                    return timeDictionary;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
     }
 }

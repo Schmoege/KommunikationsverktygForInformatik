@@ -82,6 +82,12 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                 var User = ur.GetUserByEmail(model.Email);
                 if (User.Active)
                 {
+                    System.Media.SoundPlayer player = new System.Media.SoundPlayer();
+                    player.Stop();
+                    var kaiPath = System.AppDomain.CurrentDomain.BaseDirectory + "Icons\\HEJKAI.wav";
+                    player.SoundLocation = kaiPath;
+                    player.Play();
+
                     var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
                     switch (result)
                     {
