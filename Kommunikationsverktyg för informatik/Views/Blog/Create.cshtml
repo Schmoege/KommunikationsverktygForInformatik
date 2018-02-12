@@ -52,8 +52,8 @@
     </div>
 
 
-    <textarea name="long" Id="long" class="hidden">asdfa</textarea>
-    <textarea name="lat" Id="lat" class="hidden"></textarea>
+    <textarea name="long" Id="long" class="hidden">unknown</textarea>
+    <textarea name="lat" Id="lat" class="hidden">unknown</textarea>
 
 
     <div class="form-group">
@@ -67,6 +67,7 @@
 <div>
     @Html.ActionLink("Tillbaka", "Index", new { formal = Model.Formal })
 </div>
+<div id="map"></div>
 
 
 
@@ -89,6 +90,7 @@
     function GetLocation() {
         console.log("GetLocation called")
         {
+            
             navigator.geolocation.getCurrentPosition(function (position) {
                 console.log("In nav")
                 document.getElementById("long").value = position.coords.longitude;

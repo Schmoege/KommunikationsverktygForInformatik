@@ -7,11 +7,11 @@
 
 <div class="jumbotron">
     <h1></h1>
-    <p class="lead">Kommuninformatik är en kommunikationsplattform för informatikprogrammet. Denna webplattform är till för att underlätta kommunikationen mellan lärare.</p>
+    <p class="lead">Kommunikationsverktyg är en kommunikationsplattform för informatikprogrammet. Denna webplattform är till för att underlätta kommunikationen mellan lärare.</p>
 </div>
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-homePage">
         <h2>Bloggflöde</h2>
 
         @if (Model.Posts.Count != 0)
@@ -36,6 +36,37 @@
                 </a>
             }
 
+        }
+        else
+        {
+            <p>Inga blogginlägg</p>
+        }
+    </div>
+    <div class="col-md-homePage">
+        <h2>Formell Blogg</h2>
+
+        @if (Model.FormalPosts.Count != 0)
+        {
+            foreach (var item in Model.FormalPosts)
+            {
+                <a href="@Url.Action("Index", "Blog", new { formal = true})">
+                    <div class="margin5 div-blogEntryMainFormal">
+                        <div id="div-blogEntryUser">
+                            <h4>@Html.DisplayFor(model => model.Users.Find(x => x.Id == item.User).BlogDisplayName)</h4>
+                        </div>
+                        <div id="div-blogEntryDate">
+                            <h5>@Html.DisplayFor(modelItem => item.Date)</h5>
+                        </div>
+                        <div id="div-blogEntryTitle">
+                            <h4>@Html.DisplayFor(modelItem => item.Title)</h4>
+                        </div>
+                        <div id="div-blogEntryDescription">
+                            <h5 id="blogText" class="comment more">@Html.DisplayFor(modelItem => item.Description)</h5>
+                        </div>
+                    </div>
+                </a>
+            }
+
 
 
         }
@@ -44,8 +75,9 @@
             <p>Inga blogginlägg</p>
         }
     </div>
-
-    <div class="col-md-4">
+</div>
+<div class="row">
+    <div class="col-md-homePage">
         <h2>Forskningsblogg</h2>
 
         @if (Model.ResearchPosts.Count != 0)
@@ -53,7 +85,7 @@
             foreach (var item in Model.ResearchPosts)
             {
                 <a href="@Url.Action("Index", "Research")">
-                    <div class="margin5 div-blogEntryMain">
+                    <div class="margin5 div-blogEntryMainRes">
                         <div id="div-blogEntryUser">
                             <h4>@Html.DisplayFor(model => model.Users.Find(x => x.Id == item.UserId).BlogDisplayName)</h4>
                         </div>
@@ -79,7 +111,7 @@
         }
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-homePage">
         <h2>Utbildningsblogg</h2>
 
         @if (Model.EducationPosts.Count != 0)
@@ -87,7 +119,7 @@
             foreach (var item in Model.EducationPosts)
             {
                 <a href="@Url.Action("Index", "Education")">
-                    <div class="margin5 div-blogEntryMain">
+                    <div class="margin5 div-blogEntryMainEdu">
                         <div id="div-blogEntryUser">
                             <h4>@Html.DisplayFor(model => model.Users.Find(x => x.Id == item.UserId).BlogDisplayName)</h4>
                         </div>
@@ -109,7 +141,5 @@
             <p>Inga blogginlägg</p>
         }
     </div>
+</div>
 
-    </div>
-
-    

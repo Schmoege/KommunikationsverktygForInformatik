@@ -49,7 +49,7 @@ namespace DataAccess.Repositories
                         db.TimeAnswers.Add(timeAnswer);
                         db.SaveChanges();
                         i++;
-                        if(i % timeSuggestions.Count == 0)
+                        if (i % rminvitelist.Count == 0)
                         {
                             j++;
                         }
@@ -94,6 +94,24 @@ namespace DataAccess.Repositories
                     return null;
                 }
             }
+        }
+        public int AmountUnansweredMeetings (string userID)
+        {
+            var amountUnansweredInvitations = new int();
+            using (DataContext db = new DataContext())
+            {
+                var invitedMeetings = GetInvitedMeetings(userID);
+                
+                foreach(var meeting in invitedMeetings)
+                {
+                    var answered = GetAnswer(meeting.MID, userID);
+                    if (!answered)
+                    {
+                        amountUnansweredInvitations++;
+                    }
+                }
+            }
+            return amountUnansweredInvitations;
         }
 
         public List<Meeting> GetCreatedMeetings(string userID)
