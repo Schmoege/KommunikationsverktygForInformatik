@@ -95,7 +95,28 @@ namespace DataAccess.Repositories
                 }
             }
         }
-        
+
+        public List<Meeting> GetCreatedMeetings(string userID)
+        {
+            using (DataContext db = new DataContext())
+            {
+                try
+                {
+                    List<Meeting> meetingList = new List<Meeting>();
+                    var inv = db.Invitations.Where(x => x.UserID.Equals(userID)).ToList();
+                    foreach(Invitation i in inv)
+                    {
+                        meetingList.Add(db.Meetings.Single(x => x.MID.Equals(i.MeetingID)));
+                    }
+                    return meetingList;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
+
         public ApplicationUser GetMeetingCreator(int meetingID)
         {
             using (DataContext db = new DataContext())
@@ -213,7 +234,7 @@ namespace DataAccess.Repositories
                     UserRepository ur = new UserRepository();
                     List<string> names = new List<string>();
                     Invitation inv = db.Invitations.Single(x => x.MeetingID.Equals(meetingID));
-                    var RMInv = db.RMInvites.Where(x => x.InvitationID.Equals(inv.IID) && x.Answer.Equals(1)).ToList();
+                    var RMInv = db.RMInvites.Where(x => x.InvitationID.Equals(inv.IID)).ToList();
                     foreach (RecieveMeetingInvitation RM in RMInv)
                     {
                         ApplicationUser user = ur.GetUser(RM.UserID);
@@ -254,6 +275,56 @@ namespace DataAccess.Repositories
                 catch
                 {
                     return null;
+                }
+            }
+        }
+
+        public string GetConfirmedTime(int meetingID)
+        {
+            using (DataContext db = new DataContext())
+            {
+                try
+                {
+                    var confirmedTime = db.TimeSuggestions.Single(x => x.MeetingID.Equals(meetingID) && x.ConfirmedTime).Suggestion;
+                    return confirmedTime;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
+
+        public void SetMeetingConfirmed(int meetingID)
+        {
+            using (DataContext db = new DataContext())
+            {
+                try
+                {
+                    var meeting = db.Meetings.Single(x => x.MID.Equals(meetingID));
+                    meeting.Confirmed = true;
+                    db.SaveChanges();
+                }
+                catch
+                {
+                    throw;
+                }
+            }
+        }
+
+        public void SetTimeSuggestionConfirmed(int meetingID, string time)
+        {
+            using (DataContext db = new DataContext())
+            {
+                try
+                {
+                    var timeSugg = db.TimeSuggestions.Single(x => x.MeetingID.Equals(meetingID) && x.Suggestion.Equals(time));
+                    timeSugg.ConfirmedTime = true;
+                    db.SaveChanges();
+                }
+                catch
+                {
+                    throw;
                 }
             }
         }

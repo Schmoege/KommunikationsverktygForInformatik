@@ -61,6 +61,15 @@ textarea {
     border: 1px solid cornflowerblue;
 }
 
+.div-blogEntryMainFormal {
+    width: 80%;
+    padding: 1% 5% 1% 5%;
+    height: 100%;
+    background-color: blueviolet;
+    overflow: hidden;
+    border: 1px solid cornflowerblue;
+}
+
 .col-md-homePage {
     position: relative;
     min-height: 1px;

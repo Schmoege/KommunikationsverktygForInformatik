@@ -50,9 +50,16 @@
 
 }
 
-
-
 @{
+    string  blogEntryMain = "";
+    if (Model.Formal)
+    {
+        blogEntryMain = "margin5 div-blogEntryMainFormal";
+    }
+    else
+    {
+        blogEntryMain = "margin5 div-blogEntryMain";
+    }
     int i = 1;
     foreach (var item in Model.PostFileCombinations)
     {
@@ -63,7 +70,7 @@
             @{i = i + 1; }
 
 
-            <div class="margin5 div-blogEntryMain">
+            <div class="@blogEntryMain">
 
                 <div id="div-blogEntryUser">
 
@@ -125,12 +132,12 @@
                     <p>
                         @if (item.AttatchedPost.User == User.Identity.GetUserId())
                         {
-                            @Html.ActionLink("Edit", "Edit", "Blog", new { Id = item.AttatchedPost.Id }, null)
+                            @Html.ActionLink("Edit", "Edit", "Blog", new { Id = item.AttatchedPost.Id, formal = Model.Formal }, null)
                         }
                         |
                         @if (ur.IsUserInRole(User.Identity.GetUserId(), "administrator") || item.AttatchedPost.User == User.Identity.GetUserId())
                         {
-                            @Html.ActionLink("Ta bort", "BlogCancel", "Blog", new { Id = item.AttatchedPost.Id, }, null)
+                            @Html.ActionLink("Ta bort", "BlogCancel", "Blog", new { Id = item.AttatchedPost.Id ,formal = Model.Formal },  null)
                         }
                     </p>
 
