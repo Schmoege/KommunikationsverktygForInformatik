@@ -203,6 +203,7 @@
             var lat = $(elem).data('latitude'); //gets the coord values from the label 'data-latitude' and 'data-longitude'
             var lng = $(elem).data('longitude');
             $("#" + divid).toggle(); //toggles visibility
+            console.log("Loc: " + lat + " " + lng);
             if (lat == "unknown" || lng == "unknown") {
                 unknownLocation();
             }

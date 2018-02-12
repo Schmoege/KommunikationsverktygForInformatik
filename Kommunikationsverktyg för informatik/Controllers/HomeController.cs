@@ -30,22 +30,22 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             }
             var informalCategories = context.Categories.Where(c => !c.Formell);
            
-            model.Posts = context.Posts.Where(x => x.Hidden == false && informalCategories.Select(c => c.Id).Contains(x.KategoriId)).Take(5).OrderByDescending(x => x.Date).ToList();
+            model.Posts = context.Posts.Where(x => x.Hidden == false && informalCategories.Select(c => c.Id).Contains(x.KategoriId)).Take(1).OrderByDescending(x => x.Date).ToList();
             foreach (var item in model.Posts)
             {
                 model.Users.Add(context.Users.SingleOrDefault(x => x.Id == item.User));
             }
-            model.EducationPosts = context.EducationPosts.Take(5).OrderByDescending(x => x.Date).ToList();
+            model.EducationPosts = context.EducationPosts.Take(1).OrderByDescending(x => x.Date).ToList();
             foreach (var item in model.EducationPosts)
             {
                 model.EducationUsers.Add(context.Users.SingleOrDefault(x => x.Id == item.UserId));
             }
-            model.ResearchPosts = context.ResearchPosts.Take(5).OrderByDescending(x => x.Date).ToList();
+            model.ResearchPosts = context.ResearchPosts.Take(1).OrderByDescending(x => x.Date).ToList();
             foreach (var item in model.ResearchPosts)
             {
                 model.ResearchUsers.Add(context.Users.SingleOrDefault(x => x.Id == item.UserId));
             }
-            model.FormalPosts = context.Posts.Where(x => x.Hidden == false && !informalCategories.Select(c => c.Id).Contains(x.KategoriId)).Take(5).OrderByDescending(x => x.Date).ToList();
+            model.FormalPosts = context.Posts.Where(x => x.Hidden == false && !informalCategories.Select(c => c.Id).Contains(x.KategoriId)).Take(1).OrderByDescending(x => x.Date).ToList();
             return View(model);
 
         }

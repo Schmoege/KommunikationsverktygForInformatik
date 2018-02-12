@@ -85,6 +85,24 @@ namespace DataAccess.Repositories
                 }
             }
         }
+        public int AmountUnansweredMeetings (string userID)
+        {
+            var amountUnansweredInvitations = new int();
+            using (DataContext db = new DataContext())
+            {
+                var invitedMeetings = GetInvitedMeetings(userID);
+                
+                foreach(var meeting in invitedMeetings)
+                {
+                    var answered = GetAnswer(meeting.MID, userID);
+                    if (!answered)
+                    {
+                        amountUnansweredInvitations++;
+                    }
+                }
+            }
+            return amountUnansweredInvitations;
+        }
 
         public List<Meeting> GetCreatedMeetings(string userID)
         {

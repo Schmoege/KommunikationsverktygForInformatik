@@ -7,7 +7,7 @@
 
 <div class="jumbotron">
     <h1></h1>
-    <p class="lead">Kommunikation är en kommunikationsplattform för informatikprogrammet. Denna webplattform är till för att underlätta kommunikationen mellan lärare.</p>
+    <p class="lead">Kommunikationsverktyg är en kommunikationsplattform för informatikprogrammet. Denna webplattform är till för att underlätta kommunikationen mellan lärare.</p>
 </div>
 
 <div class="row">
@@ -49,8 +49,8 @@
         {
             foreach (var item in Model.FormalPosts)
             {
-                <a href="@Url.Action("Index", "Blog")">
-                    <div class="@*margin5*@ div-blogEntryMainFormal">
+                <a href="@Url.Action("Index", "Blog", new { formal = true})">
+                    <div class="margin5 div-blogEntryMainFormal">
                         <div id="div-blogEntryUser">
                             <h4>@Html.DisplayFor(model => model.Users.Find(x => x.Id == item.User).BlogDisplayName)</h4>
                         </div>

@@ -9,7 +9,7 @@ $(document).ready(function () {
     $('.linkComment').each(function () {
         var id = this.id;
         var events = $._data(document.getElementById(id), "events");
-        var hasEvents = (events != null);
+        var hasEvents = (events !== null);
         if (!hasEvents) {
             $('#' + id).click(function () {
                 if ($('.' + id).children().length > 0) {

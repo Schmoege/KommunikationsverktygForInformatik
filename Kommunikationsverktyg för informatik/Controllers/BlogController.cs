@@ -30,7 +30,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         public ActionResult Index(BlogPostViewModel model, bool formal = false, bool hidden = false, int newCount = 5, int oldCount = 5)
         {
             model.Formal = formal;
-            blogRepository.ClearUnreadPosts(User.Identity.GetUserId());
+            blogRepository.ClearUnreadPosts(User.Identity.GetUserId(), formal);
             List<Post> filteredPosts = new List<Post>();
             if (model.SelectedCategory != null)
             {
@@ -58,10 +58,16 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                 string myID = User.Identity.GetUserId();
                 model.Hidden = true;
                 filteredPosts = context.Posts.Where(x => x.Hidden == true && x.User == myID).ToList();
+                foreach (Post p in filteredPosts)
+                {
+                    p.Location = blogRepository.GetLocation(p.Id.ToString());
+                }
             }
             foreach (var post in filteredPosts)
             {
                 var newPostFileCombo = new PostFileCombo();
+                post.Location = blogRepository.GetLocation(post.Id.ToString());
+
                 newPostFileCombo.AttatchedPost = post;
 
                 newPostFileCombo.AttachedUser = users.SingleOrDefault(x => x.Id == post.User);
