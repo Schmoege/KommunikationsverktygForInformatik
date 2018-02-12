@@ -20,7 +20,8 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         {
             var userID = User.Identity.GetUserId();
             List<MeetingInvitationsViewModels> meetings = FetchInvitedMeetings(userID);
-            return View(meetings);
+            List<MeetingInvitationsViewModels> createdMeetings = FetchCreatedMeetings(userID);
+            return View(Tuple.Create(meetings, createdMeetings));
         }
 
         [HttpGet]
@@ -49,7 +50,33 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         {
             var userID = User.Identity.GetUserId();
             List<MeetingInvitationsViewModels> meetings = FetchInvitedMeetings(userID);
-            return PartialView("_MeetingPartial", Tuple.Create(meetings));
+            List<MeetingInvitationsViewModels> createdMeetings = FetchCreatedMeetings(userID);
+            return PartialView("_MeetingPartial", Tuple.Create(meetings, createdMeetings));
+        }
+
+        private static List<MeetingInvitationsViewModels> FetchCreatedMeetings(string userID)
+        {
+            MeetingRepository mr = new MeetingRepository();
+            var list = mr.GetCreatedMeetings(userID);
+            List<MeetingInvitationsViewModels> meetings = new List<MeetingInvitationsViewModels>();
+            foreach (Meeting meeting in list)
+            {
+                var user = mr.GetMeetingCreator(meeting.MID);
+                var answered = mr.GetAnswer(meeting.MID, userID);
+                var mod = new MeetingInvitationsViewModels
+                {
+                    Subject = meeting.Subject,
+                    Place = meeting.Place,
+                    Date = meeting.Date,
+                    MeetingID = meeting.MID,
+                    Sender = user.FirstName + user.LastName,
+                    Answered = answered,
+                    Confirmed = meeting.Confirmed
+                };
+                meetings.Add(mod);
+            }
+
+            return meetings;
         }
 
         private static List<MeetingInvitationsViewModels> FetchInvitedMeetings(string userID)
@@ -213,13 +240,15 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             var meeting = mr.GetMeeting(meetingID);
             var user = mr.GetMeetingCreator(meetingID);
             var names = mr.GetMeetingParticipants(meetingID);
+            var time = mr.GetConfirmedTime(meetingID);
             var model = new MeetingViewModels
             {
                 Subject = meeting.Subject,
                 Place = meeting.Place,
                 Date = meeting.Date,
                 Sender = user.FirstName + " " + user.LastName,
-                Names = names
+                Names = names,
+                Time = time
 
             };
             return PartialView("_MeetingDetailsPartial", model);
@@ -240,6 +269,15 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                 Times = times
             };
             return PartialView("_ConfirmMeetingPartial", model);
+        }
+
+        [HttpPost]
+        public ActionResult ConfirmMeeting(int meetingID, string time)
+        {
+            MeetingRepository mr = new MeetingRepository();
+            mr.SetMeetingConfirmed(meetingID);
+            mr.SetTimeSuggestionConfirmed(meetingID, time);
+            return RedirectToAction("ViewMeetings");
         }
 
         [HttpPost]
@@ -272,5 +310,6 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                 return true;
             }
         }
+
     }
 }

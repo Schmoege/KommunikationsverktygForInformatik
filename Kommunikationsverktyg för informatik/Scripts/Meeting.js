@@ -270,6 +270,45 @@
         });
     });
 
+    $(document).on('click', '#confirmBook', function ()
+    {
+        var id = $("#meetingID").val();
+        var time = $("#chosenTime").html();
+        if(TimeSelected(time))
+        {
+            $.ajax({
+                url: '/Meeting/ConfirmMeeting',
+                type: "POST",
+                data:
+                    {
+                        meetingID: id,
+                        time: time
+                    },
+                success: function (data) {
+                    $("#Meeting").html(data);
+                },
+                error: function (xhr, status, error) {
+                    var msg = "Response failed with status: " + status + "</br>"
+                    + " Error: " + error;
+                    $("#Meeting").html(msg);
+                }
+            });
+        }
+        else
+        {
+            alert("Vänligen välj en tid.");
+        }
+    });
+
+    function TimeSelected(time)
+    {
+        if (time.match(/[0-9]{2}[:][0-9]{2}$/))
+        {
+            return true;
+        }
+        return false;
+    }
+
     $(document).on('click', '.confirmTime', function ()
     {
         var time = $(this).attr("id");
