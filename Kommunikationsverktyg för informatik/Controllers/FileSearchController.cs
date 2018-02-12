@@ -20,12 +20,6 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         [HttpPost]
         public JsonResult getFileSearchResult(string dateFrom, string dateTo)
         {
-            SoundPlayer player = new SoundPlayer();
-            player.Stop();
-            var kaiPath = System.AppDomain.CurrentDomain.BaseDirectory + "Icons\\HEJKAI.wav";
-            player.SoundLocation = kaiPath;
-            player.Play();
-
             List<UserFile> matchedFiles = new List<UserFile>();
             try
             {

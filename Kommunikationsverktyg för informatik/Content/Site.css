@@ -25,6 +25,15 @@ textarea {
 }
 
 /*Custom styles*/
+.div-blogEntryMain {
+    width: 80%;
+    padding: 1% 5% 1% 5%;
+    height: 100%;
+    background-color: lightblue;
+    overflow: hidden;
+    border: 1px solid cornflowerblue;
+}
+
 .div-blogEntryMainRes {
     width: 80%;
     padding: 1% 5% 1% 5%;
@@ -43,13 +52,22 @@ textarea {
     border: 1px solid cornflowerblue;
 }
 
-.div-blogEntryMain {
+.div-blogEntryMainFormal {
     width: 80%;
     padding: 1% 5% 1% 5%;
     height: 100%;
-    background-color: lightblue;
+    background-color: lightsalmon;
     overflow: hidden;
     border: 1px solid cornflowerblue;
+}
+
+.col-md-homePage {
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+    float: left;
+    width: 50%;
 }
 
 .margin5 {
@@ -234,4 +252,7 @@ textarea {
 }
 .post-description-error {
     margin-left: 17%;
+}
+.blue {
+    background-color: blue;
 }

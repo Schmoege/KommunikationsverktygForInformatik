@@ -28,7 +28,7 @@ namespace DataAccess.Repositories
             {
                 var categories = db.Categories
                  .Where(x => x.Formell == formal).Select(x => x.Id);
-                List<Post> postList = db.Posts.Where(x => x.Hidden == false && categories.Contains(x.KategoriId)).OrderByDescending(x => x.Date).Take(5).ToList();
+                List<Post> postList = db.Posts.Where(x => x.Hidden == false && categories.Contains(x.KategoriId)).OrderByDescending(x => x.Date).ToList();
                 foreach (var p in postList)
                 {
                     p.Location = db.Location.SingleOrDefault(l => l.PostId.ToString().Equals(p.Id.ToString()));
@@ -41,6 +41,7 @@ namespace DataAccess.Repositories
             /*return dataContext.Posts.Where(x => x.Hidden == false && categories.Contains(x.KategoriId)).OrderByDescending(x => x.Date).Take(5);*/
         }
 
+
         public void AddPost(Post post)
         {
             using (DataContext db = new DataContext())
@@ -52,22 +53,28 @@ namespace DataAccess.Repositories
             }
         }
 
-        public int GetUnreadPosts(string userId)
+        public int GetUnreadPosts(string userId, bool formal)
         {
             using (DataContext db = new DataContext())
             {
                 var user = db.Users.SingleOrDefault(u => u.Id.Equals(userId));
+                var categories = db.Categories.Where(x => x.Formell == formal).Select(x => x.Id);
+                var unread = user.UnreadPosts.Where(x => categories.Contains(x.KategoriId)).Count();
 
-                int unread = user.UnreadPosts.Count();
                 return unread;
             }
         }
-        public void ClearUnreadPosts(string userId)
+        public void ClearUnreadPosts(string userId, bool formal)
         {
             using (DataContext db = new DataContext())
             {
                 var user = db.Users.SingleOrDefault(u => u.Id.Equals(userId));
-                user.UnreadPosts.Clear();
+                var categories = db.Categories.Where(x => x.Formell == formal).Select(x => x.Id);
+                var unread = user.UnreadPosts.Where(x => categories.Contains(x.KategoriId)).ToList();
+                foreach (var item in unread)
+                {
+                    user.UnreadPosts.Remove(item);
+                }
                 db.SaveChanges();
             }
         }
@@ -78,7 +85,7 @@ namespace DataAccess.Repositories
             {
                 try
                 {
-                    Location loc = db.Location.Find(postId);
+                    Location loc = db.Location.FirstOrDefault(x => x.PostId.Equals(postId));
                     return loc;
                 }
                 catch

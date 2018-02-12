@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using Kommunikationsverktyg_för_informatik.ViewModels;
 using System.Threading.Tasks;
+using DataAccess.Models;
+using DataAccess.Repositories;
 
 namespace Kommunikationsverktyg_för_informatik.Controllers
 {
@@ -53,15 +55,40 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         [HttpGet]
         public PartialViewResult day(string year, string month, string day)
         {
+            DayMeetings(year, month, day);
+            return PartialView("_CalendarDayPartial", dayModel);
+        }
+
+        private void DayMeetings(string year, string month, string day)
+        {
+            MeetingRepository mr = new MeetingRepository();
+            string date = "";
+            if(Convert.ToInt32(month) < 10)
+            {
+                date = year + "-0" + month + "-";
+            }
+            else
+            {
+                date = year + "-" + month + "-";
+            }
+            if(Convert.ToInt32(day) < 10)
+            {
+                date += "0" + day;
+            }
+            else
+            {
+                date += day;
+            }
+            List<Meeting> meetings = new List<Meeting>();
+            meetings = mr.GetAllConfirmedMeetingsDay(date);
             dayModel = new DayViewModels
             {
                 Year = Convert.ToInt32(year),
                 Month = Convert.ToInt32(month),
                 Day = Convert.ToInt32(day),
-                Meetings = null,
+                Meetings = meetings,
                 Notes = null
             };
-            return PartialView("_CalendarDayPartial", dayModel);
         }
 
         private void setMonth(int newMonth)
@@ -87,6 +114,9 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
 
         private void createModel(int oldMonth)
         {
+            MeetingRepository mr = new MeetingRepository();
+            List<Meeting> meetings = new List<Meeting>();
+            meetings = mr.GetAllConfirmedMeetings();
             model = new MonthViewModels
             {
                 Name = new DateTime(year, month, 1).ToString("MMMM").ToUpper(),
@@ -95,7 +125,8 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
                 FirstDayOfMonth = getFirstDayOfMonth(),
                 CurrentDay = DateTime.Today.Day,
                 CurrentMonth = month,
-                CurrentYear = year
+                CurrentYear = year,
+                Meetings = meetings
             };
         }
 
@@ -108,20 +139,6 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             }
             return day;
         }
-
-        //private int nextMonth(int currentMonth)
-        //{
-        //    int month = currentMonth;
-        //    if(currentMonth == 12)
-        //    {
-        //        month = 1;
-        //    }
-        //    else
-        //    {
-        //        month++;
-        //    }
-        //    return month;
-        //}
 
         private int previousMonth(int currentMonth)
         {

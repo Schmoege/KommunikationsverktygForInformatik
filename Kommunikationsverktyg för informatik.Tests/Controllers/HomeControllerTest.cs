@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Kommunikationsverktyg_för_informatik;
 using Kommunikationsverktyg_för_informatik.Controllers;
+using Kommunikationsverktyg_för_informatik.ViewModels;
 
 namespace Kommunikationsverktyg_för_informatik.Tests.Controllers
 {
@@ -19,7 +20,8 @@ namespace Kommunikationsverktyg_för_informatik.Tests.Controllers
             HomeController controller = new HomeController();
 
             // Act
-            ViewResult result = controller.Index() as ViewResult;
+            FrontPageViewModel model = new FrontPageViewModel();
+            ViewResult result = controller.Index(model) as ViewResult;
 
             // Assert
             Assert.IsNotNull(result);
