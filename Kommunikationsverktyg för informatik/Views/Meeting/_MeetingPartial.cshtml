@@ -1,4 +1,4 @@
-﻿@model Tuple<List<Kommunikationsverktyg_för_informatik.ViewModels.MeetingInvitationsViewModels>>
+﻿@model Tuple<List<Kommunikationsverktyg_för_informatik.ViewModels.MeetingInvitationsViewModels>, List<Kommunikationsverktyg_för_informatik.ViewModels.MeetingInvitationsViewModels>>
 
 <div class="elements">
     <div class="elements events">
@@ -7,7 +7,7 @@
                 <legend>Möten</legend>
                 @foreach (Kommunikationsverktyg_för_informatik.ViewModels.MeetingInvitationsViewModels item in Model.Item1)
                 {
-                    if (item.Answered && item.Confirmed)
+                    if (item.Confirmed)
                     {
                        <div id="@item.MeetingID" class="details scrollItem">@item.Subject, @item.Sender</div>
                     }
@@ -19,7 +19,7 @@
                 <legend>Inbjudningar</legend>
                 @foreach (Kommunikationsverktyg_för_informatik.ViewModels.MeetingInvitationsViewModels item in Model.Item1)
                 {
-                    if (!item.Answered)
+                    if (!item.Answered && !item.Confirmed)
                     {
                         <div id="@item.MeetingID" class="specific scrollItem">@item.Subject, @item.Sender</div>
                     }
@@ -29,9 +29,9 @@
         <div class="element">
             <fieldset>
                 <legend>Spika möte</legend>
-                @foreach (Kommunikationsverktyg_för_informatik.ViewModels.MeetingInvitationsViewModels item in Model.Item1)
+                @foreach (Kommunikationsverktyg_för_informatik.ViewModels.MeetingInvitationsViewModels item in Model.Item2)
                 {
-                    if (item.Answered && !item.Confirmed)
+                    if (!item.Confirmed)
                     {
                         <div id="@item.MeetingID" class="confirmed scrollItem">@item.Subject, @item.Sender</div>
                     }

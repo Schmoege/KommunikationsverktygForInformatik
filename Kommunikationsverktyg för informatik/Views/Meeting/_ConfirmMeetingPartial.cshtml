@@ -4,6 +4,7 @@
     <div class="element">
         <fieldset id="@Model.meetingID">
             <legend>@Model.Subject, @Model.Place, @Model.Date</legend>
+            @Html.HiddenFor(model => model.meetingID, new { @id = "meetingID"})
             <ul class="scrollList">
                 @foreach (KeyValuePair<string, int> meetingTime in Model.Times)
                 {
