@@ -30,7 +30,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
         public ActionResult Index(BlogPostViewModel model, bool formal = false, bool hidden = false, int newCount = 5, int oldCount = 5)
         {
             model.Formal = formal;
-            blogRepository.ClearUnreadPosts(User.Identity.GetUserId());
+            blogRepository.ClearUnreadPosts(User.Identity.GetUserId(), formal);
             List<Post> filteredPosts = new List<Post>();
             if (model.SelectedCategory != null)
             {

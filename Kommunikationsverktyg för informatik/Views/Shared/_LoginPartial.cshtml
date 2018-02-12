@@ -54,9 +54,9 @@
                     <a href='@Url.Action("Index","Blog")'>
                         <img class="IconPic" src="~/Icons/Menu/BlogIcon.png" title="Blog" alt="Blogg" width="32" height="32" />
                         <p>Blog</p>
-                        @if (br.GetUnreadPosts(User.Identity.GetUserId()) > 0)
+                        @if (br.GetUnreadPosts(User.Identity.GetUserId(), false) > 0)
                         {
-                            <div class="bottomleft">@br.GetUnreadPosts(User.Identity.GetUserId())</div>
+                            <div class="bottomleft">@br.GetUnreadPosts(User.Identity.GetUserId(), false)</div>
                         }
                     </a>
 
@@ -68,6 +68,10 @@
                     <a href="@Url.Action("Index", "Blog", new { formal = true })">
                         <img class="IconPic" src="~/Icons/Menu/FormalBlogIcon.png" title="Formal blog" alt="Formell Blogg" width="32" height="32" />
                         <p>Formal blog</p>
+                        @if (br.GetUnreadPosts(User.Identity.GetUserId(), true) > 0)
+                        {
+                            <div class="bottomleft">@br.GetUnreadPosts(User.Identity.GetUserId(), true)</div>
+                        }
                     </a>
 
                 </li>
