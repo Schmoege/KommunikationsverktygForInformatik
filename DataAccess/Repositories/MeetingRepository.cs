@@ -49,7 +49,7 @@ namespace DataAccess.Repositories
                         db.TimeAnswers.Add(timeAnswer);
                         db.SaveChanges();
                         i++;
-                        if(i % timeSuggestions.Count == 0)
+                        if (i % rminvitelist.Count == 0)
                         {
                             j++;
                         }
