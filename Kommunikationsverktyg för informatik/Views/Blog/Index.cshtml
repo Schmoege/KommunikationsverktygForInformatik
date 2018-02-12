@@ -125,12 +125,12 @@
                     <p>
                         @if (item.AttatchedPost.User == User.Identity.GetUserId())
                         {
-                            @Html.ActionLink("Edit", "Edit", "Blog", new { Id = item.AttatchedPost.Id }, null)
+                            @Html.ActionLink("Edit", "Edit", "Blog", new { Id = item.AttatchedPost.Id, formal = Model.Formal }, null)
                         }
                         |
                         @if (ur.IsUserInRole(User.Identity.GetUserId(), "administrator") || item.AttatchedPost.User == User.Identity.GetUserId())
                         {
-                            @Html.ActionLink("Ta bort", "BlogCancel", "Blog", new { Id = item.AttatchedPost.Id, }, null)
+                            @Html.ActionLink("Ta bort", "BlogCancel", "Blog", new { Id = item.AttatchedPost.Id ,formal = Model.Formal },  null)
                         }
                     </p>
 

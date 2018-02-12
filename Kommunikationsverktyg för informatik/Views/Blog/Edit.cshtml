@@ -1,4 +1,5 @@
-﻿@model DataAccess.Models.Post
+﻿@model Kommunikationsverktyg_för_informatik.ViewModels.BlogPostViewModel
+
 
 @{
     ViewBag.Title = "Edit";
@@ -7,7 +8,7 @@
 <h2>Edit</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Blog", new { formal = Model.Formal }))
 {
     @Html.AntiForgeryToken()
 
@@ -15,25 +16,28 @@
         <h4>Ändra Post</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.Post.Id)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Post.Title, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Post.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Post.Title, "", new { @class = "text-danger" })
+
             </div>
-            @Html.LabelFor(model => model.Hidden, htmlAttributes: new { @class = "control-label col-md-2" })
+            @if (!Model.Formal) {
+            @Html.LabelFor(model => model.Post.Hidden, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Hidden, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Post.Hidden, new { htmlAttributes = new { @class = "form-control" } })
             </div>
+            }
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Post.Description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" }, id = "txtarea-createpost" })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                @Html.TextAreaFor(model => model.Post.Description, new { htmlAttributes = new { @class = "form-control" }, id = "txtarea-createpost" })
+                @Html.ValidationMessageFor(model => model.Post.Description, "", new { @class = "text-danger" })
             </div>
         </div>
 
