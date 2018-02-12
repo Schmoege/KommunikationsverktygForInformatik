@@ -49,8 +49,8 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             model.Kategorier = context.Categories.Where(x => x.Formell == formal).ToList();
             var postCategoriesId = filteredPosts.Select(x => x.Id);
             var categoryFiles = context.UserFiles.Where(x => postCategoriesId.Contains(x.BlogPostId)).ToList();
-            var picExtensionList = new List<string>() {".png",".PNG", ".jpg",".JPG",".jpeg",".JPEG" };
-            var picList = categoryFiles.Where(x => picExtensionList.Contains(x.FileExtension));
+            var picExtensionList = new List<string>() {".PNG",".JPG",".JPEG" };
+            var picList = categoryFiles.Where(x => picExtensionList.Contains(x.FileExtension.ToUpper()));
             var userIdList = filteredPosts.Select(x => x.User).ToList();
             IEnumerable<ApplicationUser> users = context.Users.Where(x => userIdList.Contains(x.Id));
             if(hidden)
@@ -200,30 +200,32 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             return File(fileToDownload.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileToDownload.FileName);
         }
 
-        public ActionResult Edit(Guid Id)
+        public ActionResult Edit(Guid Id, bool formal)
         {
-            Post post = context.Posts.SingleOrDefault(x => x.Id == Id);
-
-            return View(post);
+            BlogPostViewModel model = new BlogPostViewModel();
+            model.Post = context.Posts.SingleOrDefault(x => x.Id == Id);
+            model.Formal = formal;
+            return View(model);
         }
         [HttpPost]
-        public ActionResult Edit(Post postInfo)
+        public ActionResult Edit( BlogPostViewModel model)
         {
-            Post postToEdit = context.Posts.SingleOrDefault(x => x.Id == postInfo.Id);
-            postToEdit.Title = postInfo.Title;
-            postToEdit.Description = postInfo.Description;
-            postToEdit.Hidden = postInfo.Hidden;
+            Post postToEdit = context.Posts.SingleOrDefault(x => x.Id == model.Post.Id);
+            postToEdit.Title = model.Post.Title;
+            postToEdit.Description = model.Post.Description;
+            postToEdit.Hidden = model.Post.Hidden;
             context.Entry(postToEdit).State = System.Data.Entity.EntityState.Modified;
             context.SaveChanges();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { formal = model.Formal});
         }
 
-        public ActionResult BlogCancel (Guid id)
+        public ActionResult BlogCancel (Guid id, BlogPostViewModel model)
         {
-
+            
             
             Post postDelete = context.Posts.Find(id);
+            
             Location locationDelete = context.Location.Find(id);
             IEnumerable<Comment> relatedComments = context.Comments
                 .Where(x => x.PostID == id);
@@ -232,12 +234,9 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             context.Location.Remove(locationDelete);
             context.Posts.Remove(postDelete);
             
-         
-          
-
             context.SaveChanges();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { formal = model.Formal });
 
 
            
