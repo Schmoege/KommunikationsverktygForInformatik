@@ -1,4 +1,5 @@
-﻿@{
+﻿@using DataAccess.Models
+@{
     Queue<int> greyDays = new Queue<int>();
     Queue<int> regularDays = new Queue<int>();
     Queue<int> futureGreyDays = new Queue<int>();
@@ -81,6 +82,31 @@
                 {
                     <div class="element__item regular" data-year="@year" data-month="@month" data-day="@day">
                         <div class="date">@regularDays.Dequeue()</div>
+                        @foreach(Meeting meeting in Model.Meetings)
+                        {
+
+                            string date = year + "-";
+                            if (Convert.ToInt32(month) < 10)
+                            {
+                                date += "0" + month + "-";
+                            }
+                            else
+                            {
+                                date += month + "-";
+                            }
+                            if(Convert.ToInt32(day) < 10)
+                            {
+                                date += "0" + day;
+                            }
+                            else
+                            {
+                                date += day;
+                            }
+                            if(meeting.Date== date)
+                            {
+                                <p class="meeting">@meeting.Subject, @meeting.Place</p>
+                            }
+                        }
                     </div>
                 }
             }

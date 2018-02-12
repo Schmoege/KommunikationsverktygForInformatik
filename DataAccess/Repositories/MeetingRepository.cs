@@ -62,18 +62,8 @@ namespace DataAccess.Repositories
                     }
                     //db.SaveChanges();
                 }
-                catch(DbEntityValidationException e)
+                catch
                 {
-                    foreach (var eve in e.EntityValidationErrors)
-                    {
-                        Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-                            eve.Entry.Entity.GetType().Name, eve.Entry.State);
-                        foreach (var ve in eve.ValidationErrors)
-                        {
-                            Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
-                                ve.PropertyName, ve.ErrorMessage);
-                        }
-                    }
                     throw;
                 }
             }
@@ -150,7 +140,41 @@ namespace DataAccess.Repositories
                 }
             }
         }     
-        
+
+        public List<Meeting> GetAllConfirmedMeetings()
+        {
+            using (DataContext db = new DataContext())
+            {
+                try
+                {
+                    List<Meeting> meetings = new List<Meeting>();
+                    meetings = db.Meetings.Where(x => x.Confirmed).ToList();
+                    return meetings;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
+
+        public List<Meeting> GetAllConfirmedMeetingsDay(string date)
+        {
+            using (DataContext db = new DataContext())
+            {
+                try
+                {
+                    List<Meeting> meetings = new List<Meeting>();
+                    meetings = db.Meetings.Where(x => x.Confirmed && x.Date.Equals(date)).ToList();
+                    return meetings;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
+
         public List<TimeSuggestion> GetTimeSuggestions(int meetingID)
         {
             using (DataContext db = new DataContext())

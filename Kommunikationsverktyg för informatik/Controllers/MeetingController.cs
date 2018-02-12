@@ -13,6 +13,7 @@ using Kommunikationsverktyg_för_informatik.Models;
 
 namespace Kommunikationsverktyg_för_informatik.Controllers
 {
+    [Authorize]
     public class MeetingController : Controller
     {
         // GET: Meeting
