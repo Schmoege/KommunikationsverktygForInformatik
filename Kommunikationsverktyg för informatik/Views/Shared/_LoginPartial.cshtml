@@ -19,6 +19,7 @@
                 var rr = new ResearchRepository();
                 var er = new EducationRepository();
                 var br = new BlogRepository();
+                var mr = new MeetingRepository();
             }
             @if (currentUser != null)
             {
@@ -115,6 +116,10 @@
                 <a href='@Url.Action("Meeting", "Meeting")'>
                     <img class="IconPic" title="Meeting" src="~/Icons/Menu/Meeting.png" alt="Möte" width="32" height="32" />
                     <p>Meeting</p>
+                    @if (mr.AmountUnansweredMeetings(User.Identity.GetUserId()) > 0)
+                    {
+                        <div class="bottomleft">@mr.AmountUnansweredMeetings(User.Identity.GetUserId()).ToString()</div>
+                    }
                 </a>
             </li>
 
