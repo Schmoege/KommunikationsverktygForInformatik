@@ -366,8 +366,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\EMail\" />
-    <Folder Include="Views\SendMail\" />
     <Folder Include="Views\Location\" />
+    <Folder Include="Views\SendMail\" />
     <Folder Include="Views\Validation\" />
   </ItemGroup>
   <ItemGroup>
