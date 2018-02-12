@@ -164,6 +164,7 @@ namespace Kommunikationsverktyg_för_informatik.Controllers
             {
                 return View();
             }
+            kategori.Formell = formal;
             context.Categories.Add(kategori);
             context.SaveChanges();
             return RedirectToAction("Create", new { formal = formal });
