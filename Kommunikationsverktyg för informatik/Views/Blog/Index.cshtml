@@ -79,7 +79,7 @@
                     </div>
 
                 </div>
-               <br />
+                <br />
                 <div style="clear:both" id="div-blogEntryTitle">
 
                     <h4>@Html.DisplayFor(modelItem => item.AttatchedPost.Title)</h4>
@@ -144,12 +144,12 @@
                 </div>
             </div>
         </div>
-        
 
-        var user = ur.GetUser(User.Identity.GetUserId());
-        @Html.Hidden("currentUser", User.Identity.GetUserId())
-        @Html.Hidden("displayName", user.BlogDisplayName)
-    }
+
+                var user = ur.GetUser(User.Identity.GetUserId());
+                @Html.Hidden("currentUser", User.Identity.GetUserId())
+                @Html.Hidden("displayName", user.BlogDisplayName)
+                }
 }
 <div class="div-blogLoadPosts">
     @Html.Hidden("oldCountModel", Model.OldCount)
@@ -166,53 +166,69 @@
 </div>
 
 <style>
-    #mapDiv
-    {
-        height:300px;
-        width:400px;
-        background-color:grey;
-        left:0px;
-        top:0px;
+    #mapDiv {
+        height: 300px;
+        width: 400px;
+        background-color: grey;
+        left: 0px;
+        top: 0px;
     }
+
+    #innerMapDiv{
+        text-align: center;
+        font-size: 30px;
+        margin-top: 30%;
+    }
+
 </style>
 @section Scripts {
-<script>
-    $(document).ready(hideMap());
+    <script>
+        $(document).ready(hideMap());
 
 
-    function showMap(e,divid,elem) {
-        hideMap();
-        var left = e.clientX + "px"; //puts coords to mousepointer coords
-        var top = e.clientY + "px";
-        $("#" + divid).css('left', left); //sets the position in css
-        $("#" + divid).css('top', top);
-        $("#" + divid).css('position', 'absolute');
-        var lat = $(elem).data('latitude'); //gets the coord values from the label 'data-latitude' and 'data-longitude'
-        var lng = $(elem).data('longitude');
-        $("#" + divid).toggle(); //toggles visibility
-        initMap(lat,lng); //initiates map
-        
-        return false;
-    }
+        function showMap(e, divid, elem) {
+            hideMap();
+            var left = e.clientX + "px"; //puts coords to mousepointer coords
+            var top = e.clientY + "px";
+            $("#" + divid).css('left', left); //sets the position in css
+            $("#" + divid).css('top', top);
+            $("#" + divid).css('position', 'absolute');
+            var lat = $(elem).data('latitude'); //gets the coord values from the label 'data-latitude' and 'data-longitude'
+            var lng = $(elem).data('longitude');
+            $("#" + divid).toggle(); //toggles visibility
+            if (lat == "unknown" || lng == "unknown") {
+                unknownLocation();
+            }
+            else {
+                initMap(lat, lng); //initiates map
+            }
 
-    function hideMap() {
-        var map = document.getElementById('mapDiv');
-        map.style.display = 'none'; //hides the map
-    }
+            return false;
+        }
 
-    function initMap(lati,longi) { //function for setting map coords through google api
-        var uluru = { lat: lati, lng: longi };
-        var map = new google.maps.Map(document.getElementById('mapDiv'), {
-            zoom: 8,
-            center: uluru
-        });
-        var marker = new google.maps.Marker({
-            position: uluru,
-            map: map
-        });
-    }
-</script>
-    }
+        function hideMap() {
+            document.getElementById("mapDiv").innerHTML = "";
+            var map = document.getElementById('mapDiv');
+            map.style.display = 'none'; //hides the map
+        }
+
+        function initMap(lati, longi) { //function for setting map coords through google api
+            var location = { lat: lati, lng: longi };
+            var map = new google.maps.Map(document.getElementById('mapDiv'), {
+                zoom: 8,
+                center: location
+            });
+            var marker = new google.maps.Marker({
+                position: location,
+                map: map
+            });
+        }
+
+        function unknownLocation() {
+            var map = document.getElementById('mapDiv').innerHTML = "<p id='innerMapDiv'> Location unkown</p>";
+        }
+    </script>
+}
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSWVBSfbcef96qaP3AcCFlZ25DkuFyE-8&callback=initMap">
 </script>

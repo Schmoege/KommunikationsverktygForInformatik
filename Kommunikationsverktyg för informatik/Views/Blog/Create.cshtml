@@ -90,6 +90,7 @@
     function GetLocation() {
         console.log("GetLocation called")
         {
+            
             navigator.geolocation.getCurrentPosition(function (position) {
                 console.log("In nav")
                 document.getElementById("long").value = position.coords.longitude;

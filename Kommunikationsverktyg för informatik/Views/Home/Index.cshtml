@@ -53,7 +53,7 @@
             foreach (var item in Model.ResearchPosts)
             {
                 <a href="@Url.Action("Index", "Research")">
-                    <div class="margin5 div-blogEntryMain">
+                    <div class="margin5 div-blogEntryMainRes">
                         <div id="div-blogEntryUser">
                             <h4>@Html.DisplayFor(model => model.Users.Find(x => x.Id == item.UserId).BlogDisplayName)</h4>
                         </div>
@@ -87,7 +87,7 @@
             foreach (var item in Model.EducationPosts)
             {
                 <a href="@Url.Action("Index", "Education")">
-                    <div class="margin5 div-blogEntryMain">
+                    <div class="margin5 div-blogEntryMainEdu">
                         <div id="div-blogEntryUser">
                             <h4>@Html.DisplayFor(model => model.Users.Find(x => x.Id == item.UserId).BlogDisplayName)</h4>
                         </div>
