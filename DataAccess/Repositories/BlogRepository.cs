@@ -78,7 +78,7 @@ namespace DataAccess.Repositories
             {
                 try
                 {
-                    Location loc = db.Location.Find(postId);
+                    Location loc = db.Location.FirstOrDefault(x => x.PostId.Equals(postId));
                     return loc;
                 }
                 catch
